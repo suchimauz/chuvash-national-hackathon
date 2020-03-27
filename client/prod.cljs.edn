@@ -1,0 +1,14 @@
+{:output-to        "resources/public/js/app.js"
+ :css-dirs         ["resources/public/css"]
+ :source-map       "resources/public/js/app.js.map"
+ :output-dir       "resources/public/js/out"
+ :closure-warnings {:non-standard-jsdoc :off :global-this :off}
+ :optimizations    :advanced
+ :main             'app.build.prod
+ :externs          []
+ :output-wrapper   true
+ :verbose          true
+ :compiler-stats   true
+ :parallel-build   true
+ :language-in      :es6
+ :language-out     :es5}
