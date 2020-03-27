@@ -1,7 +1,11 @@
 {:paths ["src" "resources"]
  :deps  {org.clojure/clojurescript {:mvn/version "LATEST"}
          reagent                   {:mvn/version "LATEST"}
-         re-frame                  {:mvn/version "LATEST"}}
+         re-frame                  {:mvn/version "LATEST"}
+         garden                    {:mvn/version "LATEST"}
+         route-map                 {:mvn/version "LATEST"}
+         zenform                   {:local/root "zenform"}
+         chrono                    {:local/root "chrono"}}
 
  :aliases
  {:dev

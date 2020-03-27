@@ -1,1 +1,4 @@
-pgdata/
+client/.cpcache
+client/build
+client/resources/public/js
+client/.nrepl-port
