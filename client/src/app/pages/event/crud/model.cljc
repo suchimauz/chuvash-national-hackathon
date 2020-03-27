@@ -1,4 +1,4 @@
-(ns app.pages.project.crud.model
+(ns app.pages.event.crud.model
   (:require [re-frame.core :as rf]
             [app.pages.project.crud.form :as form]))
 

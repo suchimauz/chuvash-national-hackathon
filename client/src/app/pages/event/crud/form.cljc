@@ -1,4 +1,4 @@
-(ns app.pages.project.crud.form
+(ns app.pages.event.crud.form
   (:require [re-frame.core :as rf]
             [zenform.model :as zf]))
 
@@ -6,11 +6,11 @@
 (def schema
   {:type   :form
    :fields {:name        {:type :string}
+            :purpose     {:type :string}
             :description {:type :string}
-            :author      {:type      :object
-                          :on-search ::search-author}
             :startDate   {:type :string}
-            :endDate     {:type :string}}})
+            :endDate     {:type :string}
+            :amount      {:type :string}}})
 
 (rf/reg-event-fx
  ::init

@@ -3,67 +3,59 @@
             [app.pages.project.crud.model :as model]
             [app.pages.project.crud.form :as form]
             [re-frame.core :as rf]
-            [app.helpers :as helpers]))
+            [app.helpers :as helpers]
+            [app.form.inputs :as inputs]))
 
 (def form
   [:div.card
-   [:div.card-header [:h3.mb-0 "Datepicker"]]
+   [:div.card-header [:h2.mb-0 "Форма создания национального проекта"]]
    [:div.card-body
     [:form
-     [:div.row
+     [:div.flex-row
       [:div.col-md-6
        [:div.form-group
         [:label.form-control-label
-         "One of two cols"]
-        [:input#example2cols2Input.form-control
-         {:placeholder "One of two cols", :type "text"}]]]
-      [:div.row.input-daterange.datepicker.align-items-center
-       [:div.col
-        [:div.form-group
-         [:label.form-control-label "Start date"]
-         [:input.form-control
-          {:value "06/18/2018",
-           :type "text",
-           :placeholder "Start date"}]]]
-       [:div.col
-        [:div.form-group
-         [:label.form-control-label "End date"]
-         [:input.form-control
-          {:value "06/22/2018",
-           :type "text",
-           :placeholder "End date"}]]]]
+         "Название"]
+        [inputs/input form/path [:name] {:placeholder "Введите название"}]]]
+      [:div.col-md-6
+       [:div.form-group
+        [:label.form-control-label "Дата начала"]
+        [inputs/input form/path [:startDate] {:placeholder "Введите название"}]]]
+      [:div.col-md-6
+       [:div.form-group
+        [:label.form-control-label "Дата окончания"]
+        [inputs/input form/path [:endDate] {:placeholder "Введите название"}]]]
+      [:div.col-md-6
+       [:div.form-group
+        [:label.form-control-label "Автор"]
+        [:select.form-control
+         {:data-toggle "select"}
+         [:option "Краснов"]
+         [:option "Багров"]
+         [:option "Федулов"]
+         [:option "Туктанов"]]]]
       [:div.col-md-6
        [:div.form-group
         [:label.form-control-label
-         "Example textarea"]
-        [:textarea#exampleFormControlTextarea1.form-control
-         {:rows "3"}]]]]]]])
+         "Описание"]
+        [inputs/input form/path [:description] {:placeholder "Введите название"}]]]]]]])
 
-
-
-
-(pages/reg-subs-page
- model/edit-page
- (fn [{:keys [unity]}]
-   [:div "123"]))
-
+(def buttons
+  [:div.card-body
+   [:button.btn.btn-success {:type "button"} "Сохранить"]
+   [:button.btn.btn-secondary {:type "button"} "Отменить"]
+   [:button.btn.btn-outline-danger {:type "button"} "Удалить"]])
 
 (pages/reg-subs-page
  model/create-page
  (fn []
    [:div.container
-    [:h1 "Форма создания нац. проекта"]
     form
-    [:div.btn-component
-     [:button.btn.save  "Сохранить"]
-     [:button.btn.cancel  "Отмена"]]]))
+    buttons]))
 
 (pages/reg-subs-page
  model/edit-page
  (fn []
    [:div.container
-    [:h1 "Форма редактирования нац. проекта"]
     form
-    [:div.btn-component
-     [:button.btn.save  "Сохранить"]
-     [:button.btn.cancel  "Отмена"]]]))
+    buttons]))

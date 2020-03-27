@@ -1,7 +1,6 @@
-(ns app.pages.project.crud.model
+(ns app.pages.purpose.crud.model
   (:require [re-frame.core :as rf]
-            [app.pages.project.crud.form :as form]))
-
+            [app.pages.purpose.crud.form :as form]))
 (def create-page ::create)
 (def edit-page ::edit)
 
@@ -24,7 +23,7 @@
 
 (rf/reg-event-fx
  edit-page
- (fn [{db :db } [pid  phase _]]
+ (fn [{db :db } [pid  phase {id :id}]]
    (case phase
      (:init :params)
      {:db       db
@@ -34,5 +33,5 @@
 
 (rf/reg-sub
  edit-page
- (fn [_ _]
+ (fn [_]
    {:text "123"}))
