@@ -3,6 +3,11 @@
             [app.helpers :as helpers]
             [clojure.string :as str]))
 
+(rf/reg-sub
+ :auth/auth?
+ (fn [db]
+   (get-in db [:xhr :config :token])))
+
 (rf/reg-event-fx
  ::signin-success
  [(rf/inject-cofx :storage/get [:redirect])]
@@ -65,10 +70,9 @@
 (rf/reg-event-fx
  ::logout
  (fn [{{config :config :as db} :db} _]
-   {:json/fetch {:uri "/Session"
-                 :method  :delete
-                 :success {:event ::logout-done}
-                 :error   {:event ::logout-done}}}))
+   {:storage/remove [:auth]
+    :db (update-in db [:xhr :config] dissoc :token)
+    :zframes.redirect/redirect {:uri "/login"}}))
 
 (rf/reg-event-fx
  ::logout-done
