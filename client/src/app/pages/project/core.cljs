@@ -2,6 +2,7 @@
   (:require [re-frame.core           :as rf]
             [app.pages.model         :as page]
             [app.pages.project.model :as model]
+            [app.components.chart.doughnut :as doughnut]
             [app.components.breadcrumb.core :as breadcrumb]))
 
 (page/reg-subs-page
@@ -29,15 +30,28 @@
          [:div.card-header [:h5.h3.mb-0 "Развитие экспорта медицинских услуг"]]
          [:div.card-body
           [:div.card-body
-           [:div.row.align-items-center
+           [:div.d-flex.justify-content-between
+            [:div.row.align-items-center
+             [:div.col-auto
+              [:a.avatar.avatar-xl.rounded-circle
+               {:href "#"}
+               [:img
+                {:alt "Image placeholder"}]]]
+             [:div.col.ml--2
+              [:h4.mb-0 [:a {:href "#!"} "Руководитель проекта Филиппов Е.Ф."]]
+              [:p.text-sm.text-muted.mb-0 "министр здравоохранения Краснодарского края "]]]
             [:div.col-auto
-             [:a.avatar.avatar-xl.rounded-circle
-              {:href "#"}
-              [:img
-               {:alt "Image placeholder"}]]]
-            [:div.col.ml--2
-             [:h4.mb-0 [:a {:href "#!"} "Руководитель проекта Филиппов Е.Ф."]]
-             [:p.text-sm.text-muted.mb-0 "министр здравоохранения Краснодарского края "]]]]]])
+             [doughnut/component {:key     idx
+                                  :type    "doughnut"
+                                  :stacked true
+                                  ;:options {:scales {:yAxes [{:ticks {:beginAtZero true}}]}}
+                                  :data    {:labels   ["1" "2"]
+                                            :datasets [{:data            [1 2 3]
+                                                        :label           "Registered users"
+                                                        :backgroundColor "#90EE90"}
+                                                       {:data            [1 2 3]
+                                                        :label           "Users with address"
+                                                        :backgroundColor "#F08080"}]}}]]]]]])
       (range 3))
 
      ]
