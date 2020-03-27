@@ -5,7 +5,9 @@
          garden                    {:mvn/version "LATEST"}
          route-map                 {:mvn/version "LATEST"}
          zenform                   {:local/root "zenform"}
-         chrono                    {:local/root "chrono"}}
+         chrono                    {:local/root "chrono"}
+         cljsjs/chartjs            {:mvn/version "2.9.3-0"}}
+
 
  :aliases
  {:dev
