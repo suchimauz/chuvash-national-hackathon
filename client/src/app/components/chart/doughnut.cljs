@@ -11,4 +11,7 @@
   (r/create-class
    {:component-did-mount #(usage-metrics-chart arg)
     :reagent-render      (fn []
-                           [:canvas {:id (str "doughnut_" (:key arg))}])}))
+                           [:canvas
+                            {:style {:width "120px"
+                                     :height "120px"}
+                             :id (str "doughnut_" (:key arg))}])}))

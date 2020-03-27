@@ -42,17 +42,24 @@
               [:h4.mb-0 [:a {:href "#!"} "Руководитель проекта Филиппов Е.Ф."]]
               [:p.text-sm.text-muted.mb-0 "министр здравоохранения Краснодарского края "]]]
             [:div.col-auto
-             [doughnut/component {:key     idx
-                                  :type    "doughnut"
-                                  :stacked true
-                                  ;:options {:scales {:yAxes [{:ticks {:beginAtZero true}}]}}
-                                  :data    {:labels   ["1" "2"]
-                                            :datasets [{:data            [1 2 3]
-                                                        :label           "Registered users"
-                                                        :backgroundColor "#90EE90"}
-                                                       {:data            [1 2 3]
-                                                        :label           "Users with address"
-                                                        :backgroundColor "#F08080"}]}}]]]]]])
+             [:div.row
+              [:div.col-auto.align-self-center
+               [:div
+                [:h4 [:span {:style {:color "#2dce96"}} "●"] " Федеральный"]
+                [:h4 [:span {:style {:color "#5e72e4"}} "●"] " Региональные"]]]
+              [:div.col-auto
+               [doughnut/component {:key     idx
+                                    :type    "doughnut"
+                                    :stacked true
+                                    :options
+                                    {:scales
+                                     {:xAxes [{:display    false
+                                               :scaleLabel {:labelString "Date"}}]}
+                                     :legend {:labels {:fontSize 0}}}
+                                    :data    {:labels   ["Федеральный" "Региональные"]
+                                              :datasets [{:data            [(* 50 idx) 500]
+                                                          :label           "Users with address"
+                                                          :backgroundColor ["#2dce96" "#5e72e4"]}]}}]]]]]]]])
       (range 3))
 
      ]
