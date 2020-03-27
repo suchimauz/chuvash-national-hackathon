@@ -6,20 +6,38 @@
   (let [*node (rf/subscribe [::model/data])]
     (fn []
       (let [node (deref *node)]
-        [:nav.navbar.navbar-top.navbar-expand.navbar-dark.bg-default.border-bottom
+        [:nav.navbar.navbar-horizontal.navbar-transparent.navbar-main.navbar-expand-lg.navbar-light
          [:div.container-fluid
-          [:div.collapse.navbar-collapse
-           [:ul.navbar-nav.align-items-center.ml-md-auto
-            [:li.nav-item.d-xl-none
-             [:div.pr-3.sidenav-toggler.sidenav-toggler-dark
-              [:div.sidenav-toggler-inner
-               [:i.sidenav-toggler-line]
-               [:i.sidenav-toggler-line]
-               [:i.sidenav-toggler-line]]]]]
-           [:ul.navbar-nav.align-items-center.ml-auto.ml-md-0
-            [:li.nav-item.dropdown
-             [:div.media.align-items-center
-              [:span.avatar.avatar-sm.rounded-circle
-               [:img {:src "../../assets/img/theme/team-4.jpg",}]]
-              [:div.media-body.ml-2.d-none.d-lg-block
-               [:span.mb-0.text-sm.font-weight-bold "John Snow"]]]]]]]]))))
+          [:a.navbar-brand
+           {:href "../../pages/dashboards/dashboard.html"}
+           [:img {:src "../../assets/img/brand/white.png"}]]
+          [:button.navbar-toggler
+           {:aria-label "Toggle navigation",
+            :aria-expanded "false",
+            :aria-controls "navbar-collapse",
+            :data-target "#navbar-collapse",
+            :data-toggle "collapse",
+            :type "button"}
+           [:span.navbar-toggler-icon]]
+          [:div#navbar-collapse.navbar-collapse.navbar-custom-collapse.collapse
+           [:div.navbar-collapse-header
+            [:div.row
+             [:div.col-6.collapse-brand
+              [:a
+               {:href "../../pages/dashboards/dashboard.html"}
+               [:img {:src "../../assets/img/brand/blue.png"}]]]
+             [:div.col-6.collapse-close
+              [:button.navbar-toggler
+               {:aria-label "Toggle navigation",
+                :aria-expanded "false",
+                :aria-controls "navbar-collapse",
+                :data-target "#navbar-collapse",
+                :data-toggle "collapse",
+                :type "button"}
+               [:span]
+               [:span]]]]]
+           [:hr.d-lg-none]
+           [:ul.navbar-nav.align-items-lg-center.ml-lg-auto
+            [:li.nav-item.d-none.d-lg-block.ml-lg-4
+             [:a.btn.btn-neutral.btn-icon
+              [:a.nav-link-inner--text {:href "#/login"} "Авторизация"]]]]]]]))))
