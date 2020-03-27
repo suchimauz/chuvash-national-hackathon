@@ -4,6 +4,8 @@ PGUSER ?= postgres
 PGDATABASE ?= hackathon
 PGPASSWORD ?= jenkins
 
+STORAGEPORT ?= 8990
+
 .EXPORT_ALL_VARIABLES:
 
 #Repl

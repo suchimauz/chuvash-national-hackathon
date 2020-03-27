@@ -15,7 +15,6 @@
 
 (defn authorize
   [{{:keys [email password] :as body} :body db :db/connection :as req}]
-  (clojure.pprint/pprint req)
   (let [user (:resource
               (pg/query-first db
                {:select [:*]

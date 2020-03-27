@@ -11,3 +11,12 @@ services:
       POSTGRES_USER: "${PGUSER}"
       POSTGRES_PASSWORD: "${PGPASSWORD}"
       POSTGRES_DB: "${PGDATABASE}"
+  storage:
+    image: openresty/openresty
+    container_name: hackathon-storage
+    ports:
+      - "${STORAGEPORT}:80"
+    volumes:
+      - "./server/s3/nginx.conf:/etc/openresty/nginx.conf"
+      - "./server/s3/lua:/usr/local/openresty/nginx/conf/lua"
+      - "./server/s3/data:/var/data:rw"
