@@ -2,12 +2,12 @@
   (:require [re-frame.core :as rf]
             [zenform.model :as zf]))
 
-(def ^:const index-page ::index)
+(def index-page ::index)
 
-(def ^:const path [:form ::path])
-(def ^:const schema
+(def path [:form ::path])
+(def schema
   {:type   :form
-   :fields {:login    {:type :string}
+   :fields {:email    {:type :string}
             :password {:type :string}}})
 
 (rf/reg-event-fx
@@ -31,12 +31,12 @@
 (rf/reg-event-fx
  ::send
  (fn [_ [_ value]]
-   {:xhr/fetch {:uri    "/login"
+   {:xhr/fetch {:uri    "/authorize"
                 :method "post"
-                :body   value}}))
+                :body   value
+                :success {:event :zframes.auth/signin-success}}}))
 
-
-(def ^:const register-page ::register)
+(def register-page ::register)
 
 (rf/reg-event-fx
  register-page

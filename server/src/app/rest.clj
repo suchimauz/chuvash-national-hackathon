@@ -18,7 +18,7 @@
                   (wrap-params)
                   (wrap-json-body {:keywords? true})
                   (wrap-json-response)
-                  (wrap-cors)
+                  (middleware/wrap-cors)
                   (middleware/add-db db))]
     (migration/migration db)
     (web/run stack)))

@@ -26,7 +26,6 @@
 
 (def config
   {:base-url     "http://localhost:8080"
-   :redirect_uri "http://localhost:3000"
    :storage-url  "http://localhost:8990"})
 
 (rf/reg-event-fx
@@ -38,22 +37,14 @@
          db     (-> db
                     (merge  {:config config
                              :route-map/routes app.routes/routes})
-                    (assoc-in [:xhr :config] config)
-                    (assoc :theme (:theme storage)))]
+                    (assoc-in [:xhr :config] config))]
      (if auth
-       {:db (assoc-in db [:xhr :config :token] (:access_token auth))
-        :dispatch [::auth/userinfo]
-        :xhr/fetch auth/appinfo-xhr
+       {:db (assoc-in db [:xhr :config :token] (:token auth))
         :route-map/start {}}
-       (if-let [code (get-in location [:query-string :code])]
-         {:db db
-          :route-map/start {}
-          ;:dispatch [::auth/get-token code config]
-          }
-         {:db db
-          :route-map/start {}
-          ;:dispatch [::auth/authorize config]
-          })))))
+       {:db db
+        :dispatch [::auth/authorize]
+        :route-map/start {}}))))
+
 (defn content [page params]
   [:div.bg-white.main-content
    (if page

@@ -30,7 +30,7 @@
            [:div.input-group.input-group-merge.input-group-alternative
             [:div.input-group-prepend
              [:span.input-group-text [:i.ni.ni-email-83]]]
-            [input/input model/path [:login] {:placeholder "Email"}]]]
+            [input/input model/path [:email] {:placeholder "Email"}]]]
           [:div.form-group
            [:div.input-group.input-group-merge.input-group-alternative
             [:div.input-group-prepend

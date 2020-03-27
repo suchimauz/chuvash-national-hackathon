@@ -3,79 +3,21 @@
             [app.helpers :as helpers]
             [clojure.string :as str]))
 
-(def appinfo-xhr
-  {:uri "/AppInfo/get"
-   :req-id :app/info
-   :success {:event ::update-check}})
-
-(rf/reg-event-fx
- ::update-check
- [(rf/inject-cofx :storage/get [:info])]
- (fn [{{:keys [info]} :storage db :db} [_ {data :data}]]
-   (when
-       (and (or (not (get-in info [:nextUpdate :showedModal?]))
-                (not (= (:version info) (:version data))))
-            (get-in data [:nextUpdate :showModal]))
-     {:dispatch [:modal {:title "Внимание!"
-                         :style {:min-width "600px"}
-                         :body [:div
-                                [:div "Сегодня "
-                                 [:b (helpers/date-iso->rus-format
-                                      (get-in data [:nextUpdate :date]))]
-                                 " в "
-                                 [:b (helpers/time*
-                                      (get-in data [:nextUpdate :date]))]
-                                 " запланировано обновление "
-                                 [:b "РМИС 2.0"]
-                                 " в связи с чем просим вас сохранить ваши изменения за 5 минут до обновления, чтобы их не потерять."]
-                                [:br]
-                                [:div
-                                 "Приносим свои извинения за доставленные неудобства!"]]
-                         :cancel {:text "Закрыть"}
-                         :persistent true}]
-      :storage/set {:info (assoc-in data [:nextUpdate :showedModal?] true)}})))
-
-(rf/reg-event-fx
- ::get-token
- (fn [fx [_ code {id :client_id :as config}]]
-   {:json/fetch {:uri "/auth/token"
-                 :method "post"
-                 :body {:client_id  id
-                        :grant_type "authorization_code"
-                        :code code}
-                 :success {:event ::signin-success}
-                 :error   {:event ::signin-error}}}))
-
 (rf/reg-event-fx
  ::signin-success
  [(rf/inject-cofx :storage/get [:redirect])]
  (fn [{storage :storage db :db} [_ {data :data}]]
-   {:dispatch [::userinfo]
-    :db (assoc-in db [:xhr :config :token] (:access_token data))
-    :xhr/fetch appinfo-xhr
-    :zframes.redirect/redirect {:uri (get-in storage [:redirect :uri] "/")}
-    :zframes.redirect/set-query-string {:title "Alkona"
-                                        :group (get-in storage [:redirect :query :group])
-                                        :subject (get-in storage [:redirect :query :subject])}
+   {:db (assoc-in db [:xhr :config :token] (:token data))
     :storage/set {:auth data}
-    :storage/remove [:redirect]}))
+    :zframes.redirect/redirect {:uri "/"}}))
 
 (rf/reg-event-fx
  ::signin-error (fn [fx [_ resp]] (println "SIGNIN ERROR" resp)))
 
 (rf/reg-event-fx
  ::authorize
- [(rf/inject-cofx :window-location)]
- (fn [{location :location} [_ config]]
-   {:zframes.redirect/redirect {:uri "/login"
-                                :params (let [hash (:hash location)
-                                              group (get-in location [:query-string :group])
-                                              subject (get-in location [:query-string :subject])]
-                                          (when-not (or (str/blank? hash) (str/blank? group))
-                                            {:redirect_uri hash
-                                             :redirect_query_group group
-                                             :redirect_query_subject subject}))}}))
-
+ (fn [_ _]
+   {:zframes.redirect/redirect {:uri "/login"}}))
 
 (rf/reg-event-fx
  ::userinfo
