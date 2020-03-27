@@ -12,6 +12,5 @@
    {:component-did-mount #(usage-metrics-chart arg)
     :reagent-render      (fn []
                            [:canvas
-                            {:style {:width "120px"
-                                     :height "120px"}
+                            {:style (:_style arg)
                              :id (str "doughnut_" (:key arg))}])}))
