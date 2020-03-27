@@ -19,6 +19,7 @@
 
             [app.pages.home.core]
             [app.pages.login.core]
+            [app.pages.project.crud.core]
 
             [app.components.navbar.core :as navbar]))
 
