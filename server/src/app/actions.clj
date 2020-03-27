@@ -10,14 +10,13 @@
   (let [result (validator body)]
     (:errors result)))
 
-(defn -get [table {:keys [db params]}]
-  (let [ilike (:ilike params)
-        query {:select [:resource]
+(defn -get [table {:keys [params] db :db/connection}]
+  (let [query {:select [:resource]
                :from   [(:table table)]
-               :where  [:ilike (hsql/raw "resource::text") (str \% ilike \%)]}]
+               :limit  (or (:count params) 100)}]
     (ok (pg/query db query))))
 
-(defn -post [table {:keys [db body]}]
+(defn -post [table {:keys [body] db :db/connection}]
   (let [result (validation body table)]
     (if (empty? (:errors result))
       (let [insert   (pg/create db table {:resource body})
@@ -28,6 +27,6 @@
         (created response))
       (bad-request (:errors result)))))
 
-(defn -delete [table {:keys [db params]}]
+(defn -delete [table {:keys [params] db :db/connection}]
   (let [response (pg/delete db table (:id params))]
     (ok response)))

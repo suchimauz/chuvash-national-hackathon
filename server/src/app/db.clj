@@ -1,7 +1,5 @@
 (ns app.db
-  (:require [clj-pg.pool :as pool]
-            (app.resources
-             [categories :as categories])))
+  (:require [clj-pg.pool :as pool]))
 
 (defonce ds (atom nil))
 

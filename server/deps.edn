@@ -1,8 +1,13 @@
 {:paths ["src"]
  :deps  {org.clojure/clojure    {:mvn/version "RELEASE"}
          metosin/reitit-ring    {:mvn/version "RELEASE"}
+         buddy/buddy-auth       {:mvn/version "2.2.0"}
+         buddy/buddy-hashers    {:mvn/version "1.4.0"}
+         buddy/buddy-sign       {:mvn/version "3.1.0"}
          org.immutant/web       {:mvn/version "RELEASE"}
          ring/ring-json         {:mvn/version "RELEASE"}
+         org.clojure/data.codec {:mvn/version "0.1.1"}
+         ring-cors              {:mvn/version "0.1.13"}
          clj-pg                 {:mvn/version "RELEASE"}
          json-schema            {:mvn/version "RELEASE"}}
  :aliases
