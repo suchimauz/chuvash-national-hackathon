@@ -2,9 +2,12 @@
   (:require [garden.core :as garden]))
 
 (defn styles [& css]
-  (garden/css css))
+  [:style (garden/css css)])
 
-(def ^:const style
+(def style
   (styles
-   [:#app {:height "100%"}
+   [:.app
+    [:.pointer {:cursor :pointer}]
+    [:span
+     [:btn {:cursor :pointer}]]
     [:.separator {:height "100px"}]]))

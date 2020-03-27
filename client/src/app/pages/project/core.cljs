@@ -36,7 +36,8 @@
               [:a.avatar.avatar-xl.rounded-circle
                {:href "#"}
                [:img
-                {:alt "Image placeholder"}]]]
+                {:src "http://localhost:8990/storage/download/test/1.png"
+                 :alt "Image placeholder"}]]]
              [:div.col.ml--2
               [:h4.mb-0 [:a {:href "#!"} "Руководитель проекта Филиппов Е.Ф."]]
               [:p.text-sm.text-muted.mb-0 "министр здравоохранения Краснодарского края "]]]

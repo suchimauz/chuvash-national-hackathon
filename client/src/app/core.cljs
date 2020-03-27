@@ -48,7 +48,7 @@
         :route-map/start {}}))))
 
 (defn content [page params]
-  [:div.bg-white.main-content
+  [:div.app.bg-white.main-content
    (if page
      [page params]
      [:div "Страница не найдена"])])
@@ -60,7 +60,7 @@
       (let [page (get @pages/pages (:match @route))
             params (:params @route)]
         [:<>
-         [:style style/style]
+         style/style
          [navbar/component]
          [content page params]]))))
 

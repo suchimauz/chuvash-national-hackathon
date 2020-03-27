@@ -43,5 +43,5 @@
              (if @auth?
                [:span.btn-danger.btn {:on-click #(rf/dispatch [:zframes.auth/logout])}
                 [:span.nav-link-inner--text "Выход"]]
-               [:a.btn.btn-neutral.btn-icon
-                [:a.nav-link-inner--text {:href "#/login"} "Авторизация"]])]]]]]))))
+               [:a.btn.btn-neutral.btn-icon.pointer {:href "#/login"}
+                [:a.nav-link-inner--text "Авторизация"]])]]]]]))))

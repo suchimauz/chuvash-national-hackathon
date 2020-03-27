@@ -42,7 +42,7 @@
            [:label.custom-control-label
             [:span.text-muted "Запомнить"]]]
           [:div.text-center
-           [:button.btn.btn-primary.my-4
+           [:span.btn.btn-primary.my-4.pointer
             {:on-click #(rf/dispatch [::model/eval {:success {:event ::model/send}}])}
             "Войти"]]]]]]]]]))
 
