@@ -7,6 +7,4 @@
 (def ^:const style
   (styles
    [:#app {:height "100%"}
-    [:.container-fluid {:padding-left  "17rem"
-                        :padding-right "17rem"}]
     [:.separator {:height "100px"}]]))

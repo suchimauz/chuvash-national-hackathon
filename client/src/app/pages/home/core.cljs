@@ -25,15 +25,8 @@
        [:div.my-4.border-bottom.py-2
         [:h3.display-3 "Национальные проекты"]]
        [:div.row
-        [:div.col-xl-6.col-md-6
-         [card/component]]
-        [:div.col-xl-6.col-md-6
-         [card/component]]
-        [:div.col-xl-6.col-md-6
-         [card/component]]
-        [:div.col-xl-6.col-md-6
-         [card/component]]
-        [:div.col-xl-6.col-md-6
-         [card/component]]
-        [:div.col-xl-6.col-md-6
-         [card/component]]]]])))
+        (map-indexed
+         (fn [idx item] ^{:key idx}
+           [:div.col-xl-6.col-md-6
+            [card/component {:href (str "#/project/" idx)}]])
+         (range 6))]]])))

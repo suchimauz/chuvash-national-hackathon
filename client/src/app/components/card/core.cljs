@@ -1,7 +1,7 @@
 (ns app.components.card.core)
 
-(defn component []
-  [:div.card.card-stats
+(defn component [{:keys [href]}]
+  [:a.card.card-stats {:href href}
    [:div.card-body
     [:div.row
      [:div.col

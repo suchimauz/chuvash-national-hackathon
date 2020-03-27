@@ -9,7 +9,7 @@
         [:nav.navbar.navbar-horizontal.navbar-transparent.navbar-main.navbar-expand-lg.navbar-light
          [:div.container-fluid
           [:a.navbar-brand
-           {:href "../../pages/dashboards/dashboard.html"}
+           {:href "#/home"}
            [:img {:src "../../assets/img/brand/white.png"}]]
           [:button.navbar-toggler
            {:aria-label "Toggle navigation",
