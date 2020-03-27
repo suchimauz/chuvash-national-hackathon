@@ -1,3 +1,11 @@
+PGPORT ?= 5441
+PGHOST ?= localhost
+PGUSER ?= postgres
+PGDATABASE ?= hackathon
+PGPASSWORD ?= jenkins
+
+.EXPORT_ALL_VARIABLES:
+
 #Repl
 ui-repl:
 	cd client && rm -rf .cpcache/ && clj -A:dev:nrepl
@@ -13,3 +21,8 @@ ui-build:
 #Run
 back-run:
 	cd server && clj -m app.rest
+
+db-up:
+	docker-compose up -d
+db-down:
+	docker-compose down
