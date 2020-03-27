@@ -10,20 +10,35 @@
    [:<>
     [:div.header.bg-gradient-primary.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
      [:div.container-fluid.d-flex.align-items-center
-      [:div.row
-       [:div.col-lg-7.col-md-10
-        [:h1.display-2.text-white "Hello Jesse"]
-        [:p.text-white.mt-0.mb-5
-         "This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks"]]]]
+      [:div.col-lg-7.col-md-10
+       [:h1.display-4.text-white "Национальные проекты"]
+       [:h1.display-2.text-white "Здравоохранение"]]]
      [:div.container-fluid
       [:div.row.align-items-center.py-4
        [:div.col-lg-6.col-7
         [breadcrumb/component]]
        [:div.col-lg-6.col-5.text-right
-        [:a.btn.btn.btn-neutral {:href "#"} "Редактировать"]]]]
-     ]
+        [:a.btn.btn.btn-neutral {:href "#"} "Редактировать"]]]]]
 
     [:div.container
+     [:div.my-4.border-bottom.py-2
+      [:h3.display-3 "Региональные проекты"]]
+     (map-indexed
+      (fn [idx item]^{:key idx}
+        [:div.card
+         [:div.card-header [:h5.h3.mb-0 "Развитие экспорта медицинских услуг"]]
+         [:div.card-body
+          [:div.card-body
+           [:div.row.align-items-center
+            [:div.col-auto
+             [:a.avatar.avatar-xl.rounded-circle
+              {:href "#"}
+              [:img
+               {:alt "Image placeholder"}]]]
+            [:div.col.ml--2
+             [:h4.mb-0 [:a {:href "#!"} "Руководитель проекта Филиппов Е.Ф."]]
+             [:p.text-sm.text-muted.mb-0 "министр здравоохранения Краснодарского края "]]]]]])
+      (range 3))
 
-     [:h1 "!@3"]]
+     ]
     ]))
