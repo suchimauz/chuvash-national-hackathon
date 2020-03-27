@@ -46,12 +46,14 @@
        (if-let [code (get-in location [:query-string :code])]
          {:db db
           :route-map/start {}
-          :dispatch [::auth/get-token code config]}
+          ;:dispatch [::auth/get-token code config]
+          }
          {:db db
           :route-map/start {}
-          :dispatch [::auth/authorize config]})))))
+          ;:dispatch [::auth/authorize config]
+          })))))
 (defn content [page params]
-  [:div.bg-default.main-content
+  [:div.bg-white.main-content
    (if page
      [page params]
      [:div "Страница не найдена"])])
