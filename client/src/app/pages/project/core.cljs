@@ -53,11 +53,12 @@
         ;; exception - :href is not ISeqable
         ]
        [:div.col-lg-6.col-5.text-right
-        [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/create")} "Создать региональный проект"]]]]]
+        [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/edit")} "Редактировать"]]]]]
 
     [:div.container
-     [:div.my-4.border-bottom.py-2
-      [:h3.display-3 "Региональные проекты"]]
+     [:div.row.align-items-center.py-4.justify-content-between
+      [:h3.display-3 "Региональные проекты"]
+      [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/create")} "Создать региональный проект"]]
      (map-indexed
       (fn [idx item]^{:key idx}
         [:div.card

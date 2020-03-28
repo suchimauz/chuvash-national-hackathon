@@ -4,6 +4,7 @@
             [app.pages.project.crud.model :as model]
             [app.pages.project.crud.form :as form]
             [app.pages.project.crud.file :as file]
+            [clojure.string :as str]
             [app.form.inputs :as inputs]))
 
 (defn form []
@@ -42,7 +43,7 @@
                 {:lang "en", :type "file"
                  :on-change #(rf/dispatch [::file/upload (-> % .-target .-files array-seq first)])}]
                [:input.form-control.custom-file-label
-                {:placeholder "Укажите фон"}]]]
+                {:placeholder (or (last (str/split @img #"/")) "Укажите фон")}]]]
              [:div.col-1
               [:img.avatar {:src (str "http://localhost:8990" @img)}]]]]]]]]])))
 
