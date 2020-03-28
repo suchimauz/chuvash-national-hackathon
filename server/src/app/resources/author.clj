@@ -4,7 +4,7 @@
 
 (def table
   (u/new-table
-   :Project
+   :Author
    {:type       "object"
     :properties {:name     {:type  :array
                             :items {:type       :object
