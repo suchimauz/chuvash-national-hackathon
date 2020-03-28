@@ -7,15 +7,18 @@
 
 (page/reg-subs-page
  model/show-page
- (fn [{:keys [regionals] {:keys [name]} :national :as page} {:keys [id]}]
+ (fn [{:keys [regionals] {:keys [name img]} :national :as page} {:keys [id]}]
    [:<>
-    [:div.header.bg-gradient-primary.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
+    [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
+     {:style {:background-image (str "url(http://localhost:8990" img ")")}}
+     [:span.mask.bg-gradient-default.opacity-8]
      [:div.container-fluid.d-flex.align-items-center
       [:div.col-lg-7.col-md-9
        [:h1.display-4.text-white "Национальный проект"]
        [:h1.display-2.text-white name]]
       [:div.row
        [:div.card-body.px-lg-7
+        {:style {:z-index "100"}}
         [doughnut/component {:key     "123"
                              :type    "doughnut"
                              :_style  {:width  "220px"

@@ -3,12 +3,14 @@
             [re-frame.core :as rf]
             [app.pages.project.crud.model :as model]
             [app.pages.project.crud.form :as form]
+            [app.pages.project.crud.file :as file]
             [app.form.inputs :as inputs]))
 
 (defn form []
-  (let [category (rf/subscribe [:zf/get-value form/path [:category]])]
+  (let [category (rf/subscribe [:zf/get-value form/path [:category]])
+        img      (rf/subscribe [:zf/get-value form/path [:img]])]
     (fn []
-      [:div.container.mt--8.pb-5
+      [:div.container.mt--8
        [:div.row.justify-content-center
         [:div.col
          [:div.card
@@ -32,7 +34,17 @@
             [:div.form-group
              [:label.form-control-label
               "Описание"]
-             [inputs/textarea form/path [:description] {:placeholder "Введите описание проекта"}]]]]]]]])))
+             [inputs/textarea form/path [:description] {:placeholder "Введите описание проекта"}]]
+            [:div.row
+             [:div.col
+              [:div.custom-file
+               [:input#customFileLang.custom-file-input
+                {:lang "en", :type "file"
+                 :on-change #(rf/dispatch [::file/upload (-> % .-target .-files array-seq first)])}]
+               [:input.form-control.custom-file-label
+                {:placeholder "Укажите фон"}]]]
+             [:div.col-1
+              [:img.avatar {:src (str "http://localhost:8990" @img)}]]]]]]]]])))
 
 (defn header [{:keys [header]}]
   [:div.header.bg-gradient-primary.py-8.py-lg-8.pt-lg-9
@@ -50,7 +62,7 @@
    [:<>
     [header page]
     [form]
-    [:div.card-body
+    [:div.container.card-body
      [:span.pointer.btn.btn-success
       {:on-click #(rf/dispatch [::model/create-request])}
       "Сохранить"]
