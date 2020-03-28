@@ -38,6 +38,31 @@
       :dispatch [:zf/form-set-value form-path path :status :loaded]})))
 
 (rf/reg-event-fx
+ ::search-event
+ (fn [_ [_ & [{:keys [form-path path q]}]]]
+   {:xhr/fetch {:uri "/Event"
+                :success {:event ::event-loaded
+                          :params {:path path
+                                   :form-path form-path}}}
+    :dispatch [:zf/form-set-value form-path path :status :loading]}))
+
+(rf/reg-event-fx
+ ::event-loaded
+ (fn [{db :db} [_ {data :data} {:keys [form-path path]}]]
+   (let [items (map
+                (fn [item]
+                  {:value {:id (:id item)
+                           :display (:name item)
+                           :resourceType (:resourceType item)}
+                   :display [:div.align-items-center
+                             [:div.ml--2
+                              [:h4.mb-0 (:name item)]]]})
+                data)]
+     {:db (assoc-in db (conj (into form-path (zf/get-node-path path)) :items) items)
+      :dispatch [:zf/form-set-value form-path path :status :loaded]})))
+
+
+(rf/reg-event-fx
  ::subjects-loaded
  (fn [{db :db} [_ {data :data} {:keys [form-path path]}]]
    (let [items (map
