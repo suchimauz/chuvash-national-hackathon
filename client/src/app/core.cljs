@@ -36,17 +36,20 @@
 (rf/reg-event-fx
  ::initialize
  [(rf/inject-cofx :storage/get [:auth])
+  (rf/inject-cofx :storage/get [:subs])
   (rf/inject-cofx :window-location)]
  (fn [{storage :storage location :location db :db} _]
-   (let [auth   (:auth storage)
-         db     (-> db
-                    (merge  {:config config
-                             :route-map/routes app.routes/routes})
-                    (assoc-in [:xhr :config] config))]
+   (let [auth (:auth storage)
+         db   (-> db
+                  (merge  {:config           config
+                           :route-map/routes app.routes/routes})
+                  (assoc-in [:xhr :config] config))]
      (if auth
-       {:db (assoc-in db [:xhr :config :token] (:token auth))
+       {:db              (-> db
+                             (assoc  :subs (:subs storage))
+                             (assoc-in  [:xhr :config :token] (:token auth)))
         :route-map/start {}}
-       {:db db
+       {:db              db
         :route-map/start {}}))))
 
 (defn content [page params]

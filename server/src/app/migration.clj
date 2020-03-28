@@ -9,6 +9,7 @@
              [user :as user]
              [object :as object]
              [event :as event]
+             [subscriber :as subscriber]
              [project :as project]
              [author :as author])))
 
@@ -33,6 +34,7 @@
   (migrate db project/table)
   (migrate db event/table)
   (migrate db object/table)
+  (migrate db subscriber/table)
   (migrate db author/table))
 
 (comment

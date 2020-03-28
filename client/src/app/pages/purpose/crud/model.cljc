@@ -16,7 +16,7 @@
 (rf/reg-sub
  create-page
  (fn [_]
-   {:text "123"}))
+   {:header "Создание показателя"}))
 
 (rf/reg-event-fx
  ::create-resource
@@ -52,7 +52,7 @@
 (rf/reg-sub
  edit-page
  (fn [_]
-   {:text "123"}))
+   {:header "Редактирование показателя"}))
 
 (rf/reg-event-fx
  ::delete

@@ -4,11 +4,13 @@
             [app.auth :as auth]
             (app.resources
              [purpose :as purpose]
+             [subscriber :as subscriber]
              [object :as object]
              [user :as user]
              [event :as event]
              [project :as project]
              [author :as author])))
+
 
 (def handler
   (reitit/ring-handler
@@ -40,5 +42,7 @@
      ["/Object/:id" {:get    {:handler (partial action/-get object/table)}
                      :put    {:handler (partial action/-put object/table)}
                      :delete {:handler (partial action/-delete object/table)}}]
+     ["/Subscriber" {:post {:handler (partial action/-post subscriber/table)}}]
+     ["/Subscriber/:id" {:delete {:handler (partial action/-delete object/table)}}]
      ["/authorize" {:post {:handler (fn [req] (auth/authorize req))}}]])
    (constantly {:status 404, :body {:error {:message "Route not found"}}})))

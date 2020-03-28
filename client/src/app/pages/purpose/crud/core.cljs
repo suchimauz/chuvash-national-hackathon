@@ -58,7 +58,7 @@
 (pages/reg-subs-page
  model/create-page
  (fn [page params]
-   [:div.container
+   [:<>
     [header page]
     [form]
     [buttons params]]))

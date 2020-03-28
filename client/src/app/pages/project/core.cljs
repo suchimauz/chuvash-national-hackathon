@@ -4,6 +4,7 @@
             [app.helpers :as h]
             [app.pages.project.model :as model]
             [app.components.chart.doughnut :as doughnut]
+            [app.components.mail.core     :as mail]
             [app.components.breadcrumb.core :as breadcrumb]))
 
 (page/reg-subs-page
@@ -114,7 +115,9 @@
        (let [period (:period project)]
          [:b.text-warning.mt-0.mb-5 (:start period) " - " (:end period)])]]
      [:div.container-fluid.d-flex.justify-content-end
-      [:div.align-items-end.py-4
+      [:div.align-items-end.py-4.row
+       [:div.col-lg-6.col-5.text-right
+        [mail/button {:id reg-id :resourceType "Project"}]]
        (when auth?
          [:div.col-lg-6.col-5.text-right
           [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" reg-id "/edit")} "Редактировать"]])]]]
