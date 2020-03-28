@@ -11,7 +11,7 @@
          [:div.container-fluid
           [:a.navbar-brand
            {:href "#/home"}
-           [:img {:src "../../assets/img/brand/white.png"}]]
+           [:img {:src "img/logo.png" :style {:height "60px" :weight "100px"}}]]
           [:button.navbar-toggler
            {:aria-label "Toggle navigation",
             :aria-expanded "false",
@@ -26,7 +26,7 @@
              [:div.col-6.collapse-brand
               [:a
                {:href "../../pages/dashboards/dashboard.html"}
-               [:img {:src "../../assets/img/brand/blue.png"}]]]
+               [:img {:src "../../../../resources/public/img/logo.png"}]]]
              [:div.col-6.collapse-close
               [:button.navbar-toggler
                {:aria-label "Toggle navigation",
