@@ -1,6 +1,5 @@
 (ns app.components.breadcrumb.core)
 
-
 (defn component []
   [:nav.d-none.d-md-inline-block.ml-md-4
    [:ol.breadcrumb.breadcrumb-links.breadcrumb-dark

@@ -48,7 +48,7 @@
          [:div.form-group
           [:label.form-control-label
            "Описание"]
-          [inputs/input form/path [:description] {:placeholder "Введите название"}]]]
+          [inputs/textarea form/path [:description] {:placeholder "Введите описание проекта"}]]]
         buttons]]]]]])
 
 (pages/reg-subs-page
