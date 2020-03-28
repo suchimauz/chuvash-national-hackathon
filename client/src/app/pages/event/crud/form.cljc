@@ -16,6 +16,18 @@
                                    :end   {:type :string}}}
             :amount      {:type :string}}})
 
+(def object-path [:form ::object])
+(def object
+  {:type   :form
+   :fields {:name   {:type :string}
+            :address {:type   :form
+                      :fields {:distinct   {:type :string}
+                               :city       {:type :string}
+                               :street     {:type :string}
+                               :house      {:type :string}
+                               :appartment {:type :string}}}
+            :event  {:type          :object}}})
+
 (rf/reg-event-fx
  ::init
  (fn [coeff [_ {:keys [data]}]]
@@ -30,4 +42,13 @@
      (if (empty? errors)
        (cb value)
        #?(:clj (println errors)
+          :cljs (.warn js/console "Form errors: " (clj->js errors)))))))
+
+(defn eval-object [db cb]
+  (let [{:keys [errors value form]} (-> db (get-in object-path) zf/eval-form )]
+    (merge
+     {:db (assoc-in db object-path form)
+      :zf/add-collection-item}
+     (when (empty? errors)
+       #?(:clj  (println errors)
           :cljs (.warn js/console "Form errors: " (clj->js errors)))))))

@@ -86,3 +86,12 @@
  (fn [_ [_ _ uri]]
    {:zframes.redirect/redirect uri
     :flash/flash [:success {:msg "Мероприятие успешно удалено" :title "Успешно!"}]}))
+
+(rf/reg-event-fx
+ ::create-object
+ (fn [{db :db} _]
+   (form/eval-object db
+                     (fn [value]
+                       {:xhr/fetch {:uri    "/Object"
+                                    :method :POST
+                                    :body   value}}))))

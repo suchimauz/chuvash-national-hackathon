@@ -16,6 +16,44 @@
     [:svg {:viewBox "0 0 10 100" :y "0" :x "0"}
      [:polygon.fill-white {:points "2560 0 2560 100 0 100"}]]]])
 
+
+(defn modal-author []
+  [:modal {:style  {:max-width "800px"}
+           :body   (fn []
+                   [:div.container
+                    [:form
+                     [:div.form-group
+                      [:label.form-control-label
+                       "Название объекта"]
+                      [inputs/input form/object-path [:name]]]
+                     [:div.form-group
+                      [:label.form-control-label
+                       "Район"]
+                      [inputs/input form/object-path [:address :distinct]]]
+                     [:div.row
+                      [:div.form-group.col
+                       [:label.form-control-label
+                        "Город"]
+                       [inputs/input form/object-path [:address :city]]]
+                      [:div.form-group.col
+                       [:label.form-control-label
+                        "Улица"]
+                       [inputs/input form/object-path [:address :street]]]]
+                     [:div.row
+                      [:div.form-group.col
+                       [:label.form-control-label
+                        "Дом"]
+                       [inputs/input form/object-path [:address :house]]]
+                      [:div.form-group.col
+                       [:label.form-control-label
+                        "Квартира"]
+                       [inputs/input form/object-path [:address :appartment]]]]]])
+           :title  "Создание автора"
+           :accept {:text "Сохранить"
+                    :fn   (fn []
+                          (rf/dispatch [::model/create-object]))}}])
+
+
 (defn form []
   (fn []
     [:div.container.mt--8
@@ -28,6 +66,21 @@
            [:label.form-control-label
             "Название"]
            [inputs/input form/path [:name] {:placeholder "Введите название"}]]
+
+          [:div.row
+           [:div.form-group.col
+            [:label.form-control-label "Обьекты"]]
+           [:div.form-group.col-auto
+            [:label.form-control-label.pt-3 ""]
+            [:div.pt-1.text-primary.pointer
+             [:span.mega-octicon.octicon-plus
+              {:on-click #(do
+                            (rf/dispatch [:zf/init form/object-path form/object])
+                            (rf/dispatch (modal-author)))}]]]]
+
+          [:div.form-group
+           [:label.form-control-label "Цель"]
+           [inputs/combobox form/path [:purpose]]]
           [:div.form-group
            [:label.form-control-label
             "Описание"]
