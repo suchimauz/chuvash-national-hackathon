@@ -128,7 +128,7 @@
                                404 [:div "Не верный адрес запроса"]
                                422 [:div "Не валидный запрос"]
                                [:div "Неопознанная ошибка"])]
-                      :title [:div "Ошибка: " [:b (.-status resp)] " " (.-statusText resp)]}]))
+                      :title [:div "Ошибка: " [:b (.-status err)] " " (.-statusText err)]}]))
                  (rf/dispatch [(:event error) (merge error {:request opts :error err})])))))))
 
 (rf/reg-event-fx
