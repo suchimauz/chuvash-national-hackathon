@@ -7,51 +7,66 @@
             [app.form.inputs :as inputs]
             [clojure.string :as str]))
 
+(defn header [{:keys [header]}]
+  [:div.header.bg-gradient-primary.py-8.py-lg-8.pt-lg-9
+   [:div.container.d-flex.align-items-center
+    [:div.row
+     [:div.col
+      [:h1.display-2.text-white header]]]]
+   [:div.separator.separator-bottom.separator-skew.zindex-100
+    [:svg {:viewBox "0 0 10 100" :y "0" :x "0"}
+     [:polygon.fill-white {:points "2560 0 2560 100 0 100"}]]]])
+
 (defn form []
   (let [indic (rf/subscribe [:zf/collection-indexes form/path [:indicators]])]
     (fn []
-      [:div.card
-       [:div.card-header [:h2.mb-0 "Форма создания цели"]]
-       [:div.card-body
-        [:form
-         [:div.form-group
-          [:label.form-control-label "Название"]
-          [inputs/input form/path [:name] {:placeholder "Введите название"}]]
-         [:div.border-left
-          (map
-           (fn [idx]
-             [:div.row.pl-3
-              [:div.form-group.col
-               [:label.form-control-label "Год"]
-               [inputs/input form/path [:indicators idx :year]]]
-              [:div.form-group.col
-               [:label.form-control-label "Текущее значение"]
-               [inputs/input form/path [:indicators idx :current]]]
-              [:div.form-group.col
-               [:label.form-control-label "Планируемое"]
-               [inputs/input form/path [:indicators idx :planning]]]])
-           @indic)
-          [:div.form-group.col-auto.d-flex.justify-content-center
-           [:div.pt-1.text-primary.pointer
-            [:span.mega-octicon.octicon-plus
-             {:on-click #(rf/dispatch [:zf/add-collection-item form/path [:indicators]])}]]]]]]])))
+      [:div.container.mt--8
+       [:div.row.justify-content-center
+        [:div.col
+         [:div.card
+          [:div.card-header [:h2.mb-0 "Форма создания цели"]]
+          [:div.card-body
+           [:form
+            [:div.form-group
+             [:label.form-control-label "Название"]
+             [inputs/input form/path [:name] {:placeholder "Введите название"}]]
+            [:div.border-left
+             (map
+              (fn [idx]
+                [:div.row.pl-3
+                 [:div.form-group.col
+                  [:label.form-control-label "Год"]
+                  [inputs/input form/path [:indicators idx :year]]]
+                 [:div.form-group.col
+                  [:label.form-control-label "Текущее значение"]
+                  [inputs/input form/path [:indicators idx :current]]]
+                 [:div.form-group.col
+                  [:label.form-control-label "Планируемое"]
+                  [inputs/input form/path [:indicators idx :planning]]]])
+              @indic)
+             [:div.form-group.col-auto.d-flex.justify-content-center
+              [:div.pt-1.text-primary.pointer
+               [:span.mega-octicon.octicon-plus
+                {:on-click #(rf/dispatch [:zf/add-collection-item form/path [:indicators]])}]]]]]]]]]])))
 
-(def buttons
-  [:div.card-body
-   [:button.btn.btn-success {:on-click #(rf/dispatch [::model/create-resource])} "Сохранить"]
-   [:button.btn.btn-secondary  "Отменить"]
-   [:button.btn.btn-outline-danger {:type "button"} "Удалить"]])
+(defn buttons [{:keys [id reg-id] :as params}]
+  [:div.card-body.container
+   [:button.btn.btn-primary.btn-lg {:on-click #(rf/dispatch [::model/create-resource])} "Сохранить"]
+   [:a.btn.btn-secondary.btn-lg {:href (helpers/href "project" id "regional" reg-id)}  "Отменить"]
+   [:button.btn.text-danger {:on-click #(rf/dispatch [::model/delete params])} "Удалить"]])
 
 (pages/reg-subs-page
  model/create-page
- (fn []
+ (fn [page params]
    [:div.container
+    [header page]
     [form]
-    buttons]))
+    [buttons params]]))
 
 (pages/reg-subs-page
  model/edit-page
- (fn []
-   [:div.container
+ (fn [page param]
+   [:<>
+    [header page]
     [form]
-    buttons]))
+    [buttons param]]))

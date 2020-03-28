@@ -16,7 +16,7 @@
 
 (rf/reg-event-fx
  ::init
- (fn [_ [_ {project :data} {:keys [purpose]}]]
+ (fn [_ [_ {project :data} {purpose :data}]]
    (if project
      {:dispatch-n [[:zf/init path schema {:project {:id           (:id project)
                                                     :display      (:name project)

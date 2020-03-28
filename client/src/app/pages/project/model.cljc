@@ -26,8 +26,6 @@
                   {:uri "/Project"
                    :params {:.project.id id}
                    :req-id ::show-regional}]}
-     :deinit
-     {:db (dissoc db pid)}
      nil)))
 
 (rf/reg-sub
@@ -35,7 +33,7 @@
  :<- [:xhr/response show-page]
  :<- [:xhr/response ::show-regional]
  (fn [[{national :data} {regionals :data}] _]
-   {:national national
+   {:national  national
     :regionals regionals}))
 
 (def show-regional ::regional)

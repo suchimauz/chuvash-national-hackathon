@@ -120,37 +120,46 @@
           [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" reg-id "/edit")} "Редактировать"]])]]]
     [:div.container
      [:div
-      [:div.card-header.bg-transparent [:h3.mb-0 "Показатели"]]
-      [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/purpose/create")} "Добавить показатель"]
+      [:div.card-header.bg-transparent.row.align-items-center
+       {:style {:justify-content :space-between}}
+       [:h3.mb-0 "Показатели"]
+       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/purpose/create")} "Добавить показатель"]]
       [:div.card-body
 
        [:div.timeline.timeline-one-side
         (map-indexed
          (fn [idx item] ^{:key idx}
            [:div.timeline-block
-
-            [:span.timeline-step.badge-success [:i.ni.ni-bell-55]]
+            [:span.timeline-step.badge-success
+             [:i.ni.ni-bell-55]]
             [:div.timeline-content {:style {:max-width "100%"}}
-             [:h3.text-muted.font-weight-bold (:name item)]
+             [:h3.font-weight-bold.pb-3 (:name item)]
              (map-indexed
               (fn [idxx ind] ^{:key idxx}
                 (let [cur  (h/parseInt (:current ind))
                       plan (h/parseInt (:planning ind))
-                      proc (str (* (/ cur plan) 100) "%")]
+                      proc (str (* (/ cur plan) 100.0) "%")
+                      completed? (= cur plan)]
                   [:div.row.pb-5 {:style {:height "90px"}}
                    [:div.col-xl-3.col-md-6 [:h4.display-4.p-0.m-0 (:year ind)]]
                    [:div.position-relative.w-100.col-xl.col-md-6
-                    [:div.progress-bar.bg-orange.position-absolute.rounded.align-items-end
-                     {:style {:width   proc
+                    [:div.progress-bar.position-absolute.rounded.align-items-end
+                     {:class (if completed? "bg-success" "bg-orange")
+                      :style {:width   proc
                               :z-index "10"
                               :height  "100%"}}
-                     [:h4.text-dark.pr-3 {:style {:z-index "20"}} cur]]
+                     (when-not completed?
+                       [:h4.m-0.text-dark.pr-3 {:style {:z-index "20"}} cur])]
                     [:div.progress-bar.bg-light.position-absolute.rounded.align-items-end
                      {:style {:width  "100%"
                               :height "100%"}}
                      [:h4.m-0.pr-3 {:style {:z-index "20"}} plan]]]]))
-              (:indicators item))]])
-         purposes)]]]
+              (:indicators item))]
+            [:div.d-flex.justify-content-end
+             [:a.font-weight-bold.p-0.text-muted
+              {:href (h/href "project" id "regional" reg-id "purpose" (:id item) "edit")} "Редактировать"]]])
+         purposes)]
+       ]]
      [:div
       [:div.card-header.bg-transparent.row.align-items-center
        {:style {:justify-content :space-between}}
@@ -160,7 +169,7 @@
        (map-indexed
         (fn [idx item] ^{:key idx}
           [:div.list-group-item.list-group-item-action.pointer
-           {:style {:width "100%"}
+           {:style    {:width "100%"}
             :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" (:id item))}])}
            [:small.text-muted.font-weight-bold (:date item)]
            [:h5.mt-3.mb-0 (:name item)]])
