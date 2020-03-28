@@ -47,8 +47,7 @@
 (defn eval-object [db cb]
   (let [{:keys [errors value form]} (-> db (get-in object-path) zf/eval-form )]
     (merge
-     {:db (assoc-in db object-path form)
-      :zf/add-collection-item}
+     {:db (assoc-in db object-path form)}
      (when (empty? errors)
        #?(:clj  (println errors)
           :cljs (.warn js/console "Form errors: " (clj->js errors)))))))
