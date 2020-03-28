@@ -133,7 +133,7 @@
             [:span.timeline-step.badge-success
              [:i.ni.ni-bell-55]]
             [:div.timeline-content {:style {:max-width "100%"}}
-             [:h3.font-weight-bold.pb-3 (:name item)]
+             [:h3.display-6.font-weight-bold.pb-3 (:name item)]
              (map-indexed
               (fn [idxx ind] ^{:key idxx}
                 (let [cur  (h/parseInt (:current ind))
