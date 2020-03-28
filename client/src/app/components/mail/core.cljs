@@ -9,6 +9,13 @@
                (= resourceType (:resourceType item))))
         resources))
 
+
+(defn unsign [{:keys [id resourceType]} resources]
+  (remove (fn [item]
+            (and (= id (:id item))
+                 (= resourceType (:resourceType item))))
+          resources))
+
 (defn modal [resource]
   [:modal {:style {:max-width "500px"}
            :body  (let [mail (r/atom "")]
@@ -33,24 +40,25 @@
                   :method "POST"
                   :body   {:mail     mail
                            :resource resource}}
-    :storage/set {:subs {:mail      mail
-                         :resources (conj (:resources storage) resource)}}
+    :storage/set {:mail     mail
+                  :subs-res (conj (:subs-res storage) resource)}
     :dispatch    [:modal nil]
     :flash/flash [:success {:msg "Вы успешно подписались на обновления" :title "Успешно!"}]}))
 
 
 (rf/reg-event-fx
  ::un-sign
- (fn [{db :db} [_ resource]]
+ [(rf/inject-cofx :storage/get [:subs])]
+ (fn [{storage :storage db :db} [_ {:keys [id resourceType] :as res}]]
    (let [mail (get-in db [:subs :mail])]
-     {:db             (-> db (dissoc :subs))
-      :storage/remove [:subs]
-      :xhr/fetch      {:uri    "/Subscriber"
-                       :method "DELETE"
-                       :params {:mail         mail
-                                :id           (:id resource)
-                                :resourceType (:resourceType resource)}}
-      :flash/info     [:success {:msg "Вы успешно отписались на обновления" :title "Успешно!"}]})))
+     {:db          (-> db (update-in [:subs :resources] unsign))
+      :storage/set {:subs-res (unsign res (get storage [:subs-res]))}
+      :xhr/fetch   {:uri    "/Subscriber"
+                    :method "DELETE"
+                    :params {:mail         mail
+                             :id           id
+                             :resourceType resourceType}}
+      :flash/info  [:success {:msg "Вы успешно отписались на обновления" :title "Успешно!"}]})))
 
 (rf/reg-event-fx
  ::sign

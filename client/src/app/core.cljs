@@ -36,7 +36,8 @@
 (rf/reg-event-fx
  ::initialize
  [(rf/inject-cofx :storage/get [:auth])
-  (rf/inject-cofx :storage/get [:subs])
+  (rf/inject-cofx :storage/get [:subs-res])
+  (rf/inject-cofx :storage/get [:mail])
   (rf/inject-cofx :window-location)]
  (fn [{storage :storage location :location db :db} _]
    (let [auth (:auth storage)
@@ -46,7 +47,8 @@
                   (assoc-in [:xhr :config] config))]
      (if auth
        {:db              (-> db
-                             (assoc  :subs (:subs storage))
+                             (assoc-in [:subs :resources] (:subs-res storage))
+                             (assoc-in [:subs :mail] (:mail storage))
                              (assoc-in  [:xhr :config :token] (:token auth)))
         :route-map/start {}}
        {:db              db
