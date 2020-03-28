@@ -104,35 +104,15 @@
                                      (rf/dispatch [::auth/logout-done @db/app-db {}])
                                      [:flash/danger
                                       {:msg  [:div
-                                              [:div "Ошибка: " [:b (.-status resp)] " " (.-statusText resp)]
+                                              (case (.-status resp)
+                                                404 [:div "Не верный адрес запроса " url]
+                                                409 [:div "Конфликт с текущим состоянием сервера"]
+                                                422 [:div "Не валидный запрос"]
+                                                nil)
                                               (if-let [msg (:message data)]
-                                                [:div msg]
-                                                (case (.-status resp)
-                                                  404 [:div "Не верный адрес запроса " url]
-                                                  409 [:div "Конфликт с текущим состоянием сервера"]
-                                                  422 [:div "Не валидный запрос"]
-                                                  nil))
-                                              (when (and (not (empty? errors)) (= 422 (.-status resp)))
-                                                [:ul (for [e errors] ^{:key e} [:li e])])
-                                              [:div
-                                               [:div.btn-sm.btn.mt-2.btn-outline-secondary.btn-block
-                                                {:title "Отправить отчет об ошибке"
-                                                 :on-click (fn [e]
-                                                             (rf/dispatch
-                                                              [:xhr/error-report
-                                                               {:msg (str "------------------------------\n"
-                                                                          "<b>Error report:</b> Status " (.-status resp) "\n"
-                                                                          "<b>Instance:</b> " base-url "\n"
-                                                                          "<b>Screen:</b> " screen "\n"
-                                                                          "<b>Req url:</b> " url "\n"
-                                                                          "<b>Correlation-id:</b> " x-correlation-id "\n"
-                                                                          "<pre><code>"
-                                                                          (let [s (with-out-str (println data))]
-                                                                            (str/replace (.stringify js/JSON (clj->js data)) #"<" "меньше"))
-                                                                          "</code></pre>")}]))}
-                                                "Сообщить об ошибке"]]
-
-                                              ]}]))))]
+                                                [:div msg])]
+                                       :title [:div "Ошибка: " [:b (.-status resp)] " " (.-statusText resp)]
+                                       }]))))]
                             (mapv #(when % (rf/dispatch %))))))
                    ;; No json
                    (fn [doc]

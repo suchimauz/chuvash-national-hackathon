@@ -6,7 +6,7 @@
 
 (defn ok          [response] {:status 200 :body response})
 (defn created     [response] {:status 201 :body response})
-(defn bad-request [response] {:status 522 :body {:errors {:message "Unprocessable Entity"
+(defn bad-request [response] {:status 422 :body {:errors {:message "Unprocessable Entity"
                                                           :detail response}}})
 (defn res-not-found [id] {:status 404 :body {:errors {:message (str "Resource id = " id " not found")}}})
 

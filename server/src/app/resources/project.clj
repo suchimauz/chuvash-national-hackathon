@@ -8,10 +8,10 @@
    {:type       "object"
     :properties {:category    {:type :string
                                :enum ["national" "regional"]}
-                 :author      {:type :string}
+                 :author      (u/reference-type "Author")
                  :name        {:type :string :required true}
                  :description {:type :string}
-                 :project     {:type :string}
+                 :project     (u/reference-type "Project")
                  :img         {:type :string}
                  :period      {:type       :object
                                :properties {:start {:type :string}

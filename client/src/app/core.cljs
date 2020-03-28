@@ -12,6 +12,7 @@
             [zframes.storage]
             [zframes.auth :as auth]
             [zframes.window-location]
+            [zframes.flash :as flashes]
 
             [app.routes      :as routes]
             [app.pages.model :as pages]
@@ -44,7 +45,6 @@
        {:db (assoc-in db [:xhr :config :token] (:token auth))
         :route-map/start {}}
        {:db db
-        :dispatch [::auth/authorize]
         :route-map/start {}}))))
 
 (defn content [page params]
@@ -61,8 +61,10 @@
             params (:params @route)]
         [:<>
          style/style
+         flashes/styles
          [navbar/component]
-         [content page params]]))))
+         [content page params]
+         [flashes/flashes]]))))
 
 (defn ^:export mount []
   (rf/dispatch-sync [::initialize])

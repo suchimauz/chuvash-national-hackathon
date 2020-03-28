@@ -7,7 +7,7 @@
 
 (page/reg-subs-page
  model/index-page
- (fn [{:keys [items]} _]
+ (fn [{:keys [items]} _ {:keys [auth?]}]
    [:<>
     [:div.header.bg-gradient-primary.py-8.py-lg-8.pt-lg-9
      [:div.container.d-flex.align-items-center
@@ -23,7 +23,8 @@
     [:div.container
      [:div.row.align-items-center.py-4.justify-content-between
       [:h3.display-3 "Национальные проекты"]
-      [:span.pointer.btn.btn.btn-neutral {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri "/project/create"}])} "Создать национальный проект"]]
+      (when auth?
+        [:span.pointer.btn.btn.btn-neutral {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri "/project/create"}])} "Создать национальный проект"])]
      [:div.row
       (map-indexed
        (fn [idx item] ^{:key idx}

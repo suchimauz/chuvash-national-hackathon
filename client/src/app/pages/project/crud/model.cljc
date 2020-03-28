@@ -74,7 +74,8 @@
    (case phase
      :init
      {:dispatch [::form/init {:data {:category "regional"
-                                     :project id}}]}
+                                     :project {:id id
+                                               :resourceType "Project"}}}]}
      :deinit
      {:db (dissoc db pid)}
      nil)))
@@ -134,14 +135,17 @@
 (rf/reg-event-fx
  ::create-success
  (fn [_ [_ {:keys [id]} s]]
-   {:zframes.redirect/redirect (str s id)}))
+   {:zframes.redirect/redirect (str s id)
+    :flash/flash [:success {:msg "Проект успешно создан" :title "Успешно!"}]}))
 
 (rf/reg-event-fx
  ::edit-success
  (fn [_ [_ _ uri]]
-   {:zframes.redirect/redirect uri}))
+   {:zframes.redirect/redirect uri
+    :flash/flash [:success {:msg "Проект успешно отредактирован" :title "Успешно!"}]}))
 
 (rf/reg-event-fx
  ::delete-success
  (fn [_ [_ _ uri]]
-   {:zframes.redirect/redirect uri}))
+   {:zframes.redirect/redirect uri
+    :flash/flash [:success {:msg "Проект успешно удалён" :title "Успешно!"}]}))

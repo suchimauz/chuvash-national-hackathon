@@ -7,7 +7,7 @@
 
 (page/reg-subs-page
  model/show-page
- (fn [{:keys [regionals] {:keys [name img]} :national :as page} {:keys [id]}]
+ (fn [{:keys [regionals] {:keys [name img]} :national :as page} {:keys [id]} {:keys [auth?]}]
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
      {:style {:background-image (str "url(http://localhost:8990" img ")")}}
@@ -52,13 +52,15 @@
         #_[breadcrumb/component-with-sub]
         ;; exception - :href is not ISeqable
         ]
-       [:div.col-lg-6.col-5.text-right
-        [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/edit")} "Редактировать"]]]]]
+       (when auth?
+         [:div.col-lg-6.col-5.text-right
+          [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/edit")} "Редактировать"]])]]]
 
     [:div.container
      [:div.row.align-items-center.py-4.justify-content-between
       [:h3.display-3 "Региональные проекты"]
-      [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/create")} "Создать региональный проект"]]
+      (when auth?
+        [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/create")} "Создать региональный проект"])]
      (map-indexed
       (fn [idx item]^{:key idx}
         [:div.card

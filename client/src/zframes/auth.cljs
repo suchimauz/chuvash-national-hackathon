@@ -71,8 +71,7 @@
  ::logout
  (fn [{{config :config :as db} :db} _]
    {:storage/remove [:auth]
-    :db (update-in db [:xhr :config] dissoc :token)
-    :zframes.redirect/redirect {:uri "/login"}}))
+    :db (update-in db [:xhr :config] dissoc :token)}))
 
 (rf/reg-event-fx
  ::logout-done

@@ -2,6 +2,15 @@
   (:require [clojure.string :as str]
             [honeysql.core :as hsql]))
 
+(defn reference-type [& enum]
+  {:type       :object
+   :properties {:id           {:type :string
+                               :required true}
+                :resourceType {:type :string
+                               :enum enum
+                               :required true}
+                :display      {:type :string}}})
+
 (defn new-table [resource validator]
   {:table     (keyword (str/lower-case (name resource)))
    :columns   {:id            {:type :serial :primary true :weight 0}
@@ -28,10 +37,15 @@
       (when (seq params)
         (first params)))))
 
-(defn where-params [{:keys [table]} {:keys [id] :as params}]
+(defn where-params [{:keys [table]} {:keys [id ilike] :as params}]
   (let [conds (cond-> []
-                (:id params) (conj [:= (resource-alias table :id) id])
-                (dot-param? table params) (conj (dot-param? table params)))]
+                id (conj [:= (resource-alias table :id) id])
+                ilike (concat (-> ilike
+                                  (str/split #"[\s,\+]")
+                                  (->> (map (comp hsql/raw
+                                               #(str "(" (resource-alias table :id) " || '' || " (resource-alias table :resource) "::text) ilike '%" % "%'"))))))
+                (dot-param? table params) (conj (dot-param? table params))
+                true vec)]
     (if (> (count conds) 1)
       {:where (into [:and] conds)}
       (when (seq conds)

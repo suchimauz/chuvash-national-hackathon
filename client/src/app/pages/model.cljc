@@ -18,8 +18,9 @@
 
 (defn subscribed-page [page-idx view]
   (fn [params]
-    (let [m (rf/subscribe [page-idx])]
-      (fn [params] [view @m params]))))
+    (let [m (rf/subscribe [page-idx])
+          auth? (rf/subscribe [:auth/auth?])]
+      (fn [params] [view @m params {:auth? @auth?}]))))
 
 (defn reg-subs-page
   "register subscribed page under keyword for routing"

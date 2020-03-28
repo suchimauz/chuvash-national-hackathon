@@ -2,19 +2,18 @@
   (:require [app.styles :as s]
             [re-frame.core :as rf]))
 
-
 (defn gen-uuid []
   #?(:clj (java.util.UUID/randomUUID)
      :cljs (random-uuid)))
 
 (rf/reg-event-db
  ::flash
- (fn [db [_ status {:keys [id msg time] :as opts}]]
+ (fn [db [_ status {:keys [id msg time title] :as opts}]]
    #?(:cljs (let [id (or id (keyword (str (gen-uuid))))]
               (js/setTimeout #(rf/dispatch [::remove-flash id]) (or time 8000))
-              (assoc-in db [:flash id] {:st status :msg msg}))
+              (assoc-in db [:flash id] {:st status :msg msg :title title}))
       :clj  (let [id (or id (keyword (str (gen-uuid))))]
-              (assoc-in db [:flash id] {:st status :msg msg})))))
+              (assoc-in db [:flash id] {:st status :msg msg :title title})))))
 
 (rf/reg-event-db
  ::add-flash
@@ -43,15 +42,20 @@
 (rf/reg-sub ::flashes (fn [db _] (:flash db)))
 
 (defn flash-msg [id f]
-  [:div.alert.alert-dismissible {:class (str "alert-" (name (:st f)))}
+  [:div.alert.alert-dismissible.alert-notify {:class (str "alert-" (name (:st f)))}
+   [:span.alert-icon.ni.ni-bell-55]
+   [:div.alert-text
+    (when-let [title (:title f)]
+      [:span.alert-title title])
+    [:span (:msg f)]]
    [:button.close
     {:on-click #(rf/dispatch [::remove-flash id])}
-    "×" ]
-   (:msg f)])
+    "×" ]])
 
 (def styles
-  (s/style
-   [:.flashes {:position "fixed" :top "20px" :right "20px" :max-width "500px" :z-index 200}
+  (s/styles
+   [:.flashes {:position "fixed" :bottom "20px" :right "20px" :max-width "800px" :z-index 200}
+    [:alert-notify {:max-width "800px"}]
     [:ul {:padding-left "20px"}]]))
 
 (defn flashes []
