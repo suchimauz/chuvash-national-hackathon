@@ -10,10 +10,16 @@
             :description {:type :string}
             :author      {:type      :object
                           :on-search ::search-author}
+            :img         {:type :string}
             :project     {:type :string}
             :category    {:type :string}
             :startDate   {:type :string}
             :endDate     {:type :string}}})
+
+(rf/reg-event-fx
+ ::set-img
+ (fn [_ [_ _ file-meta]]
+   {:dispatch [:zf/set-value path [:img] (:url file-meta)]}))
 
 (rf/reg-event-fx
  ::init

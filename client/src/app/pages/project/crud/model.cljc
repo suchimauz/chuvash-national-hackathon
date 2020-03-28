@@ -21,8 +21,7 @@
 (rf/reg-sub
  create-page
  (fn [_]
-   {:header "Создание национального проекта"
-    :cancel-uri "/home"}))
+   {:header "Создание национального проекта"}))
 
 (rf/reg-event-fx
  ::create-request
