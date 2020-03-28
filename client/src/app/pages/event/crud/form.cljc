@@ -8,9 +8,7 @@
 (def schema
   {:type   :form
    :fields {:name        {:type :string}
-            :purpose     {:type :object
-                          :display-paths [[:display]]
-                          :on-search ::ze/search-purpose}
+            :project     {:type :object}
             :description {:type :string}
             :startDate   {:type :string}
             :endDate     {:type :string}
@@ -18,7 +16,7 @@
 
 (rf/reg-event-fx
  ::init
- (fn [coeff {:keys [data]}]
+ (fn [coeff [_ {:keys [data]}]]
    {:dispatch [:zf/init path schema data]}))
 
 (defn eval-form [db cb]
@@ -28,8 +26,6 @@
     (merge
      {:db (assoc-in db path form)}
      (if (empty? errors)
-       (cb (cond-> value
-             (-> value :amount)
-             (update-in [:amount] h/parseInt)))
+       (cb value)
        #?(:clj (println errors)
           :cljs (.warn js/console "Form errors: " (clj->js errors)))))))

@@ -18,35 +18,32 @@
 
 (defn form []
   (fn []
-[:div.container.mt--8
-       [:div.row.justify-content-center
-        [:div.col
-         [:div.card
-          [:div.card-body
-           [:form
-            [:div.form-group
-             [:label.form-control-label
-              "Название"]
-             [inputs/input form/path [:name] {:placeholder "Введите название"}]]
-            [:div.form-group
-             [:label.form-control-label "Цель"]
-             [inputs/combobox form/path [:purpose]]]
-            [:div.form-group
-             [:label.form-control-label
-              "Описание"]
-             [inputs/input form/path [:description] {:placeholder "Введите описание"}]]
-            [:div.form-group
-             [:label.form-control-label
-              "Дата начала"]
-             [inputs/time-input form/path [:startDate] {:placeholder "Введите дату начала"}]]
-            [:div.form-group
-             [:label.form-control-label
-              "Дата начала"]
-             [inputs/time-input form/path [:endDate] {:placeholder "Введите дату окончания"}]]
-            [:div.form-group
-             [:label.form-control-label
-              "Бюджет"]
-             [inputs/input form/path [:amount] {:placeholder "Выделенный бюджет"}]]]]]]]]))
+    [:div.container.mt--8
+     [:div.row.justify-content-center
+      [:div.col
+       [:div.card
+        [:div.card-body
+         [:form
+          [:div.form-group
+           [:label.form-control-label
+            "Название"]
+           [inputs/input form/path [:name] {:placeholder "Введите название"}]]
+          [:div.form-group
+           [:label.form-control-label
+            "Описание"]
+           [inputs/input form/path [:description] {:placeholder "Введите описание"}]]
+          [:div.form-group
+           [:label.form-control-label
+            "Дата начала"]
+           [inputs/time-input form/path [:startDate] {:placeholder "Введите дату начала"}]]
+          [:div.form-group
+           [:label.form-control-label
+            "Дата начала"]
+           [inputs/time-input form/path [:endDate] {:placeholder "Введите дату окончания"}]]
+          [:div.form-group
+           [:label.form-control-label
+            "Бюджет"]
+           [inputs/input form/path [:amount] {:placeholder "Выделенный бюджет"}]]]]]]]]))
 
 (pages/reg-subs-page
  model/create-page

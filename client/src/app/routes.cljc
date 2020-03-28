@@ -15,6 +15,10 @@
                                                      :breadcrumb "Создание"}
                                         :breadcrumb "Региональные проекты"
                                         [:reg-id]   {:.          :app.pages.project.model/regional
+                                                     "event"   {:.       :app.pages.event.model/index
+                                                                "create" {:. :app.pages.event.crud.model/create}
+                                                                [:event-id]    {:.     :app.pages.event.model/show
+                                                                          "edit" {:. :app.pages.event.crud.model/edit}}}
                                                      "purpose" {:.       :app.pages.purpose.model/index
                                                                 "create" {:. :app.pages.purpose.crud.model/create}
                                                                 [:id]    {:.     :app.pages.purpose.model/show
@@ -22,8 +26,4 @@
                                                      "edit"      {:.          :app.pages.project.crud.model/edit-regional
                                                                   :breadcrumb "Редактирование"}
                                                      :breadcrumb [:app.pages.project.model/breadcrumb-regional]}}
-                           "edit"      {:. :app.pages.project.crud.model/edit}}}
-   "event"   {:.       :app.pages.event.model/index
-              "create" {:. :app.pages.event.crud.model/create}
-              [:id]    {:.     :app.pages.event.model/show
-                        "edit" {:. :app.pages.event.crud.model/edit}}}})
+                           "edit"      {:. :app.pages.project.crud.model/edit}}}})
