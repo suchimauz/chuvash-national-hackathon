@@ -64,8 +64,7 @@
      (map-indexed
       (fn [idx item]^{:key idx}
         [:a.card {:href (str "#/project/" id "/regional/" (:id item))}
-         [:div.col-lg-6.col-5.text-right
-          [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" (:id item) "/edit")} "Редактировать"]]
+
          [:div.card-header [:h5.h3.mb-0 (:name item)]]
          [:div.card-body
           [:div.card-body
@@ -98,3 +97,23 @@
                                                           :backgroundColor ["#fba040" "#5e72e4"]}]}}]]]]]]]
          ])
       regionals)]]))
+
+(page/reg-subs-page
+ model/show-regional
+ (fn [{:keys [project]} {:keys [id reg-id] :as s} {:keys [auth?]}]
+   [:<>
+    [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
+     {:style {:background-image (str "url(http://localhost:8990" (:img project) ")")}}
+     [:span.mask.bg-gradient-default.opacity-8]
+     [:div.container-fluid.d-flex.align-items-center
+      [:div.col-lg-7.col-md-9
+       [:h1.display-4.text-white "Региональный проект"]
+       [:h1.display-2.text-white (:name project)]
+       [:p.text-white.mt-0.mb-5 (:description project)]
+       [:b.text-warning.mt-0.mb-5 (:startDate project) " - " (:endDate project)]]]
+     [:div.container-fluid.d-flex.justify-content-end
+      [:div.align-items-end.py-4
+       (when auth?
+         [:div.col-lg-6.col-5.text-right
+          [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" reg-id "/edit")} "Редактировать"]])]]]
+    ]))

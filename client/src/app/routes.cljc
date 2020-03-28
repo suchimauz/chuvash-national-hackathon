@@ -14,7 +14,7 @@
                         "regional" {"create"       {:. :app.pages.project.crud.model/create-regional
                                                     :breadcrumb "Создание"}
                                     :breadcrumb "Региональные проекты"
-                                    [:regional-id] {:.     :app.pages.project.model/show-regional
+                                    [:reg-id] {:.     :app.pages.project.model/regional
                                                     "edit" {:. :app.pages.project.crud.model/edit-regional
                                                             :breadcrumb "Редактирование"}
                                                     :breadcrumb [:app.pages.project.model/breadcrumb-regional]}}

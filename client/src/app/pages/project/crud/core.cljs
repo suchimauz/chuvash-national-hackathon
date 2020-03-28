@@ -153,7 +153,7 @@
 
 (pages/reg-subs-page
  model/edit-regional-page
- (fn [{:keys [cancel-uri] :as page} {:keys [regional-id]}]
+ (fn [{:keys [cancel-uri] :as page} {:keys [reg-id]}]
    [:<>
     [header page]
     [form]
@@ -165,4 +165,4 @@
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
       "Отменить"]
      [:span.pointer.btn.text-danger "Удалить"
-      {:on-click #(rf/dispatch [::model/delete-regional-request regional-id])}]]]))
+      {:on-click #(rf/dispatch [::model/delete-regional-request reg-id])}]]]))

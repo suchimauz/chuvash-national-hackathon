@@ -1,5 +1,6 @@
 (ns app.pages.project.crud.form
   (:require [re-frame.core :as rf]
+            [app.helpers :as h]
             [app.form.events :as ze]
             [zframes.mapper :as zm]
             [zframes.flash   :as flash]
@@ -59,7 +60,9 @@
     (merge
      {:db (assoc-in db path form)}
      (if (empty? errors)
-       (cb value)
+       (cb (cond-> value
+             (-> value :author :id)
+             (update-in [:author :id] str)))
        #?(:clj  (println errors)
           :cljs (.warn js/console "Form errors: " (clj->js errors)))))))
 

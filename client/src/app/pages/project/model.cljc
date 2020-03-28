@@ -23,7 +23,7 @@
      {:xhr/fetch [{:uri (str "/Project/" id)
                    :req-id pid}
                   {:uri "/Project"
-                   :params {:.project id}
+                   :params {:.project.id id}
                    :req-id ::show-regional}]}
      :deinit
      {:db (dissoc db pid)}
@@ -36,3 +36,20 @@
  (fn [[{national :data} {regionals :data}] _]
    {:national national
     :regionals regionals}))
+
+(def show-regional ::regional)
+
+(rf/reg-event-fx
+ show-regional
+ (fn [_ [pid phase {:keys [reg-id]}]]
+   (case phase
+     :init
+     {:xhr/fetch {:uri (str "/Project/" reg-id)
+                  :req-id :regional}}
+     nil)))
+
+(rf/reg-sub
+ show-regional
+ :<- [:xhr/response :regional]
+ (fn [{project :data} _]
+   {:project project}))

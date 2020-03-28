@@ -70,7 +70,7 @@
 
 (rf/reg-event-fx
  create-regional-page
- (fn [{db :db} [pid phase {:keys [regional-id id]}]]
+ (fn [{db :db} [pid phase {:keys [reg-id id]}]]
    (case phase
      :init
      {:dispatch [::form/init {:data {:category "regional"
@@ -100,9 +100,9 @@
 
 (rf/reg-event-fx
  edit-regional-page
- (fn [{db :db } [pid phase {:keys [regional-id id]}]]
+ (fn [{db :db } [pid phase {:keys [reg-id id]}]]
    (case phase
-     :init {:xhr/fetch {:uri (str "/Project/" regional-id)
+     :init {:xhr/fetch {:uri (str "/Project/" reg-id)
                         :success {:event ::form/init}}}
      :params {:db db}
      :deinit {:db (dissoc db pid)}
@@ -111,9 +111,9 @@
 (rf/reg-sub
  edit-regional-page
  :<- [:route-map/fragment-params]
- (fn [{:keys [id regional-id]} _]
+ (fn [{:keys [id reg-id]} _]
    {:header "Редактирование регионального проекта"
-    :cancel-uri (str "/project/" id "/regional/" regional-id)}))
+    :cancel-uri (str "/project/" id "/regional/" reg-id)}))
 
 (rf/reg-event-fx
  ::edit-regional-request
