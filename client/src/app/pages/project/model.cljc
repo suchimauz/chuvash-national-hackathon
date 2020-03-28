@@ -44,12 +44,17 @@
  (fn [_ [pid phase {:keys [reg-id]}]]
    (case phase
      :init
-     {:xhr/fetch {:uri (str "/Project/" reg-id)
-                  :req-id :regional}}
+     {:xhr/fetch [{:uri    (str "/Project/" reg-id)
+                   :req-id :regional}
+                  {:uri    (str "/Purpose")
+                   :params {:.priject.id reg-id}
+                   :req-id :purpose}]}
      nil)))
 
 (rf/reg-sub
  show-regional
  :<- [:xhr/response :regional]
- (fn [{project :data} _]
-   {:project project}))
+ :<- [:xhr/response :purpose]
+ (fn [[{project :data} {purposes :data}] _]
+   {:project  project
+    :purposes purposes}))

@@ -3,6 +3,7 @@
             [app.actions :as action]
             [app.auth :as auth]
             (app.resources
+             [purpose :as purpose]
              [user :as user]
              [project :as project]
              [author :as author])))
@@ -17,6 +18,11 @@
      ["/Project/:id" {:get    {:handler (partial action/-get project/table)}
                       :put    {:handler (partial action/-put project/table)}
                       :delete {:handler (partial action/-delete project/table)}}]
+     ["/Purpose" {:get    {:handler (partial action/-get purpose/table)}
+                  :post    {:handler (partial action/-post purpose/table)}}]
+     ["/Purpose/:id" {:get    {:handler (partial action/-get purpose/table)}
+                      :put    {:handler (partial action/-put purpose/table)}
+                      :delete {:handler (partial action/-delete purpose/table)}}]
      ["/Author" {:get   {:handler (partial action/-get author/table)}
                  :post {:handler (partial action/-post author/table)}}]
      ["/Author/:id" {:get     {:handler (partial action/-get author/table)}

@@ -76,7 +76,7 @@
                 {:src "http://localhost:8990/storage/download/test/1.png"
                  :alt "Image placeholder"}]]]
              [:div.col.ml--2
-              [:h4.mb-0 [:a {:href "#!"} "Руководитель проекта Филиппов Е.Ф."]]
+              [:h4.mb-0 "Руководитель проекта " (-> item :author :display)]
               [:p.text-sm.text-muted.mb-0 "министр здравоохранения Краснодарского края "]]]
             [:div.col-aut
              [:div.row
@@ -100,7 +100,7 @@
 
 (page/reg-subs-page
  model/show-regional
- (fn [{:keys [project]} {:keys [id reg-id] :as s} {:keys [auth?]}]
+ (fn [{:keys [project purposes]} {:keys [id reg-id] :as s} {:keys [auth?]}]
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
      {:style {:background-image (str "url(http://localhost:8990" (:img project) ")")}}
@@ -110,10 +110,30 @@
        [:h1.display-4.text-white "Региональный проект"]
        [:h1.display-2.text-white (:name project)]
        [:p.text-white.mt-0.mb-5 (:description project)]
-       [:b.text-warning.mt-0.mb-5 (:startDate project) " - " (:endDate project)]]]
+       (let [period (:period project)]
+         [:b.text-warning.mt-0.mb-5 (:start period) " - " (:end period)])]]
      [:div.container-fluid.d-flex.justify-content-end
       [:div.align-items-end.py-4
        (when auth?
          [:div.col-lg-6.col-5.text-right
           [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" reg-id "/edit")} "Редактировать"]])]]]
-    ]))
+    [:div.container
+     [:div
+      [:div.card-header.bg-transparent [:h3.mb-0 "Результаты"]]
+      [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/purpose/create")} "Добавить показатель"]
+      [:div.card-body
+       [:div.timeline.timeline-one-side
+        (map-indexed
+         (fn [idx item] ^{:key idx}
+           [:div.timeline-block
+            [:span.timeline-step.badge-success [:i.ni.ni-bell-55]]
+            [:div.timeline-content
+             [:small.text-muted.font-weight-bold "10:30 AM"]
+             [:h5.mt-3.mb-0 (:name item)]
+             [:p.text-sm.mt-1.mb-0
+              "Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus."]
+             [:div.mt-3
+              [:span.badge.badge-pill.badge-success "design"]
+              [:span.badge.badge-pill.badge-success "system"]
+              [:span.badge.badge-pill.badge-success "creative"]]]])
+         purposes)]]]]]))
