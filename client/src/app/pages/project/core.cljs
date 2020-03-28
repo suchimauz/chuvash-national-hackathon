@@ -150,5 +150,4 @@
             :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" (:id item))}])}
            [:small.text-muted.font-weight-bold (:date item)]
            [:h5.mt-3.mb-0 (:name item)]])
-        (range 2))]]
-     ]]))
+        events)]]]]))

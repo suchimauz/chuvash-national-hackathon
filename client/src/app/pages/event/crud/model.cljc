@@ -9,10 +9,10 @@
 
 (rf/reg-event-fx
  create-page
- (fn [{db :db} [pid phase {:keys [id]}]]
+ (fn [{db :db} [pid phase {:keys [id reg-id]}]]
    (case phase
      :init
-     {:dispatch [::form/init {:data {:project {:id (helpers/parse-int id)
+     {:dispatch [::form/init {:data {:project {:id (helpers/parse-int reg-id)
                                                :resourceType "Project"}}}]}
      :deinit
      {:db (dissoc db pid)}
@@ -49,7 +49,7 @@
                      {:xhr/fetch {:uri "/Event"
                                   :method :POST
                                   :body value
-                                  :success {:event ::create-success :params (str "/project/" id "/regional/" reg-id)}}}))))
+                                  :success {:event ::create-success :params {:uri (str "/project/" id "/regional/" reg-id)}}}}))))
 
 (rf/reg-event-fx
  ::edit-request
@@ -71,8 +71,8 @@
 
 (rf/reg-event-fx
  ::create-success
- (fn [_ [_ {:keys [id]} s]]
-   {:zframes.redirect/redirect (str s id)
+ (fn [_ [_ {:keys [id]} uri]]
+   {:zframes.redirect/redirect uri
     :flash/flash [:success {:msg "Мероприятие успешно создано" :title "Успешно!"}]}))
 
 (rf/reg-event-fx
