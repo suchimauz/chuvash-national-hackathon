@@ -12,7 +12,7 @@
                  :description {:type :string}
                  :period      {:type       :object
                                :required   true
-                               :properties {:start {:type     :string
-                                                    :required true}
-                                            :end   {:type :string}}}
+                               :properties {:start {:type     :string}
+                                            :end   {:type :string
+                                                    :required true}}}
                  :amount      {:type :string}}}))
