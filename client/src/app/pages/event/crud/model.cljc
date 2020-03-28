@@ -1,5 +1,6 @@
 (ns app.pages.event.crud.model
   (:require [re-frame.core :as rf]
+            [app.helpers :as helpers]
             [app.pages.event.crud.form :as form]))
 
 (def create-page ::create)
@@ -19,8 +20,9 @@
 
 (rf/reg-sub
  create-page
- (fn [_]
-   {:header "Создание результата"}))
+ (fn [{{:keys [event-id reg-id id]} :fragment-params} _]
+   {:header "Создание результата"
+    :cancel-uri (str "/project/" id "/regional/" reg-id)}))
 
 
 (rf/reg-event-fx
@@ -35,37 +37,37 @@
 
 (rf/reg-sub
  edit-page
- (fn [{{{:keys [event-id regional-id id]} :fragment-params} :db} _]
+ (fn [{{:keys [event-id reg-id id]} :fragment-params} _]
    {:header "Редактирование результата"
-    :cancel-uri (str "/project/" id "/regional/" regional-id "/event/" event-id)}))
+    :cancel-uri (str "/project/" id "/regional/" reg-id "/event/" event-id)}))
 
 (rf/reg-event-fx
  ::create-request
- (fn [{{{:keys [event-id regional-id id]} :fragment-params :as db} :db} _]
+ (fn [{{{:keys [event-id reg-id id]} :fragment-params :as db} :db} _]
    (form/eval-form db
                    (fn [value]
                      {:xhr/fetch {:uri "/Event"
                                   :method :POST
                                   :body value
-                                  :success {:event ::create-success :params (str "/project/" id "/regional/" regional-id)}}}))))
+                                  :success {:event ::create-success :params (str "/project/" id "/regional/" reg-id)}}}))))
 
 (rf/reg-event-fx
  ::edit-request
- (fn [{{{:keys [event-id regional-id id]} :fragment-params :as db} :db} _]
+ (fn [{{{:keys [event-id reg-id id]} :fragment-params :as db} :db} _]
    (form/eval-form db
                    (fn [value]
                      {:xhr/fetch {:uri (str "/Event/" (:id value))
                                   :method :PUT
                                   :body value
-                                  :success {:event ::edit-success :params {:uri (str "/project/" id "/regional/" regional-id "/event/" event-id)}}}}))))
+                                  :success {:event ::edit-success :params {:uri (str "/project/" id "/regional/" reg-id "/event/" event-id)}}}}))))
 
 
 (rf/reg-event-fx
  ::delete-request
- (fn [{{{:keys [event-id regional-id id]} :fragment-params :as db} :db} [_ id]]
+ (fn [{{{:keys [event-id reg-id id]} :fragment-params :as db} :db} [_ id]]
    {:xhr/fetch {:uri (str "/Event/" id)
                 :method :DELETE
-                :success {:event ::delete-success :params (str "/project/" id "/regional/" regional-id)}}}))
+                :success {:event ::delete-success :params (str "/project/" id "/regional/" reg-id)}}}))
 
 (rf/reg-event-fx
  ::create-success

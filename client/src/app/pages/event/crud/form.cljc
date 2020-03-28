@@ -8,10 +8,12 @@
 (def schema
   {:type   :form
    :fields {:name        {:type :string}
+            :id          {:type :string}
             :project     {:type :object}
             :description {:type :string}
-            :startDate   {:type :string}
-            :endDate     {:type :string}
+            :period      {:type :form
+                          :fields {:start {:type :string}
+                                   :end   {:type :string}}}
             :amount      {:type :string}}})
 
 (rf/reg-event-fx

@@ -1,5 +1,6 @@
 (ns app.pages.project.model
   (:require [re-frame.core :as rf]
+            [app.helpers :as helpers]
             [clojure.string :as str]))
 
 (def show-page ::show)
@@ -48,13 +49,25 @@
                    :req-id :regional}
                   {:uri    (str "/Purpose")
                    :params {:.priject.id reg-id}
-                   :req-id :purpose}]}
+                   :req-id :purpose}
+                  {:uri    (str "/Event")
+                   :params {:.project.id reg-id}
+                   :req-id :event}]}
      nil)))
+
+(defn event-item-map [{:keys [name id period amount task]}]
+  {:id id
+   :name name
+   :date (helpers/date-iso->rus-format (:end period))})
 
 (rf/reg-sub
  show-regional
  :<- [:xhr/response :regional]
  :<- [:xhr/response :purpose]
- (fn [[{project :data} {purposes :data}] _]
+ :<- [:xhr/response :event]
+ (fn [[{project :data} {purposes :data} {events :data}] _]
    {:project  project
-    :purposes purposes}))
+    :purposes purposes
+    :events   (map
+               event-item-map
+               events)}))

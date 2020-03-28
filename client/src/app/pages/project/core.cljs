@@ -100,7 +100,7 @@
 
 (page/reg-subs-page
  model/show-regional
- (fn [{:keys [project purposes]} {:keys [id reg-id] :as s} {:keys [auth?]}]
+ (fn [{:keys [project purposes events]} {:keys [id reg-id] :as s} {:keys [auth?]}]
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
      {:style {:background-image (str "url(http://localhost:8990" (:img project) ")")}}
@@ -136,4 +136,19 @@
               [:span.badge.badge-pill.badge-success "design"]
               [:span.badge.badge-pill.badge-success "system"]
               [:span.badge.badge-pill.badge-success "creative"]]]])
-         purposes)]]]]]))
+         (range 2))]]]
+     [:div
+      [:div.card-header.bg-transparent.row.align-items-center
+       {:style {:justify-content :space-between}}
+       [:h3.mb-0 "Результаты"]
+       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/create")} "Добавить результат"]]
+      [:div.list-group.list-group-flush
+       (map-indexed
+        (fn [idx item] ^{:key idx}
+          [:div.list-group-item.list-group-item-action.pointer
+           {:style {:width "100%"}
+            :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" (:id item))}])}
+           [:small.text-muted.font-weight-bold (:date item)]
+           [:h5.mt-3.mb-0 (:name item)]])
+        (range 2))]]
+     ]]))

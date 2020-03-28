@@ -35,11 +35,11 @@
           [:div.form-group
            [:label.form-control-label
             "Дата начала"]
-           [inputs/time-input form/path [:startDate] {:placeholder "Введите дату начала"}]]
+           [inputs/time-input form/path [:period :start] {:placeholder "Введите дату начала"}]]
           [:div.form-group
            [:label.form-control-label
-            "Дата начала"]
-           [inputs/time-input form/path [:endDate] {:placeholder "Введите дату окончания"}]]
+            "Дата завершения"]
+           [inputs/time-input form/path [:period :end] {:placeholder "Введите дату завершения"}]]
           [:div.form-group
            [:label.form-control-label
             "Бюджет"]
