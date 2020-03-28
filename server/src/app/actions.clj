@@ -25,11 +25,10 @@
         (if-not res
           (res-not-found id)
           (ok (utils/row-to-resource res))))
-      (ok {:query (hsql/format query)
-           :resource (->> query
-                          (pg/query db)
-                          (map utils/row-to-resource)
-                          (utils/assoc-params db params))}))))
+      (ok (->> query
+               (pg/query db)
+               (map utils/row-to-resource)
+               (utils/assoc-params db params))))))
 
 (defn -post [table {:keys [body] db :db/connection}]
   (let [result (validation body table)]
