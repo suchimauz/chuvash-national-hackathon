@@ -130,6 +130,7 @@
            [:div.timeline-block
 
             [:span.timeline-step.badge-success [:i.ni.ni-bell-55]]
+]))]]]]]))
             [:div.timeline-content {:style {:max-width "100%"}}
              [:h3.text-muted.font-weight-bold (:name item)]
              (map-indexed
@@ -150,18 +151,20 @@
                               :height "100%"}}
                      [:h4.m-0.pr-3 {:style {:z-index "20"}} plan]]]]))
               (:indicators item))]])
-         purposes)]]]
-     [:div
-      [:div.card-header.bg-transparent.row.align-items-center
-       {:style {:justify-content :space-between}}
-       [:h3.mb-0 "Результаты"]
-       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/create")} "Добавить результат"]]
-      [:div.list-group.list-group-flush
-       (map-indexed
-        (fn [idx item] ^{:key idx}
-          [:div.list-group-item.list-group-item-action.pointer
-           {:style {:width "100%"}
-            :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" (:id item))}])}
-           [:small.text-muted.font-weight-bold (:date item)]
-           [:h5.mt-3.mb-0 (:name item)]])
-        events)]]]]))
+purposes)]]]
+[:div
+[:div.card-header.bg-transparent.row.align-items-center
+ {:style {:justify-content :space-between}}
+ [:h3.mb-0 "Результаты"]
+ [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/create")} "Добавить результат"]]
+ [:div.list-group.list-group-flush
+  (map-indexed
+   (fn [idx item] ^{:key idx}
+     [:div.list-group-item.list-group-item-action.pointer
+      {:style {:width "100%"}
+       :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" (:id item))}])}
+      [:small.text-muted.font-weight-bold (:date item)]
+      [:h5.mt-3.mb-0 (:name item)]])
+   (range 2))]]
+
+]]))

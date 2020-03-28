@@ -42,17 +42,16 @@
 
 (rf/reg-event-fx
  show-regional
- (fn [_ [pid phase {:keys [reg-id]}]]
+ (fn [_ [_ phase {:keys [reg-id]}]]
    (case phase
-     :init
-     {:xhr/fetch [{:uri    (str "/Project/" reg-id)
-                   :req-id :regional}
-                  {:uri    (str "/Purpose")
-                   :params {:.priject.id reg-id}
-                   :req-id :purpose}
-                  {:uri    (str "/Event")
-                   :params {:.project.id reg-id}
-                   :req-id :event}]}
+     :init {:xhr/fetch [{:uri    (str "/Project/" reg-id)
+                         :req-id :regional}
+                        {:uri    (str "/Purpose")
+                         :params {:.project.id reg-id}
+                         :req-id :purpose}
+                        {:uri    (str "/Event")
+                         :params {:.project.id reg-id}
+                         :req-id :event}]}
      nil)))
 
 (defn event-item-map [{:keys [name id period amount task]}]

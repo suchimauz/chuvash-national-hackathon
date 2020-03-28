@@ -21,8 +21,8 @@
                                                                           "edit" {:. :app.pages.event.crud.model/edit}}}
                                                      "purpose" {:.       :app.pages.purpose.model/index
                                                                 "create" {:. :app.pages.purpose.crud.model/create}
-                                                                [:id]    {:.     :app.pages.purpose.model/show
-                                                                          "edit" {:. :app.pages.purpose.crud.model/edit}}}
+                                                                [:p-id]    {:.     :app.pages.purpose.model/show
+                                                                            "edit" {:. :app.pages.purpose.crud.model/edit}}}
                                                      "edit"      {:.          :app.pages.project.crud.model/edit-regional
                                                                   :breadcrumb "Редактирование"}
                                                      :breadcrumb [:app.pages.project.model/breadcrumb-regional]}}

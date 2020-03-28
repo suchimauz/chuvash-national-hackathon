@@ -23,7 +23,7 @@
              [:div.row.pl-3
               [:div.form-group.col
                [:label.form-control-label "Год"]
-               [inputs/time-input form/path [:indicators idx :year]]]
+               [inputs/input form/path [:indicators idx :year]]]
               [:div.form-group.col
                [:label.form-control-label "Текущее значение"]
                [inputs/input form/path [:indicators idx :current]]]
