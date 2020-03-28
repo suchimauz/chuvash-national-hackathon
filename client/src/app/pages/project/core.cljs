@@ -104,7 +104,7 @@
  (fn [{:keys [project purposes events]} {:keys [id reg-id] :as s} {:keys [auth?]}]
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
-     {:style {:background-image (str "url(http://localhost:8990" (:img project) ")")}}
+     {:style {:background-image (str "url(http://localhost:8990" (get-in project [:project :resource :img]) ")")}}
      [:span.mask.bg-gradient-default.opacity-8]
      [:div.container-fluid.d-flex.align-items-center
       [:div.col-lg-7.col-md-9
@@ -156,7 +156,7 @@
        {:style {:justify-content :space-between}}
        [:h3.mb-0 "Результаты"]
        [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/create")} "Добавить результат"]]
-      [:div.list-group.list-group-flush
+      [:div.list-group.list-group-flush.mb-5
        (map-indexed
         (fn [idx item] ^{:key idx}
           [:div.list-group-item.list-group-item-action.pointer

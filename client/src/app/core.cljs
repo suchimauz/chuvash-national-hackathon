@@ -24,6 +24,7 @@
             [app.pages.project.crud.core]
             [app.pages.project.core]
             [app.pages.purpose.crud.core]
+            [app.pages.event.core]
             [app.pages.event.crud.core]
 
             [app.components.navbar.core :as navbar]))

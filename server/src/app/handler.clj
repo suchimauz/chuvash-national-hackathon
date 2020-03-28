@@ -4,6 +4,7 @@
             [app.auth :as auth]
             (app.resources
              [purpose :as purpose]
+             [object :as object]
              [user :as user]
              [event :as event]
              [project :as project]
@@ -34,5 +35,10 @@
      ["/Event/:id" {:get    {:handler (partial action/-get event/table)}
                     :put    {:handler (partial action/-put event/table)}
                     :delete {:handler (partial action/-delete event/table)}}]
+     ["/Object" {:get  {:handler (partial action/-get object/table)}
+                 :post {:handler (partial action/-post object/table)}}]
+     ["/Object/:id" {:get    {:handler (partial action/-get object/table)}
+                     :put    {:handler (partial action/-put object/table)}
+                     :delete {:handler (partial action/-delete object/table)}}]
      ["/authorize" {:post {:handler (fn [req] (auth/authorize req))}}]])
    (constantly {:status 404, :body {:error {:message "Route not found"}}})))

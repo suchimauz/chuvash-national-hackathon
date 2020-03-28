@@ -7,6 +7,7 @@
             (app.resources
              [purpose :as purpose]
              [user :as user]
+             [object :as object]
              [event :as event]
              [project :as project]
              [author :as author])))
@@ -31,6 +32,7 @@
   (migrate db user/table)
   (migrate db project/table)
   (migrate db event/table)
+  (migrate db object/table)
   (migrate db author/table))
 
 (comment

@@ -45,6 +45,7 @@
  (fn [_ [_ phase {:keys [reg-id]}]]
    (case phase
      :init {:xhr/fetch [{:uri    (str "/Project/" reg-id)
+                         :params {:assoc "project"}
                          :req-id :regional}
                         {:uri    (str "/Purpose")
                          :params {:.project.id reg-id}
