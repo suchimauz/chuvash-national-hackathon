@@ -94,13 +94,13 @@
                            (rf/dispatch [click value]))
                          (rf/dispatch [:zf/dropdown form-path path false])
                          (rf/dispatch [:zf/set-value form-path path value]))
-        open-dropdown  (fn []
+        open-dropdown  (fn [dropdown]
                          (rf/dispatch  [(:on-search @node) {:path path :form-path form-path}])
-                         (rf/dispatch [:zf/dropdown form-path path true]))]
+                         (rf/dispatch [:zf/dropdown form-path path (not dropdown)]))]
     (fn [& _]
       (let [{:keys [items display-paths value dropdown]} @node]
         [:div.position-relative #_{:on-blur close-dropdown}
-         [:div.input-group {:on-click open-dropdown}
+         [:div.input-group {:on-click #(open-dropdown dropdown)}
           [:span.form-control
            (if (empty? value)
              [:span.text-muted placeholder]
