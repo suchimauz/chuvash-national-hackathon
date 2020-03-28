@@ -11,6 +11,7 @@
                  :author      {:type :string}
                  :name        {:type :string :required true}
                  :description {:type :string}
+                 :project     {:type :string}
                  :period      {:type       :object
                                :properties {:start {:type :string}
                                             :end   {:type :string}}}}}))

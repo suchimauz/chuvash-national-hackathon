@@ -1,7 +1,8 @@
 (ns app.actions
   (:require [clj-pg.honey  :as pg]
             [json-schema.core :as schema]
-            [honeysql.core :as hsql]))
+            [honeysql.core :as hsql]
+            [app.utils :as utils]))
 
 (defn ok          [response] {:status 200 :body response})
 (defn created     [response] {:status 201 :body response})
@@ -20,12 +21,12 @@
 
 (defn -get [table {:keys [params] db :db/connection {:keys [id]} :path-params}]
   (let [query (merge
-               {:select [:*]
+               {:select [(keyword (str (name (:table table)) ".*"))]
                 :from   [(:table table)]
                 :limit  (or (:count params) 100)}
-               (when id {:where [:= :id id]}))]
+               (utils/where-params table params))]
     (if id
-      (let [res (:resource (pg/query-first db query))]
+      (let [res (:resource (pg/query-first db (assoc query :where [:= :id id])))]
         (if-not res
           (res-not-found id)
           (ok res)))
