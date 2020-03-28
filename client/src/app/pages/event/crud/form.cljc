@@ -1,7 +1,8 @@
 (ns app.pages.event.crud.form
   (:require [re-frame.core :as rf]
             [zenform.model :as zf]
-            [app.form.events :as ze]))
+            [app.form.events :as ze]
+            [app.helpers :as h]))
 
 (def path [:form ::form])
 (def schema
@@ -23,4 +24,12 @@
 (defn eval-form [db cb]
   (let [{:keys [errors value form]} (-> db
                                         (get-in path)
-                                        zf/eval-form)]))
+                                        zf/eval-form)]
+    (merge
+     {:db (assoc-in db path form)}
+     (if (empty? errors)
+       (cb (cond-> value
+             (-> value :amount)
+             (update-in [:amount] h/parseInt)))
+       #?(:clj (println errors)
+          :cljs (.warn js/console "Form errors: " (clj->js errors)))))))

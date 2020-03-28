@@ -35,8 +35,8 @@
 (rf/reg-sub
  edit-page
  (fn [{{{:keys [id]} :fragment-params} :db} _]
-   {:header "Редактирование результата"}
-   :cancel-uri (str "/event/" id)))
+   {:header "Редактирование результата"
+    :cancel-uri (str "/event/" id)}))
 
 (rf/reg-event-fx
  ::create-request
