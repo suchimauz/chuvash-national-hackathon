@@ -2,6 +2,7 @@
   (:require [re-frame.core :as rf]
             [app.form.events :as ze]
             [zframes.mapper :as zm]
+            [zframes.flash   :as flash]
             [zenform.model :as zf]))
 
 (def path [:form ::form])
@@ -39,7 +40,8 @@
 (rf/reg-event-fx
  ::set-a-img
  (fn [_ [_ _ file-meta]]
-   {:dispatch [:zf/set-value author-path [:photo] (:url file-meta)]}))
+   {:dispatch-n [[::flash/remove-flash :file-load]
+                 [:zf/set-value author-path [:photo] (:url file-meta)]]}))
 
 (rf/reg-event-fx
  ::set-img

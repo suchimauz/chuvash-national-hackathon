@@ -44,12 +44,11 @@
 (defn flash-msg [id f]
   [:div.alert.alert-dismissible.alert-notify {:class (str "alert-" (name (:st f)))}
    [:span.alert-icon.ni.ni-bell-55]
-   [:div.alert-text
+   [:div.alert-text {:on-click #(rf/dispatch [::remove-flash id])}
     (when-let [title (:title f)]
       [:span.alert-title title])
     [:span (:msg f)]]
    [:button.close
-    {:on-click #(rf/dispatch [::remove-flash id])}
     "×" ]])
 
 (def styles
