@@ -1,13 +1,13 @@
 (ns app.components.card.core)
 
-(defn component [{:keys [href]}]
+(defn component [{:keys [href name]}]
   [:a.card.card-stats {:href href}
    [:div.card-body
     [:div.row
      [:div.col
       [:h5.card-title.text-uppercase.text-muted.mb-0
        "Total traffic"]
-      [:span.h2.font-weight-bold.mb-0 "350,897"]]
+      [:span.h2.font-weight-bold.mb-0 name]]
      [:div.col-auto
       [:div.icon.icon-shape.bg-gradient-red.text-white.rounded-circle.shadow
        [:i.ni.ni-active-40]]]]

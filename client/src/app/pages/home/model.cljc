@@ -5,19 +5,19 @@
 
 (rf/reg-event-fx
  index-page
- (fn [_ [_ phase]]
-   (cond-> {}
-     (#{:init} phase)
-     (assoc :json/fetch {:uri     "/categories"
-                         :method  "get"
-                         :success {:event ::success}}))))
-
-(rf/reg-event-db
- ::success
- (fn [db [_ data]]
-   (assoc db :data data)))
+ (fn [{db :db} [pid phase]]
+   (case phase
+     :init
+     {:xhr/fetch {:uri "/Project"
+                  :req-id pid
+                  :params {:.category "national"}}}
+     :deinit {:db (dissoc db pid)}
+     nil)))
 
 (rf/reg-sub
  index-page
- (fn [db]
-   {:data (:data db)}))
+ :<- [:xhr/response index-page]
+ (fn [{nationals :data}]
+   {:items (map
+            #(assoc % :href (str "#/project/" (:id %)))
+            nationals)}))

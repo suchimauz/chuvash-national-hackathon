@@ -7,13 +7,13 @@
 
 (page/reg-subs-page
  model/show-page
- (fn [page]
+ (fn [{:keys [regionals] {:keys [name]} :national :as page} {:keys [id]}]
    [:<>
     [:div.header.bg-gradient-primary.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
      [:div.container-fluid.d-flex.align-items-center
       [:div.col-lg-7.col-md-9
-       [:h1.display-4.text-white "Национальные проекты"]
-       [:h1.display-2.text-white "Здравоохранение"]]
+       [:h1.display-4.text-white "Национальный проект"]
+       [:h1.display-2.text-white name]]
       [:div.row
        [:div.card-body.px-lg-7
         [doughnut/component {:key     "123"
@@ -46,9 +46,11 @@
      [:div.container-fluid
       [:div.row.align-items-center.py-4
        [:div.col-lg-6.col-7
-        [breadcrumb/component]]
+        #_[breadcrumb/component-with-sub]
+        ;; exception - :href is not ISeqable
+        ]
        [:div.col-lg-6.col-5.text-right
-        [:a.btn.btn.btn-neutral {:href "#/project/create"} "Создать региональный проект"]]]]]
+        [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/create")} "Создать региональный проект"]]]]]
 
     [:div.container
      [:div.my-4.border-bottom.py-2
@@ -56,14 +58,13 @@
      (map-indexed
       (fn [idx item]^{:key idx}
         [:div.card
-         [:div.card-header [:h5.h3.mb-0 "Развитие экспорта медицинских услуг"]]
+         [:div.card-header [:h5.h3.mb-0 (:name item)]]
          [:div.card-body
           [:div.card-body
            [:div.d-flex.justify-content-between
             [:div.row.align-items-center
              [:div.col-auto
-              [:a.avatar.avatar-xl.rounded-circle
-               {:href "#"}
+              [:span.avatar.avatar-xl.rounded-circle
                [:img
                 {:src "http://localhost:8990/storage/download/test/1.png"
                  :alt "Image placeholder"}]]]
@@ -87,4 +88,4 @@
                                               :datasets [{:data            [(* 50 (* 2 (inc idx))) 500]
                                                           :label           "Users with address"
                                                           :backgroundColor ["#fba040" "#5e72e4"]}]}}]]]]]]]])
-      (range 3))]]))
+      regionals)]]))
