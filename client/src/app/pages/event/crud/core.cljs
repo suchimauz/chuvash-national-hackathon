@@ -60,7 +60,7 @@
       "Сохранить"]
      [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
-      "Отменить"]]]))
+      "Отменить"]]))
 
 (pages/reg-subs-page
  model/edit-page
@@ -77,4 +77,4 @@
       "Отменить"]
      [:span.pointer.btn.text-danger
       {:on-click #(rf/dispatch [::model/delete-request id])}
-      "Удалить"]]]))
+      "Удалить"]]))
