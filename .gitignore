@@ -1,6 +1,7 @@
 client/.cpcache
 client/build
-client/resources/public/js
+client/resources/public/js/out
+client/resources/public/js/app.js
 client/.nrepl-port
 pgdata/
 sql.sql

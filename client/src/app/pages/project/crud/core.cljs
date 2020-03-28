@@ -39,12 +39,7 @@
            [inputs/time-input form/path [:endDate] {:placeholder "ДД.ММ.ГГГГ"}]]]
          [:div.form-group
           [:label.form-control-label "Автор"]
-          [:select.form-control
-           {:data-toggle "select"}
-           [:option "Краснов"]
-           [:option "Багров"]
-           [:option "Федулов"]
-           [:option "Туктанов"]]]
+          [inputs/combobox form/path [:author]]]
          [:div.form-group
           [:label.form-control-label
            "Описание"]
