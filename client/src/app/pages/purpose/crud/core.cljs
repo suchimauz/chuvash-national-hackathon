@@ -3,7 +3,9 @@
             [app.pages.purpose.crud.model :as model]
             [app.pages.purpose.crud.form :as form]
             [re-frame.core :as rf]
-            [app.helpers :as helpers]))
+            [app.helpers :as helpers]
+            [app.form.inputs :as inputs]
+            [clojure.string :as str]))
 
 (def form
   [:div.card
@@ -15,14 +17,12 @@
        [:div.form-group
         [:label.form-control-label
          "Название"]
-        [:input#example2cols2Input.form-control
-         {:placeholder "Введите название", :type "text"}]]]
+        [inputs/input form/path [:name] {:placeholder "Введите название"}]]]
       [:div.col-md-6
        [:div.form-group
         [:label.form-control-label
          "Проект"]
-        [:input#example2cols2Input.form-control
-         {:placeholder "Здесь должен быть DROPDOWN", :type "text"}]]]]]]])
+        [inputs/input form/path [:project] {:placeholder "Здесь должен быть DROPDOWN"}]]]]]]])
 
 (def buttons
   [:div.card-body

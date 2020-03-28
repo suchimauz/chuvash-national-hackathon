@@ -42,7 +42,7 @@
 (rf/reg-fx
  :html-title
  (fn [title]
-   #?(:cljs (set! (.-title  js/document) (str  "РМИС" (when title (str " - " title)))))))
+   #?(:cljs (set! (.-title  js/document) (str  "Хакатон НацПроектов Чувашии" (when title (str " - " title)))))))
 
 (defn normalize-params [{:keys [o-params n-params]}]
   (let [op       (dissoc o-params :. :params)

@@ -63,7 +63,9 @@
         [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/create")} "Создать региональный проект"])]
      (map-indexed
       (fn [idx item]^{:key idx}
-        [:div.card
+        [:a.card {:href (str "#/project/" id "/regional/" (:id item))}
+         [:div.col-lg-6.col-5.text-right
+          [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" (:id item) "/edit")} "Редактировать"]]
          [:div.card-header [:h5.h3.mb-0 (:name item)]]
          [:div.card-body
           [:div.card-body
@@ -93,5 +95,6 @@
                                     :data    {:labels   ["Федеральный" "Региональные"]
                                               :datasets [{:data            [(* 50 (* 2 (inc idx))) 500]
                                                           :label           "Users with address"
-                                                          :backgroundColor ["#fba040" "#5e72e4"]}]}}]]]]]]]])
+                                                          :backgroundColor ["#fba040" "#5e72e4"]}]}}]]]]]]]
+         ])
       regionals)]]))
