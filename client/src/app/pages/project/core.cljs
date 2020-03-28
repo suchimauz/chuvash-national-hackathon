@@ -48,7 +48,7 @@
        [:div.col-lg-6.col-7
         [breadcrumb/component]]
        [:div.col-lg-6.col-5.text-right
-        [:a.btn.btn.btn-neutral {:href "#"} "Редактировать"]]]]]
+        [:a.btn.btn.btn-neutral {:href "#/project/create"} "Создать региональный проект"]]]]]
 
     [:div.container
      [:div.my-4.border-bottom.py-2
@@ -82,11 +82,7 @@
                                               :height "120px"}
                                     :type    "doughnut"
                                     :stacked true
-                                    :options
-                                    {:scales
-                                     {:xAxes [{:display    false
-                                               :scaleLabel {:labelString "Date"}}]}
-                                     :legend {:display false}}
+                                    :options {:legend {:display false}}
                                     :data    {:labels   ["Федеральный" "Региональные"]
                                               :datasets [{:data            [(* 50 (* 2 (inc idx))) 500]
                                                           :label           "Users with address"

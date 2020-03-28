@@ -22,8 +22,9 @@
         [:svg {:viewBox "0 0 10 100" :y "0" :x "0"}
          [:polygon.fill-white {:points "2560 0 2560 100 0 100"}]]]]
       [:div.container
-       [:div.my-4.border-bottom.py-2
-        [:h3.display-3 "Национальные проекты"]]
+       [:div.row.align-items-center.py-4.justify-content-between
+        [:h3.display-3 "Национальные проекты"]
+        [:a.btn.btn.btn-neutral {:href "#/project/create"} "Создать национальный проект"]]
        [:div.row
         (map-indexed
          (fn [idx item] ^{:key idx}
