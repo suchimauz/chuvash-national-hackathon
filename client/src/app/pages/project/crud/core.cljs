@@ -64,10 +64,10 @@
               [:div.row
                [:div.col.form-group
                 [:label.form-control-label "Дата начала"]
-                [inputs/time-input form/path [:startDate] {:placeholder "ДД.ММ.ГГГГ"}]]
+                [inputs/time-input form/path [:period :start] {:placeholder "ДД.ММ.ГГГГ"}]]
                [:div.col.form-group
                 [:label.form-control-label "Дата окончания"]
-                [inputs/time-input form/path [:endDate] {:placeholder "ДД.ММ.ГГГГ"}]]])
+                [inputs/time-input form/path [:period :end] {:placeholder "ДД.ММ.ГГГГ"}]]])
             [:div.form-group
              [:label.form-control-label "Автор"]
              [inputs/combobox form/path [:author]]

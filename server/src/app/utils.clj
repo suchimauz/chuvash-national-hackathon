@@ -43,7 +43,7 @@
                 ilike (concat (-> ilike
                                   (str/split #"[\s,\+]")
                                   (->> (map (comp hsql/raw
-                                               #(str "(" (resource-alias table :id) " || '' || " (resource-alias table :resource) "::text) ilike '%" % "%'"))))))
+                                               #(str "(" (name (resource-alias table :id)) " || '' || " (name (resource-alias table :resource)) "::text) ilike '%" % "%'"))))))
                 (dot-param? table params) (conj (dot-param? table params))
                 true vec)]
     (if (> (count conds) 1)

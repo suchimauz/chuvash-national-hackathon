@@ -16,8 +16,9 @@
             :img         {:type :string}
             :project     {:type :string}
             :category    {:type :string}
-            :startDate   {:type :string}
-            :endDate     {:type :string}}})
+            :period      {:type :form
+                          :fields {:start {:type :string}
+                                   :end   {:type :string}}}}})
 
 (def author-path [:form ::author])
 (def author
