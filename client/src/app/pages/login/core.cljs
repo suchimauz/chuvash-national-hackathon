@@ -25,7 +25,7 @@
          [:div.text-center.text-muted.mb-4
           [:small "Нет аккаунта? "]
           [:a.small {:href "#/register"} "Зарегистрируйтесь"]]
-         [:form
+         [:div
           [:div.form-group.mb-3
            [:div.input-group.input-group-merge.input-group-alternative
             [:div.input-group-prepend

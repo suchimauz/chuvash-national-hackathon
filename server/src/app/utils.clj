@@ -22,7 +22,7 @@
                     (filterv #(str/starts-with? % "."))
                     (map (fn [s] ["@@"
                                  (resource-alias rt :resource)
-                                 (hsql/raw (str "'$" s " == \"" ((keyword s) params) "\"'::jsonpath"))])))]
+                                 (hsql/raw (str "'$" s " == \"" (get params s) "\"'::jsonpath"))])))]
     (if (> (count params) 1)
       (into [:and] params)
       (when (seq params)
@@ -33,6 +33,6 @@
                 (:id params) (conj [:= (resource-alias table :id) id])
                 (dot-param? table params) (conj (dot-param? table params)))]
     (if (> (count conds) 1)
-      (into [:and] conds)
+      {:where (into [:and] conds)}
       (when (seq conds)
-        (first conds)))))
+        {:where (first conds)}))))
