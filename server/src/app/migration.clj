@@ -5,23 +5,26 @@
             [cheshire.core :as json]
             [app.db        :as db]
             (app.resources
-             [user :as user])))
+             [user :as user]
+             [project :as project])))
 
 (defn migrate [db table]
   (when-not (pg/table-exists? db (:table table))
-    (pg/create-table db table))
-  (when-not (:resource
-             (pg/query-first db
-              {:select [:*]
-               :from [:user]
-               :where ["@>"
-                       :resource
-                       (json/generate-string
-                        {:email "admin@admin.admin"})]}))
-    (pg/execute db "insert into \"user\" (resource) values (jsonb_build_object('email', 'admin@admin.admin', 'password', 'bcrypt+sha512$94630e02733d4aa27ea3804ac1cf232a$12$9465947ca3cba9f60e4652bf2a2bf1b343be798dd89d2440'))")))
+    (pg/create-table db table)))
 
 (defn migration [db]
-  (migrate db user/table))
+  (when-not
+      (:resource
+       (pg/query-first db
+        {:select [:*]
+         :from [:user]
+         :where ["@>"
+                 :resource
+                 (json/generate-string
+                  {:email "admin@admin.admin"})]}))
+    (pg/execute db "insert into \"user\" (resource) values (jsonb_build_object('email', 'admin@admin.admin', 'password', 'bcrypt+sha512$94630e02733d4aa27ea3804ac1cf232a$12$9465947ca3cba9f60e4652bf2a2bf1b343be798dd89d2440'))"))
+  (migrate db user/table)
+  (migrate db project/table))
 
 (comment
   (pg/drop-table (db/connect) user/table))

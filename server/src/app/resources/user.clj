@@ -5,9 +5,8 @@
 (def table
   (u/new-table
    :User
-   (schema/compile
-    {:type "object"
-     :properties {:email {:type :varchar
-                          :required true}
-                  :password {:type :varchar
-                             :required true}}})))
+   {:type "object"
+    :properties {:email {:type :string
+                         :required true}
+                 :password {:type :string
+                            :required true}}}))
