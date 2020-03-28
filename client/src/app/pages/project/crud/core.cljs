@@ -39,7 +39,7 @@
                                                       {:success ::form/set-a-img}])}]
                           [:input.form-control.custom-file-label
                            {:placeholder (or (last (str/split @img #"/")) "Укажите фон")}]]]
-                        [:div.col-1
+                        [:div.col-auto
                          [:img.avatar {:src (str "http://localhost:8990" @img)}]]]]]))
            :title "Создание автора"
            :accept {:text "Сохранить"
@@ -68,14 +68,18 @@
                [:div.col.form-group
                 [:label.form-control-label "Дата окончания"]
                 [inputs/time-input form/path [:period :end] {:placeholder "ДД.ММ.ГГГГ"}]]])
-            [:div.form-group
-             [:label.form-control-label "Автор"]
-             [inputs/combobox form/path [:author]]
-             [:span.pointer.btn.btn-success
-              {:on-click #(do
-                            (rf/dispatch [:zf/init form/author-path form/author])
-                            (rf/dispatch (modal-author)))}
-              "Добавить"]]
+            [:div.row
+             [:div.form-group.col
+              [:label.form-control-label "Автор"]
+              [inputs/combobox form/path [:author]]]
+             [:div.form-group.col-auto
+              [:label.form-control-label.pt-3 ""]
+              [:div
+               [:div.pointer.btn.btn-success
+                {:on-click #(do
+                              (rf/dispatch [:zf/init form/author-path form/author])
+                              (rf/dispatch (modal-author)))}
+                "Добавить"]]]]
 
             [:div.form-group
              [:label.form-control-label
@@ -90,7 +94,7 @@
                                            {:success ::form/set-img}])}]
                [:input.form-control.custom-file-label
                 {:placeholder (or (last (str/split @img #"/")) "Укажите фон")}]]]
-             [:div.col-1
+             [:div.col-auto
               [:img.avatar {:src (str "http://localhost:8990" @img)}]]]]]]]]])))
 
 (defn header [{:keys [header]}]
@@ -123,7 +127,7 @@
    [:<>
     [header page]
     [form]
-    [:div.card-body
+    [:div.container.card-body
      [:span.pointer.btn.btn-success
       {:on-click #(rf/dispatch [::model/edit-request])}
       "Сохранить"]
@@ -140,7 +144,7 @@
    [:<>
     [header page]
     [form]
-    [:div.card-body
+    [:div.container.card-body
      [:span.pointer.btn.btn-success
       {:on-click #(rf/dispatch [::model/create-regional-request])}
       "Сохранить"]
@@ -154,7 +158,7 @@
    [:<>
     [header page]
     [form]
-    [:div.card-body
+    [:div.container.card-body
      [:span.pointer.btn.btn-success
       {:on-click #(rf/dispatch [::model/edit-regional-request])}
       "Сохранить"]

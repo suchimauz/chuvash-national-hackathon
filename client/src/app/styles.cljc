@@ -8,6 +8,7 @@
   (styles
    [:body {:color "#333" :font-size "15px" :font-family "GothamPro" :height "100%"}
     [:.app
+     [:.form-control {:color "#333"}]
      [:.flashes {:position "fixed" :bottom "20px" :right "20px" :max-width "800px" :z-index 200}
       [:alert-notify {:max-width "800px"}]
       [:ul {:padding-left "20px"}]]
