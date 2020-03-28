@@ -44,7 +44,8 @@
 (rf/reg-event-fx
  ::set-img
  (fn [_ [_ _ file-meta]]
-   {:dispatch [:zf/set-value path [:img] (:url file-meta)]}))
+   {:dispatch-n [[:zf/set-value path [:img] (:url file-meta)]
+                 [:zframes.flash/remove-flash :file-load]]}))
 
 (rf/reg-event-fx
  ::init

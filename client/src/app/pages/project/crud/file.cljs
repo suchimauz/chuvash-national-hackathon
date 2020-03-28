@@ -34,4 +34,5 @@
 (rf/reg-event-fx
  ::error
  (fn []
-   {:dispatch [:flash/danger {:msg "Файл не загружен"}]}))
+   {:dispatch-n [[:zframes.flash/remove-flash :file-load]
+                 [:flash/danger {:msg "Файл не загружен"}]]}))
