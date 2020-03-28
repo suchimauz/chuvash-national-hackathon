@@ -13,12 +13,6 @@
 (defn validation [body {validator :validator}]
   (schema/validate validator body))
 
-(defn row-to-resource [res]
-  (-> res
-      (assoc-in [:resource :id] (:id res))
-      (assoc-in [:resource :resourceType] (:resource_type res))
-      :resource))
-
 (defn -get [table {:keys [params] db :db/connection {:keys [id]} :path-params}]
   (let [query (merge
                {:select [(keyword (str (name (:table table)) ".*"))]
@@ -26,24 +20,26 @@
                 :limit  (or (:count params) 100)}
                (utils/where-params table params))]
     (if id
-      (let [res (pg/query-first db (assoc query :where [:= :id id]))]
+      (let [res (pg/query-first db (assoc query :where [:= :id id]))
+            res (when res (first (utils/assoc-params db params [res])))]
         (if-not res
           (res-not-found id)
-          (ok (row-to-resource res))))
+          (ok (utils/row-to-resource res))))
       (ok (->> query
                (pg/query db)
-               (map row-to-resource))))))
+               (map utils/row-to-resource)
+               (utils/assoc-params db params))))))
 
 (defn -post [table {:keys [body] db :db/connection}]
   (let [result (validation body table)]
     (if (empty? (:errors result))
-      (created (row-to-resource (pg/create db table {:resource (dissoc body :id :resourceType)})))
+      (created (utils/row-to-resource (pg/create db table {:resource (dissoc body :id :resourceType)})))
       (bad-request (:errors result)))))
 
 (defn -put [table {:keys [body] db :db/connection {:keys [id]} :path-params}]
   (let [result (validation body table)]
     (if (empty? (:errors result))
-      (ok (row-to-resource (pg/update db table {:id id :resource (dissoc body :id :resourceType)})))
+      (ok (utils/row-to-resource (pg/update db table {:id id :resource (dissoc body :id :resourceType)})))
       (bad-request (:errors result)))))
 
 (defn -delete [table {:keys [params] db :db/connection {:keys [id]} :path-params}]

@@ -1,5 +1,6 @@
 (ns app.pages.project.crud.model
   (:require [re-frame.core :as rf]
+            [app.helpers :as helpers]
             [app.pages.project.crud.form :as form]))
 
 (def create-page ::create)
@@ -74,7 +75,7 @@
    (case phase
      :init
      {:dispatch [::form/init {:data {:category "regional"
-                                     :project {:id id
+                                     :project {:id (helpers/parse-int id)
                                                :resourceType "Project"}}}]}
      :deinit
      {:db (dissoc db pid)}

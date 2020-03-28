@@ -1,10 +1,17 @@
 (ns app.utils
   (:require [clojure.string :as str]
+            [clj-pg.honey :as pg]
             [honeysql.core :as hsql]))
+
+(defn row-to-resource [res]
+  (-> res
+      (assoc-in [:resource :id] (:id res))
+      (assoc-in [:resource :resourceType] (:resource_type res))
+      :resource))
 
 (defn reference-type [& enum]
   {:type       :object
-   :properties {:id           {:type :string
+   :properties {:id           {:type :integer
                                :required true}
                 :resourceType {:type :string
                                :enum enum
@@ -22,7 +29,26 @@
 
 (defn resource-alias [rt key]
   (keyword
-   (str (name rt) "." (name key))))
+   (str (str/lower-case (name rt)) "." (name key))))
+
+(defn assoc-params [db params rows]
+  (if-let [assoc (:assoc params)]
+    (map (fn [{table :resourceType id :id :as res}]
+           (reduce (fn [res a]
+                  (let [path (-> a
+                                 (str/split #"\.")
+                                 (->> (mapv keyword)))
+                        object (get-in res path)
+                        assoc-resource (when (and (:id object) (:resourceType object))
+                                         (pg/query-first db
+                                          {:select [(resource-alias (:resourceType object) :*)]
+                                           :from [(keyword (str/lower-case (name (:resourceType object))))]
+                                           :where [:= (resource-alias (:resourceType object) :id) (:id object)]}))]
+                    (if assoc-resource
+                      (assoc-in res (conj path :resource) (row-to-resource assoc-resource)) res)))
+                res (str/split assoc #"\,")))
+         rows)
+    rows))
 
 (defn dot-param? [rt params]
   (let [params (->> params
