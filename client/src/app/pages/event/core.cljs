@@ -28,4 +28,4 @@
       [:div.card-header.bg-transparent.row.align-items-center
        {:style {:justify-content :space-between}}
        [:h3.mb-0 "Объекты"]
-       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/create")} "Добавить объект"]]]]]))
+       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/" event-id "/create")} "Добавить объект"]]]]]))
