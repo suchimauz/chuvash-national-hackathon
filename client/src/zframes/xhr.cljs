@@ -111,8 +111,7 @@
                                                 nil)
                                               (if-let [msg (:message data)]
                                                 [:div msg])]
-                                       :title [:div "Ошибка: " [:b (.-status resp)] " " (.-statusText resp)]
-                                       }]))))]
+                                       :title [:div "Ошибка: " [:b (.-status resp)] " " (.-statusText resp)]}]))))]
                             (mapv #(when % (rf/dispatch %))))))
                    ;; No json
                    (fn [doc]
@@ -124,29 +123,12 @@
                    (rf/dispatch
                     [:flash/danger
                      {:msg  [:div
-                             [:div "Ошибка: " [:b (.-status err)] " " (.-statusText err)]
                              (case (.-status err)
                                500 [:div "Внутренняя ошибка сервера"]
                                404 [:div "Не верный адрес запроса"]
                                422 [:div "Не валидный запрос"]
-                               [:div "Неопознанная ошибка"])
-                             [:div
-                              [:div.btn-sm.btn.mt-2.btn-outline-secondary.btn-block
-                               {:title "Отправить отчет об ошибке"
-
-                                :on-click (fn [e]
-                                            (.then (.text err)
-                                                   (fn [err-text]
-                                                     (rf/dispatch
-                                                      [:xhr/error-report
-                                                       {:msg (str "------------------------------\n"
-                                                                  "<b>Error report:</b> Status " (.-status err) "\n"
-                                                                  "<b>Instance:</b> " base-url "\n"
-                                                                  "<b>Screen:</b> " screen "\n"
-                                                                  "<b>Req url:</b> " url "\n"
-                                                                  "<b>Correlation-id:</b> " x-correlation-id "\n"
-                                                                  "<pre><code>" (subs (str err-text) 0 (if (> (count (str err-text)) 1000) 1000 (count (str err-text)))) "</code></pre>")}]))))}
-                               "Сообщить об ошибке"]]]}]))
+                               [:div "Неопознанная ошибка"])]
+                      :title [:div "Ошибка: " [:b (.-status resp)] " " (.-statusText resp)]}]))
                  (rf/dispatch [(:event error) (merge error {:request opts :error err})])))))))
 
 (rf/reg-event-fx

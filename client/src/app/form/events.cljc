@@ -27,7 +27,7 @@
  (fn [{db :db} [_ {data :data} {:keys [form-path path]}]]
    (let [items (map
                 (fn [item]
-                  {:value {:id (:id item)
+                  {:value {:id (helpers/parse-int (:id item))
                            :display (:name item)
                            :resourceType (:resourceType item)}
                    :display [:div.align-items-center
@@ -43,7 +43,7 @@
    (let [items (map
                 (fn [item]
                   (let [fio (helpers/fio (:name item))]
-                    {:value   {:id           (:id item)
+                    {:value   {:id           (helpers/parse-int (:id item))
                                :display      fio
                                :resourceType (:resourceType item)}
                      :display [:div.row.align-items-center

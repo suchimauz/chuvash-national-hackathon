@@ -60,9 +60,7 @@
     (merge
      {:db (assoc-in db path form)}
      (if (empty? errors)
-       (cb (cond-> value
-             (-> value :author :id)
-             (update-in [:author :id] str)))
+       (cb value)
        #?(:clj  (println errors)
           :cljs (.warn js/console "Form errors: " (clj->js errors)))))))
 
@@ -71,6 +69,6 @@
     (merge
      {:db (assoc-in db author-path form)}
      (if (empty? errors)
-       (cb (zm/export value au-mapper) )
+       (cb (zm/export value au-mapper))
        #?(:clj  (println errors)
           :cljs (.warn js/console "Form errors: " (clj->js errors)))))))

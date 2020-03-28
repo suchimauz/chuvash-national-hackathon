@@ -55,9 +55,18 @@
                     keys
                     (map name)
                     (filterv #(str/starts-with? % "."))
-                    (map (fn [s] ["@@"
-                                 (resource-alias rt :resource)
-                                 (hsql/raw (str "'$" s " == \"" (get params s) "\"'::jsonpath"))])))]
+                    (map (fn [s] [:or
+                                 [:=
+                                  (hsql/call
+                                   :cast
+                                   (hsql/call :jsonb_path_query_first
+                                              (resource-alias rt :resource)
+                                              (hsql/raw (str "'$" s "'")))
+                                   :text)
+                                  (hsql/raw (str "'" (get params s) "'"))]
+                                 ["@@"
+                                  (resource-alias rt :resource)
+                                  (hsql/raw (str "'$" s " == \"" (get params s) "\"'::jsonpath"))]])))]
     (if (> (count params) 1)
       (into [:and] params)
       (when (seq params)
