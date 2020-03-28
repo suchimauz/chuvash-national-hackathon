@@ -74,12 +74,11 @@
               [inputs/combobox form/path [:author]]]
              [:div.form-group.col-auto
               [:label.form-control-label.pt-3 ""]
-              [:div
-               [:div.pointer.btn.btn-success
+              [:div.pt-1.text-primary.pointer
+               [:span.mega-octicon.octicon-plus
                 {:on-click #(do
                               (rf/dispatch [:zf/init form/author-path form/author])
-                              (rf/dispatch (modal-author)))}
-                "Добавить"]]]]
+                              (rf/dispatch (modal-author)))}]]]]
 
             [:div.form-group
              [:label.form-control-label
