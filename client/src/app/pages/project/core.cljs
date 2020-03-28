@@ -26,7 +26,7 @@
           [:div {:style {:position "absolute"
                          :color "#fff"
                          :margin "auto"
-                         :height "38%"
+                         :height "45%"
                          :width "30%"
                          :font-size "35px"
                          :font-weight "bold"
@@ -56,13 +56,21 @@
               [:th "Факт"]]]
             [:tbody
              [:tr
-              [:th {:style {:color "#fba000" }} "Федеральный"]
-              [:td {:style {:color "#fba000" }} "100000"]
-              [:td {:style {:color "#fdc488" }} "200000"]]
+              [:th {:style {:color "red"}} "Федеральный"]
+              [:td {:style {:color "red"}} (get-in payments ["Федеральный" :total] 0)]
+              [:td {:style {:color "red"}} (get-in payments ["Федеральный" :total] 0)]]
              [:tr
-              [:th {:style {:color "#3853df" }}"Региональные"]
-              [:td {:style {:color "#3853df" }} "100000"]
-              [:td {:style {:color "#8693db" }} "200000"]]]]]]])]
+              [:th {:style {:color "blue"}} "Региональный"]
+              [:td {:style {:color "blue"}} (get-in payments ["Региональный" :total] 0)]
+              [:td {:style {:color "blue"}} (get-in payments ["Региональный" :total] 0)]]
+             [:tr
+              [:th {:style {:color "purple"}} "Муниципальный"]
+              [:td {:style {:color "purple"}} (get-in payments ["Муниципальный" :total] 0)]
+              [:td {:style {:color "purple"}} (get-in payments ["Муниципальный" :total] 0)]]
+             [:tr
+              [:th {:style {:color "#fba000"}} "Внебюджет"]
+              [:td {:style {:color "#fba000"}} (get-in payments ["Внебюджет" :total] 0)]
+              [:td {:style {:color "#fba000"}} (get-in payments ["Внебюджет" :total] 0)]]]]]]])]
      [:div.container-fluid
       [:div.row.align-items-center.py-4
        [:div.col-lg-6.col-7
@@ -211,8 +219,13 @@
        (map-indexed
         (fn [idx item] ^{:key idx}
           [:div.list-group-item.list-group-item-action.pointer
-           {:style    {:width "100%"}
+           {:style    {:width "100%" :display :flex :justify-content :space-between}
             :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" (:id item))}])}
-           [:small.text-muted.font-weight-bold (:date item)]
-           [:h5.mt-3.mb-0 (:name item)]])
+           [:div
+            [:small.text-muted.font-weight-bold (get-in item [:period :end])]
+            [:h5.mb-0 (:name item)]]
+           [:div
+            [:span.font-weight-bold (get-in item [:task :target]) " " (get-in item [:task :unit])]
+            [:br]
+            [:span.text-muted.font-weight-bold (get-in item [:task :complete]) " " (get-in item [:task :unit])]]])
         events)]]]]))

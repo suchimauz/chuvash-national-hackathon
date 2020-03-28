@@ -71,11 +71,6 @@
                          :req-id :event}]}
      nil)))
 
-(defn event-item-map [{:keys [name id period amount task]}]
-  {:id id
-   :name name
-   :date (helpers/date-iso->rus-format (:end period))})
-
 (rf/reg-sub
  show-regional
  :<- [:xhr/response :regional]
@@ -84,6 +79,4 @@
  (fn [[{project :data} {purposes :data} {events :data}] _]
    {:project  project
     :purposes purposes
-    :events   (map
-               event-item-map
-               events)}))
+    :events   events}))

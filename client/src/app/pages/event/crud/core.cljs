@@ -64,39 +64,48 @@
          [:form
           [:div.form-group
            [:label.form-control-label
-            "Название"]
-           [inputs/input form/path [:name] {:placeholder "Введите название"}]]
-
-          [:div.row
-           [:div.form-group.col
-            [:label.form-control-label "Обьекты"]]
-           [:div.form-group.col-auto
-            [:label.form-control-label.pt-3 ""]
-            [:div.pt-1.text-primary.pointer
-             [:span.mega-octicon.octicon-plus
-              {:on-click #(do
-                            (rf/dispatch [:zf/init form/object-path form/object])
-                            (rf/dispatch (modal-author)))}]]]]
-
+            "Цель"]
+           [inputs/input form/path [:name] {:placeholder "Введите цель"}]
+           [:div.row
+            [:div.col-sm-5
+             [:small "Кол-во"]
+             [inputs/input form/path [:task :target] {:placeholder "100"}]]
+            [:div.col-sm-5
+             [:small "Текущее кол-во"]
+             [inputs/input form/path [:task :complete] {:placeholder "20"}]]
+            [:div.col-sm-2
+             [:small "Ед.изм."]
+             [inputs/input form/path [:task :unit] {:placeholder "Например: шт."}]]]]
           [:div.form-group
-           [:label.form-control-label "Цель"]
-           [inputs/combobox form/path [:purpose]]]
+           [:div.form-control-label
+            "Бюджет - млн.руб."]
+           [:div.row
+            [:div.col-sm-6
+             [:small "Федеральный"]
+             [inputs/input form/path [:payment :federal] {:placeholder "Например: 321,1"}]]
+            [:div.col-sm-6
+             [:small "Региональный"]
+             [inputs/input form/path [:payment :regional] {:placeholder "Например: 100,5"}]]
+            [:div.col-sm-6
+             [:small "Муниципальный"]
+             [inputs/input form/path [:payment :municipal] {:placeholder "Например: 42,32"}]]
+            [:div.col-sm-6
+             [:small "Внебюджет"]
+             [inputs/input form/path [:payment :other] {:placeholder "Например: 10"}]]]]
           [:div.form-group
            [:label.form-control-label
             "Описание"]
            [inputs/input form/path [:description] {:placeholder "Введите описание"}]]
           [:div.form-group
            [:label.form-control-label
-            "Дата начала"]
-           [inputs/time-input form/path [:period :start] {:placeholder "Введите дату начала"}]]
-          [:div.form-group
-           [:label.form-control-label
-            "Дата завершения"]
-           [inputs/time-input form/path [:period :end] {:placeholder "Введите дату завершения"}]]
-          [:div.form-group
-           [:label.form-control-label
-            "Бюджет"]
-           [inputs/input form/path [:amount] {:placeholder "Выделенный бюджет"}]]]]]]]]))
+            "Дата"]
+           [:div.row
+            [:div.col-sm-6
+             [:small "Начало"]
+             [inputs/time-input form/path [:period :start] {:placeholder "Введите дату начала"}]]
+            [:div.col-sm-6
+             [:small "Конец"]
+             [inputs/time-input form/path [:period :end] {:placeholder "Введите дату завершения"}]]]]]]]]]]))
 
 (pages/reg-subs-page
  model/create-page

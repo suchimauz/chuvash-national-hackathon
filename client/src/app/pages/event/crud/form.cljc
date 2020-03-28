@@ -11,10 +11,18 @@
             :id          {:type :string}
             :project     {:type :object}
             :description {:type :string}
+            :payment     {:type   :form
+                          :fields {:regional  {:type :string}
+                                   :municipal {:type :string}
+                                   :federal   {:type :string}
+                                   :other     {:type :string}}}
+            :task        {:type :form
+                          :fields {:unit {:type :string}
+                                   :target {:type :string}
+                                   :complete {:type :string}}}
             :period      {:type   :form
                           :fields {:start {:type :string}
-                                   :end   {:type :string}}}
-            :amount      {:type :string}}})
+                                   :end   {:type :string}}}}})
 
 (def object-path [:form ::object])
 (def object
