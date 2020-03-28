@@ -26,10 +26,10 @@
                 :limit  (or (:count params) 100)}
                (utils/where-params table params))]
     (if id
-      (let [res (:resource (pg/query-first db (assoc query :where [:= :id id])))]
+      (let [res (pg/query-first db (assoc query :where [:= :id id]))]
         (if-not res
           (res-not-found id)
-          (ok res)))
+          (ok (row-to-resource res))))
       (ok (->> query
                (pg/query db)
                (map row-to-resource))))))
