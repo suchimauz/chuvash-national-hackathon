@@ -1,16 +1,11 @@
-(ns app.components.card.core)
+(ns app.components.card.core
+  (:require [clojure.string :as str]))
 
-(defn component [{:keys [href name]}]
-  [:a.card.card-stats {:href href}
-   [:div.card-body
-    [:div.row
-     [:div.col
-      [:h5.card-title.text-uppercase.text-muted.mb-0
-       "Total traffic"]
-      [:span.h2.font-weight-bold.mb-0 name]]
-     [:div.col-auto
-      [:div.icon.icon-shape.bg-gradient-red.text-white.rounded-circle.shadow
-       [:i.ni.ni-active-40]]]]
-    [:p.mt-3.mb-0.text-sm
-     [:span.text-success.mr-2 [:i.fa.fa-arrow-up] " 3.48%"]
-     [:span.text-nowrap "Since last month"]]]])
+(defn component [{:keys [href name img]}]
+  [:a.card.bg-dark.text-white.border-0 {:href href}
+   [:img.card-img {:style {:height "200px"}
+                   :src (str "http://localhost:8990" img)}]
+   [:div.card-img-overlay.d-flex.align-items-center
+    [:span.mask.bg-gradient-default.opacity-5]
+    [:div {:style {:z-index "100"}}
+     [:h5.h2.card-title.text-white.mb-2 name]]]])

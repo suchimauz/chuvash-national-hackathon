@@ -149,3 +149,13 @@
  (fn [_ [_ _ uri]]
    {:zframes.redirect/redirect uri
     :flash/flash [:success {:msg "Проект успешно удалён" :title "Успешно!"}]}))
+
+
+(rf/reg-event-fx
+ ::create-author
+ (fn [{db :db} _]
+   (form/eval-author db
+                     (fn [value]
+                       {:xhr/fetch {:uri    "/Author"
+                                    :method :POST
+                                    :body   value}}))))

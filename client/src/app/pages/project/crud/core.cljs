@@ -7,6 +7,45 @@
             [clojure.string :as str]
             [app.form.inputs :as inputs]))
 
+(defn modal-author []
+  [:modal {:style {:max-width "800px"}
+           :body (let [img (rf/subscribe [:zf/get-value form/author-path [:photo]])]
+                   (fn []
+                     [:div.container
+                      [:form
+                       [:div.row
+                        [:div.form-group.col
+                         [:label.form-control-label
+                          "Фамилия"]
+                         [inputs/input form/author-path [:surname]]]
+                        [:div.form-group.col
+                         [:label.form-control-label
+                          "Имя"]
+                         [inputs/input form/author-path [:name]]]
+                        [:div.form-group.col
+                         [:label.form-control-label
+                          "Отчество"]
+                         [inputs/input form/author-path [:last-name]]]]
+                       [:div.form-group
+                        [:label.form-control-label
+                         "Должность"]
+                        [inputs/input form/author-path [:position]]]
+                       [:div.row
+                        [:div.col
+                         [:div.custom-file
+                          [:input.custom-file-input
+                           {:type "file"
+                            :on-change #(rf/dispatch [::file/upload (-> % .-target .-files array-seq first)
+                                                      {:success ::form/set-a-img}])}]
+                          [:input.form-control.custom-file-label
+                           {:placeholder (or (last (str/split @img #"/")) "Укажите фон")}]]]
+                        [:div.col-1
+                         [:img.avatar {:src (str "http://localhost:8990" @img)}]]]]]))
+           :title "Создание автора"
+           :accept {:text "Сохранить"
+                    :fn (fn []
+                          (rf/dispatch [::model/create-author]))}}])
+
 (defn form []
   (let [category (rf/subscribe [:zf/get-value form/path [:category]])
         img      (rf/subscribe [:zf/get-value form/path [:img]])]
@@ -31,7 +70,13 @@
                 [inputs/time-input form/path [:endDate] {:placeholder "ДД.ММ.ГГГГ"}]]])
             [:div.form-group
              [:label.form-control-label "Автор"]
-             [inputs/combobox form/path [:author]]]
+             [inputs/combobox form/path [:author]]
+             [:span.pointer.btn.btn-success
+              {:on-click #(do
+                            (rf/dispatch [:zf/init form/author-path form/author])
+                            (rf/dispatch (modal-author)))}
+              "Добавить"]]
+
             [:div.form-group
              [:label.form-control-label
               "Описание"]
@@ -41,7 +86,8 @@
               [:div.custom-file
                [:input#customFileLang.custom-file-input
                 {:lang "en", :type "file"
-                 :on-change #(rf/dispatch [::file/upload (-> % .-target .-files array-seq first)])}]
+                 :on-change #(rf/dispatch [::file/upload (-> % .-target .-files array-seq first)
+                                           {:success ::form/set-img}])}]
                [:input.form-control.custom-file-label
                 {:placeholder (or (last (str/split @img #"/")) "Укажите фон")}]]]
              [:div.col-1

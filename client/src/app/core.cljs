@@ -9,6 +9,7 @@
             [zframes.cookies]
             [zframes.xhr]
             [zframes.file]
+            [zframes.modal :as modal]
             [zframes.storage]
             [zframes.auth :as auth]
             [zframes.window-location]
@@ -64,6 +65,7 @@
          flashes/styles
          [navbar/component]
          [content page params]
+         [modal/modal]
          [flashes/flashes]]))))
 
 (defn ^:export mount []

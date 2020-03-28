@@ -13,7 +13,7 @@
 
 (rf/reg-event-fx
  ::upload
- (fn [_ [_ file]]
+ (fn [_ [_ file {:keys [success]}]]
    (let [folder "project"]
      (letfn [(make-attachment [file]
                {:url         (str "/storage/download/" folder "/" (file-name file))
@@ -27,7 +27,7 @@
                       :name    (file-name file)
                       :folder  folder
                       :body    file
-                      :success {:event  :app.pages.project.crud.form/set-img
+                      :success {:event  success
                                 :params (make-attachment file)}
                       :error   {:event ::error}}}))))
 

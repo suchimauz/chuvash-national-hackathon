@@ -14,42 +14,23 @@
 (defn modal []
   (let [modal* (rf/subscribe [:modal])]
     (fn []
-      [:div.zmodal
-       (when-let [modal @modal*]
-         [:div {:style {:position "fixed"
-                        :height "100%"
-                        :top 0
-                        :width "100%"
-                        :background-color "rgba(0, 0, 0, 0.5)"
-                        :z-index "99"}
-                :on-click (when-not (:persistent modal) #(rf/dispatch [:modal nil]))}
-          [:div#exampleModalCenter.modal-fade {:style {:transition "opacity .15s linear"}}
-           [:div.modal-dialog.modal-dialog-centered {:role "document"
-                                                     :style {:justify-content "center"}}
-            [:div.modal-content.p-2 {:style (merge {:width "auto"} (:style modal))}
-             [:div.modal-header.border-0.pb-0
-              [:h2.pt-2
-               (:title modal)]
-              [:button.close {:type "button"
-                              :on-click #(do (when-let [close (:close modal)] (close))
-                                             (rf/dispatch [:modal nil]))}
-               [:span "×"]]]
-             [:div.modal-body (:body modal)]
-             (when (or (:accept modal) (:cancel modal))
-               [:div.btn-component>div.col-sm.pb-4
-
-                (when-let [accept (:accept modal)]
-                  [:button.btn {:class (or (:class accept) "save")
-                                :type "button"
-                                :on-click #(do (when-let [accept-fn (:fn accept)] (accept-fn))
-                                               (when-not (:validation modal)
-                                                 (rf/dispatch [:modal nil])))}
-                   (:text accept)])
-                (when-let [cancel (:cancel modal)]
-                  [:button.btn {:class (or (:class cancel) "cancel") :type "button"
-                                       :on-click #(do (when-let [cancel-fn (:fn cancel)] (cancel-fn))
-                                                      (rf/dispatch [:modal nil]))}
-                   (:text cancel)])])]]]])])))
+      (when-let [modal @modal*]
+        [:div.modal.fade.show.d-block
+         [:div.modal-dialog.modal-dialog-centered {:style (:style modal)}
+          [:div.modal-content
+           [:div.modal-header
+            [:h6#modal-title-default.modal-title (:title modal)]
+            [:button.close {:type "button"
+                            :on-click #(do (when-let [close (:close modal)] (close))
+                                           (rf/dispatch [:modal nil]))}
+             [:span "×"]]]
+           [(:body modal)]
+           [:div.modal-footer.align-self-start
+            (when-let [accept (:accept modal)]
+              [:button.btn.btn-primary {:on-click #(do (when-let [accept-fn (:fn accept)] (accept-fn))
+                                                       (when-not (:validation modal)
+                                                         (rf/dispatch [:modal nil])))}
+               (:text accept)])]]]]))))
 
 (defn confirm-delete [dispatch]
   {:title      "Подтвердите действие"
