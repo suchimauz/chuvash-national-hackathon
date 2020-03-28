@@ -18,12 +18,14 @@
        [:h1.display-4.text-white name]
        [:h1.display-2.text-white header]
        [:p.text-white.mt-0.mb-5 (:description project)]]]
-     [:div.container-fluid
+     [:div.container-fluid.d-flex.justify-content-end
       [:div.row.align-items-center.py-4
-       [:div.col-lg-6.col-7
-        #_[breadcrumb/component-with-sub]
-        ;; exception - :href is not ISeqable
-        ]
        (when auth?
          [:div.col-lg-6.col-5.text-right
-          [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" reg-id "/event/" event-id "/edit")} "Редактировать"]])]]]]))
+          [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" reg-id "/event/" event-id "/edit")} "Редактировать"]])]]]
+    [:div.container
+     [:div
+      [:div.card-header.bg-transparent.row.align-items-center
+       {:style {:justify-content :space-between}}
+       [:h3.mb-0 "Объекты"]
+       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/create")} "Добавить объект"]]]]]))
