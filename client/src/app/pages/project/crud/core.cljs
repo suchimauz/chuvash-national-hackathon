@@ -79,7 +79,24 @@
                 {:on-click #(do
                               (rf/dispatch [:zf/init form/author-path form/author])
                               (rf/dispatch (modal-author)))}]]]]
-
+            (when (#{"regional"} @category)
+              [:div.form-group
+               [:div.form-control-label
+                "Бюджет - млн.руб."]
+               [:div.row
+                [:div.col-sm-6
+                 [:small "Федеральный"]
+                 [inputs/input form/path [:payment :federal] {:placeholder "Например: 321,1"}]]
+                [:div.col-sm-6
+                 [:small "Региональный"]
+                 [inputs/input form/path [:payment :regional] {:placeholder "Например: 100,5"}]]
+                [:div.col-sm-6
+                 [:small "Муниципальный"]
+                 [inputs/input form/path [:payment :municipal] {:placeholder "Например: 42,32"}]]
+                [:div.col-sm-6
+                 [:small "Внебюджет"]
+                 [inputs/input form/path [:payment :other] {:placeholder "Например: 10"}]]
+                ]])
             [:div.form-group
              [:label.form-control-label
               "Описание"]

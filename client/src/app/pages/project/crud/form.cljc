@@ -15,6 +15,11 @@
             :author      {:type      :object
                           :display-paths [[:display]]
                           :on-search ::ze/search-author}
+            :payment     {:type   :form
+                          :fields {:regional  {:type :string}
+                                   :municipal {:type :string}
+                                   :federal   {:type :string}
+                                   :other     {:type :string}}}
             :img         {:type :string}
             :project     {:type :string}
             :category    {:type :string}

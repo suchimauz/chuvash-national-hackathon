@@ -2,6 +2,7 @@
   (:require [reitit.ring :as reitit]
             [app.actions :as action]
             [app.auth :as auth]
+            [app.report :as report]
             (app.resources
              [purpose :as purpose]
              [subscriber :as subscriber]
@@ -44,5 +45,6 @@
                      :delete {:handler (partial action/-delete object/table)}}]
      ["/Subscriber" {:post {:handler (partial action/-post subscriber/table)}}]
      ["/Subscriber/:id" {:delete {:handler (partial action/-delete object/table)}}]
-     ["/authorize" {:post {:handler (fn [req] (auth/authorize req))}}]])
+     ["/authorize" {:post {:handler (fn [req] (auth/authorize req))}}]
+     ["/report/:id" {:get {:handler (fn [req] (report/report req))}}]])
    (constantly {:status 404, :body {:error {:message "Route not found"}}})))

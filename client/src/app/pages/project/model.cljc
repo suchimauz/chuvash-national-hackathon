@@ -24,17 +24,35 @@
      {:xhr/fetch [{:uri (str "/Project/" id)
                    :req-id pid}
                   {:uri "/Project"
-                   :params {:.project.id id}
-                   :req-id ::show-regional}]}
+                   :params {:.project.id id
+                            :assoc "author"}
+                   :req-id ::show-regional}
+                  {:uri "/report/national-project-payment-sum"
+                   :params {:id id}
+                   :req-id ::payments}]}
+     :deinit
+     {:db (dissoc db pid)}
      nil)))
+
+(defn payment-name-mapping [{:keys [federal regional municipal other]}]
+  (cond-> {}
+    federal   (assoc "Федеральный" {:total (helpers/parse-float federal) :color "red"})
+    regional  (assoc "Региональный" {:total (helpers/parse-float regional) :color "blue"})
+    municipal (assoc "Муниципальный" {:total (helpers/parse-float municipal) :color "purple"})
+    other     (assoc "Внебюджет" {:total (helpers/parse-float other) :color "#fba000"})))
 
 (rf/reg-sub
  show-page
  :<- [:xhr/response show-page]
  :<- [:xhr/response ::show-regional]
- (fn [[{national :data} {regionals :data}] _]
-   {:national  national
-    :regionals regionals}))
+ :<- [:xhr/response ::payments]
+ (fn [[{national :data} {regionals :data} {payments :data}] _]
+   {:national national
+    :payments (payment-name-mapping payments)
+    :regionals (map
+                (fn [r]
+                  (assoc r :payment (payment-name-mapping (:payment r))))
+                regionals)}))
 
 (def show-regional ::regional)
 

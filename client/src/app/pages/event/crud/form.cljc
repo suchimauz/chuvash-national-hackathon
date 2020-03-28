@@ -11,7 +11,7 @@
             :id          {:type :string}
             :project     {:type :object}
             :description {:type :string}
-            :period      {:type :form
+            :period      {:type   :form
                           :fields {:start {:type :string}
                                    :end   {:type :string}}}
             :amount      {:type :string}}})
