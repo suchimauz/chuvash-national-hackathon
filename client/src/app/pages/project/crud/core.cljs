@@ -114,10 +114,10 @@
     [header page]
     [form]
     [:div.container.card-body
-     [:span.pointer.btn.btn-success
+     [:span.pointer.btn.btn-primary.btn-lg
       {:on-click #(rf/dispatch [::model/create-request])}
       "Сохранить"]
-     [:span.pointer.btn.btn-secondary
+     [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
       "Отменить"]]]))
 
@@ -128,13 +128,13 @@
     [header page]
     [form]
     [:div.container.card-body
-     [:span.pointer.btn.btn-success
+     [:span.pointer.btn.btn-primary.btn-lg
       {:on-click #(rf/dispatch [::model/edit-request])}
       "Сохранить"]
-     [:span.pointer.btn.btn-secondary
+     [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
       "Отменить"]
-     [:span.pointer.btn.btn-outline-danger
+     [:span.pointer.btn.text-danger
       {:on-click #(rf/dispatch [::model/delete-request id])}
       "Удалить"]]]))
 
@@ -145,10 +145,10 @@
     [header page]
     [form]
     [:div.container.card-body
-     [:span.pointer.btn.btn-success
+     [:span.pointer.btn.btn-primary.btn-lg
       {:on-click #(rf/dispatch [::model/create-regional-request])}
       "Сохранить"]
-     [:span.pointer.btn.btn-secondary
+     [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
       "Отменить"]]]))
 
@@ -159,11 +159,11 @@
     [header page]
     [form]
     [:div.container.card-body
-     [:span.pointer.btn.btn-success
+     [:span.pointer.btn.btn-primary.btn-lg
       {:on-click #(rf/dispatch [::model/edit-regional-request])}
       "Сохранить"]
-     [:span.pointer.btn.btn-secondary
+     [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
       "Отменить"]
-     [:span.pointer.btn.btn-outline-danger "Удалить"
+     [:span.pointer.btn.text-danger "Удалить"
       {:on-click #(rf/dispatch [::model/delete-regional-request regional-id])}]]]))
