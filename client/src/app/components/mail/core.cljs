@@ -53,11 +53,11 @@
    (let [mail (get-in db [:subs :mail])]
      {:db          (-> db (update-in [:subs :resources] unsign))
       :storage/set {:subs-res (unsign res (get storage [:subs-res]))}
-      :xhr/fetch   {:uri    "/Subscriber"
-                    :method "DELETE"
-                    :params {:mail         mail
-                             :id           id
-                             :resourceType resourceType}}
+      ;; :xhr/fetch   {:uri    "/Subscriber"
+      ;;               :method "DELETE"
+      ;;               :params {:mail         mail
+      ;;                        :id           id
+      ;;                        :resourceType resourceType}}
       :flash/info  [:success {:msg "Вы успешно отписались на обновления" :title "Успешно!"}]})))
 
 (rf/reg-event-fx
