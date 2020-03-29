@@ -10,8 +10,6 @@
 (def object-show-page ::object-show)
 (def object-edit-page ::object-edit)
 
-
-
 (rf/reg-sub
  object-create-page
  (fn [{{:keys [event-id reg-id id obj-id]} :fragment-params} _]
@@ -147,7 +145,7 @@
 (rf/reg-event-fx
  ::object-edit-success
  (fn [_ [_ _ uri]]
-   {:zframes.redirect/redirect uri
+   {:zframes.redirect/redirect {:uri uri}
     :flash/flash [:success {:msg "Проект успешно отредактирован" :title "Успешно!"}]}))
 
 (rf/reg-event-fx
@@ -167,7 +165,7 @@
 (rf/reg-event-fx
  ::delete-object-success
  (fn [_ [_ _ uri]]
-   {:zframes.redirect/redirect uri
+   {:zframes.redirect/redirect {:uri uri}
     :flash/flash [:success {:msg "Мероприятие успешно удалено" :title "Успешно!"}]}))
 
 (rf/reg-event-fx
@@ -179,13 +177,13 @@
 (rf/reg-event-fx
  ::edit-success
  (fn [_ [_ _ uri]]
-   {:zframes.redirect/redirect uri
+   {:zframes.redirect/redirect {:uri uri}
     :flash/flash [:success {:msg "Мероприятие успешно отредактировано" :title "Успешно!"}]}))
 
 (rf/reg-event-fx
  ::delete-success
  (fn [_ [_ _ uri]]
-   {:zframes.redirect/redirect uri
+   {:zframes.redirect/redirect {:uri uri}
     :flash/flash [:success {:msg "Мероприятие успешно удалено" :title "Успешно!"}]}))
 
 (rf/reg-event-fx
