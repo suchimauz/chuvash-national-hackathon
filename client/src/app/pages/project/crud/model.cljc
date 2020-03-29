@@ -83,13 +83,13 @@
 
 (rf/reg-event-fx
  ::create-regional-request
- (fn [{{{:keys [id]} :fragment-params :as db} :db} _]
+ (fn [{{{:keys [id reg-id]} :fragment-params :as db} :db} _]
    (form/eval-form db
     (fn [value]
       {:xhr/fetch {:uri "/Project"
                    :method :POST
                    :body value
-                   :success {:event ::create-success :params (str "/project/" id "/regional/")}}}))))
+                   :success {:event ::create-success :params (str "/project/" id )}}}))))
 
 (rf/reg-sub
  create-regional-page
@@ -136,7 +136,7 @@
 (rf/reg-event-fx
  ::create-success
  (fn [_ [_ {:keys [id]} s]]
-   {:zframes.redirect/redirect (str s id)
+   {:zframes.redirect/redirect {:uri s}
     :flash/flash [:success {:msg "Проект успешно создан" :title "Успешно!"}]}))
 
 (rf/reg-event-fx

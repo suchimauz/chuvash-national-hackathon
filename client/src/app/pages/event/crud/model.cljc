@@ -135,17 +135,17 @@
 (rf/reg-event-fx
  ::object-edit-request
  (fn [{{{:keys [obj-id event-id reg-id id]} :fragment-params :as db} :db} _]
-   (form/eval-form db
-                   (fn [value]
-                     {:xhr/fetch {:uri (str "/Object/" obj-id)
-                                  :method :PUT
-                                  :body value
-                                  :success {:event ::object-edit-success :params {:uri (str "/project/" id "/regional/" reg-id "/event/" event-id "/object/" obj-id)}}}}))))
+   (form/eval-object db
+                     (fn [value]
+                       {:xhr/fetch {:uri (str "/Object/" obj-id)
+                                    :method :PUT
+                                    :body value
+                                    :success {:event ::object-edit-success :params {:uri (str "/project/" id "/regional/" reg-id "/event/" event-id)}}}}))))
 
 (rf/reg-event-fx
  ::object-edit-success
  (fn [_ [_ _ uri]]
-   {:zframes.redirect/redirect {:uri uri}
+   {:zframes.redirect/redirect uri
     :flash/flash [:success {:msg "Проект успешно отредактирован" :title "Успешно!"}]}))
 
 (rf/reg-event-fx
@@ -177,7 +177,7 @@
 (rf/reg-event-fx
  ::edit-success
  (fn [_ [_ _ uri]]
-   {:zframes.redirect/redirect {:uri uri}
+   {:zframes.redirect/redirect uri
     :flash/flash [:success {:msg "Мероприятие успешно отредактировано" :title "Успешно!"}]}))
 
 (rf/reg-event-fx

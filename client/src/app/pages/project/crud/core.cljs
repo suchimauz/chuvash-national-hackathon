@@ -52,12 +52,15 @@
         img      (rf/subscribe [:zf/get-value form/path [:img]])]
     (fn []
       [:div.container.mt--8
+
        [:div.row.justify-content-center
         [:div.col
          [:div.card
           [:div.card-body
+           
            [:form
             [:div.form-group
+
              [:label.form-control-label
               "Название"]
              [inputs/input form/path [:name] {:placeholder "Введите название"}]]

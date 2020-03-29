@@ -171,15 +171,7 @@
        [:h1.display-4.text-white "Региональный проект"]
        [:h1.display-2.text-white (:name project)]
        [:p.text-white.mt-0.mb-5 (:description project)]
-       [:div.container-fluid
-        [:div.row.align-items-center.py-4
-         [:div.col-lg-6.col-7
-          [breadcrumb/component [{:display "Главная"
-                                  :href (str "#/")}
-                                 {:display "Проекты"
-                                  :href (str "#/project/" id)}
-                                 {:display "Региональные"
-                                  :href (str "#/project/" id "/regional/" reg-id)}]]]]]
+
        (let [period (:period project)]
          [:b.text-warning
           (:start period)
@@ -187,13 +179,19 @@
                      (:end period))
             " - ")
           (:end period)])]]
-     [:div.container-fluid.d-flex.justify-content-end
-      [:div.align-items-end.py-4.row
+     [:div.container-fluid
+      [:div.row.align-items-center.py-4
+       [:div.col-lg-6.col-7
+        [breadcrumb/component [{:display "Главная"
+                                :href (str "#/")}
+                               {:display "Проекты"
+                                :href (str "#/project/" id)}
+                               {:display "Региональные"
+                                :href (str "#/project/" id "/regional/" reg-id)}]]]
        [:div.col-lg-6.col-5.text-right
-        [mail/button {:id reg-id :resourceType "Project"}]]
-       (when auth?
-         [:div.col-lg-6.col-5.text-right
-          [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" reg-id "/edit")} "Редактировать"]])]]]
+        [mail/button {:id reg-id :resourceType "Project"}]
+        (when auth?
+          [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" reg-id "/edit")} "Редактировать"])]]]]
     [:div.container
      [:div
       [:div.card-header.bg-transparent.row.align-items-center
