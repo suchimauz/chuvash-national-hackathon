@@ -1,10 +1,11 @@
-{:output-to        "resources/public/js/app.js"
+{:output-to        "build/js/app.js"
  :foreign-libs     [{:file     "resources/public/js/imask.js"
                      :provides ["jslib.imask"]}]
  :css-dirs         ["resources/public/css"]
- :source-map       "resources/public/js/app.js.map"
- :output-dir       "resources/public/js/out"
- :closure-warnings {:non-standard-jsdoc :off :global-this :off}
+ :source-map       false
+ ;;:source-map       "resources/public/js/app.js.map"
+ :output-dir       "build/js/out"
  :optimizations    :advanced
  :main             'app.build.prod
+ :infer-externs    true
  :externs          []}

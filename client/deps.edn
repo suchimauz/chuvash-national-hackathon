@@ -14,7 +14,6 @@
   {:extra-paths ["dev"]
    :extra-deps  {re-frisk                  {:mvn/version "LATEST"}
                  com.bhauman/figwheel-main {:mvn/version "LATEST"}}}
-
   :prod
   {:main-opts ["-m cljs.main -co prod.cljs.edn -c app.build.prod"]}
 

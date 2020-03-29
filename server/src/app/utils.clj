@@ -91,8 +91,10 @@
                 :object.resource
                 (hsql/raw (str "'$.address.district == \"" __event_district "\"'"))]]]]
     (cond
-      __project_district {:join _p_d}
-      __event_district   {:join _e_d})))
+      __project_district {:join _p_d
+                          :group-by :project.id}
+      __event_district   {:join _e_d
+                          :group-by :project.id})))
 
 (defn where-params [{:keys [table]} {:keys [id ilike] :as params}]
   (let [conds (cond-> []
