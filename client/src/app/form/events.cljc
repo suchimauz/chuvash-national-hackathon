@@ -75,7 +75,7 @@
                                  [:div.col-auto
                                   [:a.avatar.rounded-circle
                                    [:img
-                                    {:src (str "http://localhost:8990" (:photo item))}]]]
+                                    {:src (str "http://109.68.213.4:8990" (:photo item))}]]]
                                  [:div.col.ml--2
                                   [:h4.mb-0 fio]
                                   [:small (:position item)]]]}))

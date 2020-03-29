@@ -14,7 +14,7 @@
  (fn [{:keys [regionals payments f-payments] {:keys [name img]} :national :as page} {:keys [id]} {:keys [auth?]}]
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
-     {:style {:background-image (str "url(http://localhost:8990" img ")")}}
+     {:style {:background-image (str "url(http://109.68.213.4:8990" img ")")}}
      [:span.mask.bg-gradient-default.opacity-8]
      [:div.container-fluid.d-flex.align-items-center.row
       [:div.col-lg-6
@@ -122,7 +122,7 @@
              [:div.col-auto
               [:span.avatar.avatar-xl
                [:img
-                {:src (str "http://localhost:8990" (-> item :author :resource :photo))
+                {:src (str "http://109.68.213.4:8990" (-> item :author :resource :photo))
                  :alt (-> item :author :display)}]]]
              [:div.col.ml--2
               [:small.mb-0 "Руководитель проекта"]
@@ -162,7 +162,7 @@
  (fn [{:keys [project purposes events]} {:keys [id reg-id] :as s} {:keys [auth?]}]
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
-     {:style {:background-image (str "url(http://localhost:8990" (get-in project [:project :resource :img]) ")")}}
+     {:style {:background-image (str "url(http://109.68.213.4:8990" (get-in project [:project :resource :img]) ")")}}
      [:span.mask.bg-gradient-default.opacity-8]
      [:div.container-fluid.d-flex.align-items-center
       [:div.col-lg-7.col-md-9
