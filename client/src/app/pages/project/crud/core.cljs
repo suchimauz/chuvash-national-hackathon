@@ -41,7 +41,7 @@
                            (let [name (last (str/split @img #"/"))]
                              {:placeholder (if (str/blank? name)  "Укажите фон" (str/split @img #"/"))})]]]
                         [:div.col-auto
-                         [:img.avatar {:src (str "http://localhost:8990" @img)}]]]]]))
+                         [:img.avatar {:src (str "http://109.68.213.4:8990" @img)}]]]]]))
            :title "Создание автора"
            :accept {:text "Сохранить"
                     :fn (fn []
@@ -119,7 +119,7 @@
                   [:input.form-control.custom-file-label
                    {:placeholder (or (last (str/split @img #"/")) "Укажите фон")}]]]
                 [:div.col-auto
-                 [:img.avatar {:src (str "http://localhost:8990" @img)}]]]])]]]]]])))
+                 [:img.avatar {:src (str "http://109.68.213.4:8990" @img)}]]]])]]]]]])))
 
 (defn header [{:keys [header]}]
   [:div.header.bg-gradient-primary.py-8.py-lg-8.pt-lg-9

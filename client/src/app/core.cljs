@@ -30,8 +30,8 @@
             [app.components.navbar.core :as navbar]))
 
 (def config
-  {:base-url     "http://localhost:8080"
-   :storage-url  "http://localhost:8990"})
+  {:base-url     "http://109.68.213.4:8080"
+   :storage-url  "http://109.68.213.4:8990"})
 
 (rf/reg-event-fx
  ::initialize

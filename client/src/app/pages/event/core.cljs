@@ -12,7 +12,7 @@
  (fn [{:keys [header items project] {:keys [name]} :event} {:keys [id reg-id event-id]} {:keys [auth?]}]
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
-     {:style {:background-image (str "url(http://localhost:8990" (:img project) ")")}}
+     {:style {:background-image (str "url(http://109.68.213.4:8990" (:img project) ")")}}
      [:span.mask.bg-gradient-default.opacity-8]
      [:div.container-fluid.d-flex.align-items-center
       [:div.col-lg-7.col-md-9

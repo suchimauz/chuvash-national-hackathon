@@ -19,6 +19,11 @@ back-repl:
 ui-build:
 	cd client && clj -A:prod
 
+
+
+build-cambada:
+	cd server && clj -A:build && mv target/app-1.0.0-SNAPSHOT-standalone.jar app.jar
+
 #Run
 back-run:
 	cd server && clj -m app.rest

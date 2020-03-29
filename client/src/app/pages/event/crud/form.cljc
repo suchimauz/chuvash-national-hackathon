@@ -8,7 +8,7 @@
 (defmethod validators/validate
   ::float
   [{msg :message} v]
-  (when (and v (not (re-matches #"^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$" (str v))))
+  (when (and v (not (re-matches #"^[+-]?([0-9]+([,][0-9]*)?|[,][0-9]+)$" (str v))))
     msg))
 
 (defmethod validators/validate
