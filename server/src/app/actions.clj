@@ -2,6 +2,7 @@
   (:require [clj-pg.honey  :as pg]
             [json-schema.core :as schema]
             [honeysql.core :as hsql]
+            [app.postal :as postal]
             [app.utils :as utils]))
 
 (defn ok          [response] {:status 200 :body response})
@@ -37,8 +38,12 @@
 
 (defn -put [table {:keys [body] db :db/connection {:keys [id]} :path-params}]
   (let [result (validation body table)]
+    (prn "@@@" body)
     (if (empty? (:errors result))
-      (ok (utils/row-to-resource (pg/update db table {:id id :resource (dissoc body :id :resourceType)})))
+      (do
+        (when (= "regional" (:category body))
+          (postal/send-all db body))
+        (ok (utils/row-to-resource (pg/update db table {:id id :resource (dissoc body :id :resourceType)}))))
       (bad-request (:errors result)))))
 
 (defn -delete [table {:keys [params] db :db/connection {:keys [id]} :path-params}]

@@ -9,7 +9,8 @@
          org.clojure/data.codec {:mvn/version "0.1.1"}
          ring-cors              {:mvn/version "0.1.13"}
          clj-pg                 {:mvn/version "RELEASE"}
-         json-schema            {:mvn/version "RELEASE"}}
+         json-schema            {:mvn/version "RELEASE"}
+         com.draines/postal     {:mvn/version "2.0.3"}}
  :aliases
  {:nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "RELEASE"}}
           :main-opts  ["-m" "nrepl.cmdline"

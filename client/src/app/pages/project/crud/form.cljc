@@ -65,7 +65,11 @@
     (merge
      {:db (assoc-in db path form)}
      (if (empty? errors)
-       (cb value)
+       (cb (cond-> value
+             (:project value)
+             (update-in [:project :id] h/parseInt)
+             (:author value)
+             (update-in [:author :id] h/parseInt)))
        #?(:clj  (println errors)
           :cljs (.warn js/console "Form errors: " (clj->js errors)))))))
 

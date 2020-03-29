@@ -12,7 +12,6 @@
              [project :as project]
              [author :as author])))
 
-
 (def handler
   (reitit/ring-handler
    (reitit/router
@@ -43,7 +42,8 @@
      ["/Object/:id" {:get    {:handler (partial action/-get object/table)}
                      :put    {:handler (partial action/-put object/table)}
                      :delete {:handler (partial action/-delete object/table)}}]
-     ["/Subscriber" {:post {:handler (partial action/-post subscriber/table)}}]
+     ["/Subscriber" {:get    {:handler (partial action/-get subscriber/table)}
+                     :post {:handler (partial action/-post subscriber/table)}}]
      ["/Subscriber/:id" {:delete {:handler (partial action/-delete object/table)}}]
      ["/authorize" {:post {:handler (fn [req] (auth/authorize req))}}]
      ["/report/:id" {:get {:handler (fn [req] (report/report req))}}]])
