@@ -200,7 +200,8 @@
        (when auth?
          [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/purpose/create")} "Добавить показатель"])]
       [:div.card-body
-
+       (when (empty? purposes)
+         [:div.list-group.list-group-flush "Не найдено ни одного показателя."])
        [:div.timeline.timeline-one-side
         (map-indexed
          (fn [idx item] ^{:key idx}
