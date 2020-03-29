@@ -54,7 +54,7 @@
             [:div.list-group-item.list-group-item-action.pointer
              {:style {:width "100%"}
               :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" event-id "/object/" (:id item) "/edit")}])}
-             [:small.font-weight-bold (str (or (:district address) (:city address)) ", " (:street address) ", " (:appartment address))]
+             [:small.font-weight-bold (str (or (:district address) (:city address)) ", " (:street address) ", " (:house address) ", " (:appartment address))]
              [:p
               [:small.text-muted.font-weight-bold (:name item)]]]))
         items)]]]]))

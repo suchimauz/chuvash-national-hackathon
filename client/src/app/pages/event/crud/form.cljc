@@ -72,7 +72,6 @@
 (rf/reg-event-fx
  ::object-init
  (fn [{db :db} [_ {:keys [data]}]]
-   (prn "form init")
    {:dispatch [:zf/init object-path object data]}))
 
 (defn eval-form [db cb]
@@ -90,7 +89,6 @@
   (let [{:keys [errors value form]} (-> db
                                         (get-in object-path)
                                         zf/eval-form )]
-    (prn value "form"form "errors" errors)
     (merge
      {:db (assoc-in db object-path form)}
      (if (empty? errors)
