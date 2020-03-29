@@ -27,7 +27,7 @@
  object-edit-page
  (fn [{{:keys [event-id reg-id id obj-id]} :fragment-params} _]
    {:header "Редактирование объекта"
-    :cancel-uri (str "/project/" id "/regional/" reg-id "/event/" event-id)}))
+    :cancel-uri (str "/project/" id "/regional/" reg-id "/event/" event-id "/object/" obj-id)}))
 
 (rf/reg-event-fx
  object-create-page
@@ -137,12 +137,12 @@
 (rf/reg-event-fx
  ::object-edit-request
  (fn [{{{:keys [obj-id event-id reg-id id]} :fragment-params :as db} :db} _]
-   (form/eval-object db
+   (form/eval-form db
                    (fn [value]
                      {:xhr/fetch {:uri (str "/Object/" obj-id)
                                   :method :PUT
                                   :body value
-                                  :success {:event ::edit-success :params {:uri (str "/project/" id "/regional/" reg-id "/event/" event-id)}}}}))))
+                                  :success {:event ::object-edit-success :params {:uri (str "/project/" id "/regional/" reg-id "/event/" event-id "/object/" obj-id)}}}}))))
 
 (rf/reg-event-fx
  ::object-edit-success

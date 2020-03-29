@@ -80,9 +80,12 @@
      [:div.container-fluid
       [:div.row.align-items-center.py-4
        [:div.col-lg-6.col-7
-        #_[breadcrumb/component-with-sub]
-        ;; exception - :href is not ISeqable
-        ]
+        [breadcrumb/component [{:display "Главная"
+                                :href (str "#/")}
+                               {:display "Проекты"
+                                :href (str "#/project/" id)}
+                               {:display "Региональные"
+                                :href (str "#/project/" id)}]]]
        (when auth?
          [:div.col-lg-6.col-5.text-right
           [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/edit")} "Редактировать"]])]]]
@@ -160,8 +163,17 @@
        [:h1.display-4.text-white "Региональный проект"]
        [:h1.display-2.text-white (:name project)]
        [:p.text-white.mt-0.mb-5 (:description project)]
+       [:div.container-fluid
+        [:div.row.align-items-center.py-4
+         [:div.col-lg-6.col-7
+          [breadcrumb/component [{:display "Главная"
+                                  :href (str "#/")}
+                                 {:display "Проекты"
+                                  :href (str "#/project/" id)}
+                                 {:display "Региональные"
+                                  :href (str "#/project/" id "/regional/" reg-id)}]]]]]
        (let [period (:period project)]
-         [:b.text-warning.mt-0.mb-5
+         [:b.text-warning
           (:start period)
           (when (and (:start period)
                      (:end period))

@@ -18,8 +18,17 @@
        [:h1.display-4.text-white name]
        [:h1.display-2.text-white header]
        [:p.text-white.mt-0.mb-5 (:description project)]]]
-     [:div.container-fluid.d-flex.justify-content-end
+     [:div.container-fluid
       [:div.row.align-items-center.py-4
+       [:div.col-lg-6.col-7
+        [breadcrumb/component [{:display "Главная"
+                                :href (str "#/")}
+                               {:display "Проекты"
+                                :href (str "#/project/" id)}
+                               {:display "Региональные"
+                                :href (str "#/project/" id "/regional/" reg-id)}
+                               {:display "Мероприятия"
+                                :href (str "#/project/" id "/regional/" reg-id "/event/" event-id)}]]]
        (when auth?
          [:div.col-lg-6.col-5.text-right
           [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/" reg-id "/event/" event-id "/edit")} "Редактировать"]])]]]

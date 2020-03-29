@@ -18,34 +18,39 @@
 
 (defn obj-form []
   (fn []
-    [:div.container
-     [:form
-      [:div.form-group
-       [:label.form-control-label
-        "Название объекта"]
-       [inputs/input form/object-path [:name]]]
-      [:div.form-group
-       [:label.form-control-label
-        "Район"]
-       [inputs/z-dropdown form/object-path [:address :district] {:placeholder "Выберите район"}]]
-      [:div.row
-       [:div.form-group.col
-        [:label.form-control-label
-         "Город"]
-        [inputs/input form/object-path [:address :city]]]
-       [:div.form-group.col
-        [:label.form-control-label
-         "Улица"]
-        [inputs/input form/object-path [:address :street]]]]
-      [:div.row
-       [:div.form-group.col
-        [:label.form-control-label
-         "Дом"]
-        [inputs/input form/object-path [:address :house]]]
-       [:div.form-group.col
-        [:label.form-control-label
-         "Квартира"]
-        [inputs/input form/object-path [:address :appartment]]]]]]))
+    [:div.container.mt--8
+     [:div.row.justify-content-center
+      [:div.col
+       [:div.card
+        [:div.card-body
+         [:div.container
+          [:form
+           [:div.form-group
+            [:label.form-control-label
+             "Название объекта"]
+            [inputs/input form/object-path [:name]]]
+           [:div.form-group
+            [:label.form-control-label
+             "Район"]
+            [inputs/z-dropdown form/object-path [:address :district] {:placeholder "Выберите район"}]]
+           [:div.row
+            [:div.form-group.col
+             [:label.form-control-label
+              "Город"]
+             [inputs/input form/object-path [:address :city]]]
+            [:div.form-group.col
+             [:label.form-control-label
+              "Улица"]
+             [inputs/input form/object-path [:address :street]]]]
+           [:div.row
+            [:div.form-group.col
+             [:label.form-control-label
+              "Дом"]
+             [inputs/input form/object-path [:address :house]]]
+            [:div.form-group.col
+             [:label.form-control-label
+              "Квартира"]
+             [inputs/input form/object-path [:address :appartment]]]]]]]]]]]))
 
 (defn form []
   (fn []
