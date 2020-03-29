@@ -41,7 +41,7 @@
   (let [result (validation body table)]
     (if (empty? (:errors result))
       (do
-        #_(when (= "regional" (:category body))
+        (when (= "regional" (:category body))
           (postal/send-all db body))
         (ok (utils/row-to-resource (pg/update db table {:id id :resource (dissoc body :id :resourceType)}))))
       (bad-request (:errors result)))))
