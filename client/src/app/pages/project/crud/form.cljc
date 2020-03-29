@@ -15,6 +15,8 @@
             :author      {:type      :object
                           :display-paths [[:display]]
                           :on-search ::ze/search-author}
+            :test {:type :string
+                   :items [{:display "lol" :value "kek"}]}
             :payment     {:type   :form
                           :fields {:regional  {:type :string}
                                    :municipal {:type :string}

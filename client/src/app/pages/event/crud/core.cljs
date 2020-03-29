@@ -27,7 +27,7 @@
       [:div.form-group
        [:label.form-control-label
         "Район"]
-       [inputs/input form/object-path [:address :district]]]
+       [inputs/z-dropdown form/object-path [:address :district] {:placeholder "Выберите район"}]]
       [:div.row
        [:div.form-group.col
         [:label.form-control-label

@@ -137,12 +137,12 @@
 (rf/reg-event-fx
  ::object-edit-request
  (fn [{{{:keys [obj-id event-id reg-id id]} :fragment-params :as db} :db} _]
-   (form/eval-form db
+   (form/eval-object db
                    (fn [value]
                      {:xhr/fetch {:uri (str "/Object/" obj-id)
                                   :method :PUT
                                   :body value
-                                  :success {:event ::object-edit-success :params {:uri (str "/project/" id "/regional/" reg-id "/event/" event-id "/object/" obj-id)}}}}))))
+                                  :success {:event ::edit-success :params {:uri (str "/project/" id "/regional/" reg-id "/event/" event-id)}}}}))))
 
 (rf/reg-event-fx
  ::object-edit-success

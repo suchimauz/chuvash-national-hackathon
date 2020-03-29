@@ -128,3 +128,46 @@
       (if @node
         [*combobox form-path path attrs]
         [:input.form-control]))))
+
+(defn z-dropdown
+  [form-path path & [{:keys [data placeholder]}]]
+  (let [node (rf/subscribe [:zf/node form-path path])
+        open-dropdown #(rf/dispatch [:zf/dropdown form-path path true])
+        on-click (fn [i]
+                   (rf/dispatch [:zf/set-value form-path path (:value i)])
+                   (rf/dispatch [:zf/dropdown form-path path false])
+                   (when (:on-click @node)
+                     (rf/dispatch [(:on-click @node) (:value i)])))
+        close-dropdown #(rf/dispatch [:zf/dropdown form-path path false])]
+    (fn [_ _ & [{:keys [disabled]}]]
+      (let [{:keys [value items errors validators dropdown] :as *node} @node
+            items (if-let [i (:subscribtion items)] @(rf/subscribe i) items)
+            items (get (first items) data items)
+            display (when (or (and (= (:type @node) "boolean")
+                                   (= false value))
+                              value)
+                      (some #(when (= value (:value %)) (:display %)) items))]
+        [:div.position-relative {:tab-index 0
+                                 :on-blur close-dropdown}
+         [:div.input-group.pointer {:on-click open-dropdown}
+          [:span.form-control
+           (if-not display
+             [:span.text-muted placeholder]
+             [:span display])]
+          (when (and value (not disabled))
+            [:span {:key "clear-dropdown"
+                    :style {:position "absolute"
+                            :top "10px"
+                            :right "10px"}
+                    :on-mouse-down #(on-click {:value nil})}
+             [:i.octicon.octicon-x]])]
+         (when dropdown
+           [:div.position-absolute.w-100 {:style {:z-index "100"}}
+            [:div.shadow.items
+             (if-not (empty? items)
+               (map-indexed
+                (fn [idx v] ^{:key idx}
+                  [:li.list-group-item.rounded-0.pointer {:on-mouse-down #(on-click v)}
+                   (:display v)])
+                items)
+               [:li.list-group-item.rounded-0 "Нет выбора"])]])]))))

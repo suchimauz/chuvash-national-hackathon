@@ -29,7 +29,8 @@
   {:type   :form
    :fields {:name    {:type :string}
             :address {:type   :form
-                      :fields {:district   {:type :string}
+                      :fields {:district   {:type :string
+                                            :items h/districts}
                                :city       {:type :string}
                                :street     {:type :string}
                                :house      {:type :string}

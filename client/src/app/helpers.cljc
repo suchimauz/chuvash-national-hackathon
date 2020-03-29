@@ -17,6 +17,13 @@
             #?(:cljs [goog.string.format]))
   #?(:cljs (:import [goog.async Debouncer])))
 
+(def districts
+  [{:value "Ибресинский район" :display "Ибресинский район"}
+   {:value "Чебоксарский район" :display "Чебоксарский район"}
+   {:value "Канашский район" :display "Канашский район"}
+   {:value "Вурнарский район" :display "Вурнарский район"}
+   {:value "Батыревский район" :display "Батыревский район"}])
+
 (def userinfo-path [:xhr :req :zframes.auth/userinfo :data])
 
 (defn format-str [fmt & args]
