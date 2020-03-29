@@ -38,10 +38,9 @@
 
 (defn -put [table {:keys [body] db :db/connection {:keys [id]} :path-params}]
   (let [result (validation body table)]
-    (prn "@@@" body)
     (if (empty? (:errors result))
       (do
-        (when (= "regional" (:category body))
+        #_(when (= "regional" (:category body))
           (postal/send-all db body))
         (ok (utils/row-to-resource (pg/update db table {:id id :resource (dissoc body :id :resourceType)}))))
       (bad-request (:errors result)))))
