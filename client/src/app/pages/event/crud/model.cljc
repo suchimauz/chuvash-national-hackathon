@@ -27,7 +27,7 @@
  object-edit-page
  (fn [{{:keys [event-id reg-id id obj-id]} :fragment-params} _]
    {:header "Редактирование объекта"
-    :cancel-uri (str "/project/" id "/regional/" reg-id "/event/" event-id "/object/" obj-id)}))
+    :cancel-uri (str "/project/" id "/regional/" reg-id "/event/" event-id)}))
 
 (rf/reg-event-fx
  object-create-page

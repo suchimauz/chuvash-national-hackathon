@@ -34,7 +34,7 @@
         (fn [idx item] ^{:key idx}
           [:div.list-group-item.list-group-item-action.pointer
            {:style {:width "100%"}
-            :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" event-id "/object/" (:id item))}])}
+            :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" event-id "/object/" (:id item) "/edit")}])}
            [:small.text-muted.font-weight-bold (:name item)]
            [:h5.mt-3.mb-0 (-> item :address :city)]])
         items)]]]]))
