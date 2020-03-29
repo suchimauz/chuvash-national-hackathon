@@ -8,7 +8,8 @@
             [app.migration  :as migration]
             [app.db         :as db]
             [app.middleware :as middleware]
-            [app.handler    :as handler]))
+            [app.handler    :as handler])
+  (:gen-class))
 
 
 (defn -main []
@@ -21,4 +22,5 @@
                   (middleware/wrap-cors)
                   (middleware/add-db db))]
     (migration/migration db)
-    (web/run stack)))
+    (web/run stack {"host" (or (System/getenv "IMM_HOST") "127.0.0.1")
+                    "port" (or (System/getenv "IMM_PORT") "8081")})))
