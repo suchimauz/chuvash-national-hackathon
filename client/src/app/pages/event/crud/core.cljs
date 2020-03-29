@@ -100,7 +100,7 @@
              [inputs/time-input form/path [:period :start] {:placeholder "Введите дату начала"}]]
             [:div.col-sm-6
              [:small "Конец"]
-             [inputs/time-input form/path [:period :end] {:placeholder "Введите дату завершения"}]]]]]]]]]]))
+             [inputs/time-input form/path [:period :end] {:placeholder "Введите дату завершения"}]]]]]]]]))
 
 (pages/reg-subs-page
  model/create-page
