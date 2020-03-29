@@ -83,7 +83,7 @@
        [:div.col-lg-6.col-7
         [breadcrumb/component [{:display "Главная"
                                 :href (str "#/")}
-                               {:display "Региональные"
+                               {:display "Национальный"
                                 :href (str "#/project/" id)}]]]
        (when auth?
          [:div.col-lg-6.col-5.text-right
