@@ -64,7 +64,7 @@
            [:label.form-control-label
             "Цель"]
            [inputs/input form/path [:name] {:placeholder "Введите цель"}]
-           [:div.row
+           [:div.row.pt-2
             [:div.col-sm-5
              [:small "Кол-во"]
              [inputs/input form/path [:task :target] {:placeholder "100"}]]

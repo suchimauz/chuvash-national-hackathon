@@ -24,7 +24,6 @@
        [:div.row.justify-content-center
         [:div.col
          [:div.card
-          [:div.card-header [:h2.mb-0 "Форма создания цели"]]
           [:div.card-body
            [:form
             [:div.form-group

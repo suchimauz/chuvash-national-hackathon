@@ -215,12 +215,14 @@
               (fn [idxx ind] ^{:key idxx}
                 (let [cur  (h/parseInt (:current ind))
                       plan (h/parseInt (:planning ind))
-                      proc (str (* (/ cur plan) 100.0) "%")
-                      completed? (= cur plan)]
+                      v    (* (/ cur plan) 100.0)
+                      val (if (< 100 v) 100 v)
+                      proc (str val "%")
+                      completed? (>= cur plan)]
                   [:div.row.pb-5 {:style {:height "90px"}}
                    [:div.col-xl-3.col-md-6 [:h4.display-4.p-0.m-0 (:year ind)]]
                    [:div.position-relative.w-100.col-xl.col-md-6
-                    [:div.progress-bar.position-absolute.rounded.align-items-end
+                    [:div.progress-bar.position-absolute.rounded.align-items-end.shadow
                      {:class (if completed? "bg-success" "bg-orange")
                       :style {:width   proc
                               :z-index "10"
@@ -231,7 +233,7 @@
                      {:style {:width  "100%"
                               :height "100%"}}
                      [:h4.m-0.pr-3 {:style {:z-index "20"}} plan]]]]))
-              (:indicators item))]
+              (reverse (:indicators item)))]
             (when auth?
               [:div.d-flex.justify-content-end
                [:a.font-weight-bold.p-0.text-muted
@@ -257,18 +259,17 @@
         (fn [idx item]
           (let [percent (.toFixed (* (/ (h/parse-int (get-in item [:task :complete]))
                                         (h/parse-int (get-in item [:task :target]))) 100) 1)]
-            [:div.list-group-item.list-group-item-action.pointer.name
+            [:div.list-group-item.list-group-item-action.pointer.name.mb-5.rounded.shadow
              {:key idx
               :style    {:width "100%" :display :flex :justify-content :space-between
                          :background (str "linear-gradient(to right, "
                                           (cond
-                                            (< percent 30) "#ff6c6cb3"
-                                            (< percent 50) "#ffdb6c"
-                                            (< percent 100) "rgb(221, 255, 115)"
-                                            :else "rgb(0, 255, 48)") " " percent "%, white 0%)")}
+                                            (< percent 50) "#5e72e4"
+                                            (< percent 100) "#2dce89"
+                                            :else "#2dce89") " " percent "%, #ced4da 0%)")}
               :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" (:id item))}])}
              [:div
-              [:small.text-muted.font-weight-bold (get-in item [:period :end])]
+              [:h3.text-black.font-weight-bold (get-in item [:period :end])]
               [:h5.mb-0 (:name item)]]
              [:div
               [:span.font-weight-bold (get-in item [:task :target]) " " (get-in item [:task :unit])]

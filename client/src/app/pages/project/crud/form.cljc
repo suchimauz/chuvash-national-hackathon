@@ -9,7 +9,9 @@
 (def path [:form ::form])
 (def schema
   {:type   :form
-   :fields {:name        {:type :string}
+   :fields {:name        {:type :string
+                          :validators {:required {:message "Укажите название"}}
+                          }
             :id          {:type :string}
             :description {:type :string}
             :author      {:type      :object
