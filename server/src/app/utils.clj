@@ -72,6 +72,28 @@
       (when (seq params)
         (first params)))))
 
+(defn join-params [{:keys [table]} {:keys [__project_district __event_district]}]
+  (let [_p_d [[:event :event]
+              [:= (hsql/call :cast :project.id :text)
+               (hsql/raw "event.resource#>>'{project,id}'")]
+              [:object :object]
+              [:and
+               [:= (hsql/call :cast :event.id :text)
+                (hsql/raw "object.resource#>>'{event,id}'")]
+               ["@@"
+                :object.resource
+                (hsql/raw (str "'$.address.district == \"" __project_district "\"'"))]]]
+        _e_d [[:object :object]
+              [:and
+               [:= (hsql/call :cast :event.id :text)
+                (hsql/raw "object.resource#>>'{event,id}'")]
+               ["@@"
+                :object.resource
+                (hsql/raw (str "'$.address.district == \"" __event_district "\"'"))]]]]
+    (cond
+      __project_district {:join _p_d}
+      __event_district   {:join _e_d})))
+
 (defn where-params [{:keys [table]} {:keys [id ilike] :as params}]
   (let [conds (cond-> []
                 id (conj [:= (resource-alias table :id) id])

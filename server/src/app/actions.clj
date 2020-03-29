@@ -19,6 +19,7 @@
                {:select [(keyword (str (name (:table table)) ".*"))]
                 :from   [(:table table)]
                 :limit  (or (:count params) 100)}
+               (utils/join-params table params)
                (utils/where-params table params))]
     (if id
       (let [res (pg/query-first db (assoc query :where [:= :id id]))]

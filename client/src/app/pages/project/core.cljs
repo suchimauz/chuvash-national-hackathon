@@ -1,6 +1,7 @@
 (ns app.pages.project.core
   (:require [re-frame.core           :as rf]
             [app.pages.model         :as page]
+            [app.form.inputs  :as inputs]
             [app.styles :as style]
             [app.helpers :as h]
             [app.pages.project.model :as model]
@@ -95,6 +96,13 @@
       [:h3.display-3 "Региональные проекты"]
       (when auth?
         [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/create")} "Создать региональный проект"])]
+
+     [:div.form-group
+      [:div.row
+       [:div.col-sm-4
+        [inputs/z-dropdown model/filter-path [:district] {:placeholder "Выберите район"}]]]]
+     (when (empty? regionals)
+       [:div.list-group.list-group-flush "Не найдено ни одного регионального проекта"])
      (map-indexed
       (fn [idx {:keys [period payment] :as item}] ^{:key idx}
         [:a.card.border {:href (str "#/project/" id "/regional/" (:id item))}
@@ -122,7 +130,7 @@
               [:small.mb-0 "Руководитель проекта"]
               [:h4.mb-0 (-> item :author :display)]
               [:p.text-sm.text-muted.mb-0 (-> item :author :resource :position)]]]
-            [:div.col-aut
+            [:div.col-auto
              (when (seq payment)
                [:<>
                 [:div.row
@@ -239,6 +247,12 @@
        (style/styles
         [:.name
          [:&:hover {:text-decoration "underline"}]])
+       [:div.form-group.mt-4
+        [:div.row
+         [:div.col-sm-4
+          [inputs/z-dropdown model/filter-path [:district] {:placeholder "Выберите район"}]]]]
+       (when (empty? events)
+         [:div.list-group.list-group-flush "Не найдено ни одного результата."])
        (map-indexed
         (fn [idx item]
           (let [percent (.toFixed (* (/ (h/parse-int (get-in item [:task :complete]))

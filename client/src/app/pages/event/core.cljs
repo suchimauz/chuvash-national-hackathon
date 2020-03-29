@@ -1,5 +1,6 @@
 (ns app.pages.event.core
   (:require [re-frame.core           :as rf]
+            [app.form.inputs :as inputs]
             [app.pages.model         :as page]
             [app.helpers :as h]
             [app.pages.event.model :as model]
@@ -38,7 +39,15 @@
        {:style {:justify-content :space-between}}
        [:h3.mb-0 "Объекты"]
        [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/" event-id "/object/create")} "Добавить объект"]]
-      [:div.list-group.list-group-flush.mb-5
+      [:div.list-group.list-group-flush.mt-3
+       [:div.form-group
+        [:div.row
+         [:div.col-sm-4
+          [inputs/z-dropdown model/filter-path [:district] {:placeholder "Выберите район"}]]
+         [:div.col-sm-8
+          [inputs/input model/filter-path [:ilike] {:placeholder "Введите поисковый запрос"}]]]]
+       (when (empty? items)
+         [:div.list-group.list-group-flush "Не найдено ни одного объекта"])
        (map-indexed
         (fn [idx item] ^{:key idx}
           [:div.list-group-item.list-group-item-action.pointer
