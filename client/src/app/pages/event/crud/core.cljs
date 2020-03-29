@@ -68,11 +68,9 @@
              [inputs/input form/path [:task :complete] {:placeholder "20"}]]
             [:div.col-sm-2
              [:small "Ед.изм."]
-             [inputs/input form/path [:task :unit] {:placeholder "Например: шт."}]]]]
-            "Название"]
-           [inputs/input form/path [:name] {:placeholder "Введите название"}]]
+             [inputs/input form/path [:task :unit] {:placeholder "Например: шт."}]]]]]
           [:div.form-group
-           [:div.form-control-label
+           [:label.form-control-label
             "Бюджет - млн.руб."]
            [:div.row
             [:div.col-sm-6
@@ -100,7 +98,7 @@
              [inputs/time-input form/path [:period :start] {:placeholder "Введите дату начала"}]]
             [:div.col-sm-6
              [:small "Конец"]
-             [inputs/time-input form/path [:period :end] {:placeholder "Введите дату завершения"}]]]]]]]]))
+             [inputs/time-input form/path [:period :end] {:placeholder "Введите дату завершения"}]]]]]]]]]))
 
 (pages/reg-subs-page
  model/create-page
@@ -118,10 +116,10 @@
 
 (pages/reg-subs-page
  model/edit-page
- (fn [{:keys [cancel-uri] :as page} {:keys [id]}]
+ (fn [{:keys [cancel-uri] :as page} {:keys [event-id]}]
    [:<>
     [header page]
-    [obj-form]
+    [form]
     [:div.container.card-body
      [:span.pointer.btn.btn-primary.btn-lg
       {:on-click #(rf/dispatch [::model/edit-request])}
@@ -129,11 +127,13 @@
      [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
       "Отменить"]
-     [:a.btn.text-danger "sds"]]]))
+     [:a.ml-2.text-danger.pointer
+      {:on-click #(rf/dispatch [::model/delete-request event-id])}
+      "Удалить"]]]))
 
 (pages/reg-subs-page
  model/object-create-page
- (fn [{:keys [cancel-uri] :as page} {:keys [id]}]
+ (fn [{:keys [cancel-uri] :as page} {:keys [obj-id]}]
    [:<>
     [header page]
     [obj-form]
@@ -147,7 +147,7 @@
 
 (pages/reg-subs-page
  model/object-edit-page
- (fn [{:keys [cancel-uri] :as page} {:keys [id]}]
+ (fn [{:keys [cancel-uri] :as page} {:keys [obj-id]}]
    [:<>
     [header page]
     [obj-form]
@@ -158,4 +158,4 @@
      [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
       "Отменить"]
-     [:a.btn.text-danger "Удалить"]]]))
+     [:a.ml-2.text-danger.pointer "Удалить"]]]))
