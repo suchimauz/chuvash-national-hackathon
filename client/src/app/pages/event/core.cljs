@@ -9,6 +9,7 @@
 (page/reg-subs-page
  model/show-page
  (fn [{:keys [header items project] {:keys [name]} :event} {:keys [id reg-id event-id]} {:keys [auth?]}]
+   (prn items)
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
      {:style {:background-image (str "url(http://localhost:8990" (:img project) ")")}}
@@ -28,4 +29,13 @@
       [:div.card-header.bg-transparent.row.align-items-center
        {:style {:justify-content :space-between}}
        [:h3.mb-0 "Объекты"]
-       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/" event-id "/create")} "Добавить объект"]]]]]))
+       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/" event-id "/object/create")} "Добавить объект"]]
+      [:div.list-group.list-group-flush.mb-5
+       (map-indexed
+        (fn [idx item] ^{:key idx}
+          [:div.list-group-item.list-group-item-action.pointer
+           {:style {:width "100%"}
+            :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" event-id "/object/" (:id item))}])}
+           [:small.text-muted.font-weight-bold (:name item)]
+           [:h5.mt-3.mb-0 (-> item :address :city)]])
+        items)]]]]))

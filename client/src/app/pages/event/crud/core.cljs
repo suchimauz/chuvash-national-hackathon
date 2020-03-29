@@ -16,43 +16,36 @@
     [:svg {:viewBox "0 0 10 100" :y "0" :x "0"}
      [:polygon.fill-white {:points "2560 0 2560 100 0 100"}]]]])
 
-
-(defn modal-author []
-  [:modal {:style  {:max-width "800px"}
-           :body   (fn []
-                   [:div.container
-                    [:form
-                     [:div.form-group
-                      [:label.form-control-label
-                       "Название объекта"]
-                      [inputs/input form/object-path [:name]]]
-                     [:div.form-group
-                      [:label.form-control-label
-                       "Район"]
-                      [inputs/input form/object-path [:address :distinct]]]
-                     [:div.row
-                      [:div.form-group.col
-                       [:label.form-control-label
-                        "Город"]
-                       [inputs/input form/object-path [:address :city]]]
-                      [:div.form-group.col
-                       [:label.form-control-label
-                        "Улица"]
-                       [inputs/input form/object-path [:address :street]]]]
-                     [:div.row
-                      [:div.form-group.col
-                       [:label.form-control-label
-                        "Дом"]
-                       [inputs/input form/object-path [:address :house]]]
-                      [:div.form-group.col
-                       [:label.form-control-label
-                        "Квартира"]
-                       [inputs/input form/object-path [:address :appartment]]]]]])
-           :title  "Создание автора"
-           :accept {:text "Сохранить"
-                    :fn   (fn []
-                          (rf/dispatch [::model/create-object]))}}])
-
+(defn obj-form []
+  (fn []
+    [:div.container
+     [:form
+      [:div.form-group
+       [:label.form-control-label
+        "Название объекта"]
+       [inputs/input form/object-path [:name]]]
+      [:div.form-group
+       [:label.form-control-label
+        "Район"]
+       [inputs/input form/object-path [:address :district]]]
+      [:div.row
+       [:div.form-group.col
+        [:label.form-control-label
+         "Город"]
+        [inputs/input form/object-path [:address :city]]]
+       [:div.form-group.col
+        [:label.form-control-label
+         "Улица"]
+        [inputs/input form/object-path [:address :street]]]]
+      [:div.row
+       [:div.form-group.col
+        [:label.form-control-label
+         "Дом"]
+        [inputs/input form/object-path [:address :house]]]
+       [:div.form-group.col
+        [:label.form-control-label
+         "Квартира"]
+        [inputs/input form/object-path [:address :appartment]]]]]]))
 
 (defn form []
   (fn []
@@ -76,6 +69,8 @@
             [:div.col-sm-2
              [:small "Ед.изм."]
              [inputs/input form/path [:task :unit] {:placeholder "Например: шт."}]]]]
+            "Название"]
+           [inputs/input form/path [:name] {:placeholder "Введите название"}]]
           [:div.form-group
            [:div.form-control-label
             "Бюджет - млн.руб."]
@@ -126,11 +121,41 @@
  (fn [{:keys [cancel-uri] :as page} {:keys [id]}]
    [:<>
     [header page]
-    [form]
+    [obj-form]
     [:div.container.card-body
      [:span.pointer.btn.btn-primary.btn-lg
       {:on-click #(rf/dispatch [::model/edit-request])}
       "Сохранить"]
      [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
+      "Отменить"]
+     [:a.btn.text-danger "sds"]]]))
+
+(pages/reg-subs-page
+ model/object-create-page
+ (fn [{:keys [cancel-uri] :as page} {:keys [id]}]
+   [:<>
+    [header page]
+    [obj-form]
+    [:div.container.card-body
+     [:span.pointer.btn.btn-primary.btn-lg
+      {:on-click #(rf/dispatch [::model/object-create-request])}
+      "Сохранить"]
+     [:span.pointer.btn.btn-secondary.btn-lg
+      {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
       "Отменить"]]]))
+
+(pages/reg-subs-page
+ model/object-edit-page
+ (fn [{:keys [cancel-uri] :as page} {:keys [id]}]
+   [:<>
+    [header page]
+    [obj-form]
+    [:div.container.card-body
+     [:span.pointer.btn.btn-primary.btn-lg
+      {:on-click #(rf/dispatch [::model/object-edit-request])}
+      "Сохранить"]
+     [:span.pointer.btn.btn-secondary.btn-lg
+      {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
+      "Отменить"]
+     [:a.btn.text-danger "Удалить"]]]))

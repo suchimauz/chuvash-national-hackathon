@@ -27,19 +27,25 @@
 (def object-path [:form ::object])
 (def object
   {:type   :form
-   :fields {:name   {:type :string}
+   :fields {:name    {:type :string}
             :address {:type   :form
-                      :fields {:distinct   {:type :string}
+                      :fields {:district   {:type :string}
                                :city       {:type :string}
                                :street     {:type :string}
                                :house      {:type :string}
                                :appartment {:type :string}}}
-            :event  {:type          :object}}})
+            :event   {:type :object}}})
 
 (rf/reg-event-fx
  ::init
- (fn [coeff [_ {:keys [data]}]]
+ (fn [{db :db} [_ {:keys [data]}]]
    {:dispatch [:zf/init path schema data]}))
+
+(rf/reg-event-fx
+ ::object-init
+ (fn [{db :db} [_ {:keys [data]}]]
+   (prn "form init")
+   {:dispatch [:zf/init object-path object data]}))
 
 (defn eval-form [db cb]
   (let [{:keys [errors value form]} (-> db
@@ -53,9 +59,13 @@
           :cljs (.warn js/console "Form errors: " (clj->js errors)))))))
 
 (defn eval-object [db cb]
-  (let [{:keys [errors value form]} (-> db (get-in object-path) zf/eval-form )]
+  (let [{:keys [errors value form]} (-> db
+                                        (get-in object-path)
+                                        zf/eval-form )]
+    (prn value "form"form "errors" errors)
     (merge
      {:db (assoc-in db object-path form)}
-     (when (empty? errors)
+     (if (empty? errors)
+       (cb value)
        #?(:clj  (println errors)
           :cljs (.warn js/console "Form errors: " (clj->js errors)))))))

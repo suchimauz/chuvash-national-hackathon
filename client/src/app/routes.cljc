@@ -19,9 +19,9 @@
                                                                   "create"    {:. :app.pages.event.crud.model/create}
                                                                   [:event-id] {:.       :app.pages.event.model/show
                                                                                "edit"   {:. :app.pages.event.crud.model/edit}
-                                                                               "object" {"create"  {:. :app.pages.event.crud.model/object-create-page}
-                                                                                         [:obj-id] {:.     :app.pages.event.crud.model/object-show-page
-                                                                                                    "edit" {:. :app.pages.event.crud.model/object-edit-page}}}}}
+                                                                               "object" {"create"  {:. :app.pages.event.crud.model/object-create}
+                                                                                         [:obj-id] {:.     :app.pages.event.crud.model/object-show
+                                                                                                    "edit" {:. :app.pages.event.crud.model/object-edit}}}}}
                                                      "purpose"   {:.       :app.pages.purpose.model/index
                                                                   "create" {:. :app.pages.purpose.crud.model/create}
                                                                   [:p-id]  {:.     :app.pages.purpose.model/show
