@@ -29,7 +29,10 @@
                    :req-id ::show-regional}
                   {:uri "/report/national-project-payment-sum"
                    :params {:id id}
-                   :req-id ::payments}]}
+                   :req-id ::payments}
+                  {:uri "/report/project-event-payment-sum"
+                   :params {:nat-id id}
+                   :req-id ::f-payments}]}
      :deinit
      {:db (dissoc db pid)}
      nil)))
@@ -46,9 +49,11 @@
  :<- [:xhr/response show-page]
  :<- [:xhr/response ::show-regional]
  :<- [:xhr/response ::payments]
- (fn [[{national :data} {regionals :data} {payments :data}] _]
+ :<- [:xhr/response ::f-payments]
+ (fn [[{national :data} {regionals :data} {payments :data} {f-payments :data}] _]
    {:national national
     :payments (payment-name-mapping payments)
+    :f-payments (payment-name-mapping f-payments)
     :regionals (map
                 (fn [r]
                   (assoc r :payment (payment-name-mapping (:payment r))))

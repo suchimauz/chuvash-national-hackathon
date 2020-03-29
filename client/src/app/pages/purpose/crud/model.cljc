@@ -66,3 +66,19 @@
  (fn [_ [_ _ uri]]
    {:zframes.redirect/redirect {:uri uri}
     :flash/flash [:success {:msg "Показатель удалён" :title "Успешно!"}]}))
+
+(rf/reg-event-fx
+ ::edit-resource
+ (fn [{{{:keys [reg-id id]} :fragment-params :as db} :db}]
+   (form/eval-form db
+    (fn [value]
+      {:xhr/fetch {:uri     (str "/Purpose/" (:id value))
+                   :method  :PUT
+                   :body    value
+                   :success {:event ::edit-success :params (str "/project/" id "/regional/" reg-id)}}}))))
+
+(rf/reg-event-fx
+ ::edit-success
+ (fn [_ [_ _ uri]]
+   {:zframes.redirect/redirect {:uri uri}
+    :flash/flash [:success {:msg "Показатель обновлён" :title "Успешно!"}]}))

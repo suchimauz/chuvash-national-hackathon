@@ -1,6 +1,7 @@
 (ns app.pages.project.core
   (:require [re-frame.core           :as rf]
             [app.pages.model         :as page]
+            [app.styles :as style]
             [app.helpers :as h]
             [app.pages.project.model :as model]
             [app.components.chart.doughnut :as doughnut]
@@ -9,7 +10,7 @@
 
 (page/reg-subs-page
  model/show-page
- (fn [{:keys [regionals payments] {:keys [name img]} :national :as page} {:keys [id]} {:keys [auth?]}]
+ (fn [{:keys [regionals payments f-payments] {:keys [name img]} :national :as page} {:keys [id]} {:keys [auth?]}]
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
      {:style {:background-image (str "url(http://localhost:8990" img ")")}}
@@ -46,7 +47,9 @@
                                :options {:legend {:display false}}
                                :data    {:labels   (keys payments)
                                          :datasets [{:data (mapv :total (vals payments))
-                                                     :backgroundColor (mapv :color (vals payments))}]}}]
+                                                     :backgroundColor (mapv :color (vals payments))}
+                                                    {:data (mapv :total (vals f-payments))
+                                                     :backgroundColor (mapv :color (vals f-payments))}]}}]
           [:div.table-responsive.mt-3.card
            [:table.table.align-items-center.text-white
             [:thead.thead-light
@@ -58,19 +61,19 @@
              [:tr
               [:th {:style {:color "red"}} "Федеральный"]
               [:td {:style {:color "red"}} (get-in payments ["Федеральный" :total] 0)]
-              [:td {:style {:color "red"}} (get-in payments ["Федеральный" :total] 0)]]
+              [:td {:style {:color "red"}} (get-in f-payments ["Федеральный" :total] 0)]]
              [:tr
               [:th {:style {:color "blue"}} "Региональный"]
               [:td {:style {:color "blue"}} (get-in payments ["Региональный" :total] 0)]
-              [:td {:style {:color "blue"}} (get-in payments ["Региональный" :total] 0)]]
+              [:td {:style {:color "blue"}} (get-in f-payments ["Региональный" :total] 0)]]
              [:tr
               [:th {:style {:color "purple"}} "Муниципальный"]
               [:td {:style {:color "purple"}} (get-in payments ["Муниципальный" :total] 0)]
-              [:td {:style {:color "purple"}} (get-in payments ["Муниципальный" :total] 0)]]
+              [:td {:style {:color "purple"}} (get-in f-payments ["Муниципальный" :total] 0)]]
              [:tr
               [:th {:style {:color "#fba000"}} "Внебюджет"]
               [:td {:style {:color "#fba000"}} (get-in payments ["Внебюджет" :total] 0)]
-              [:td {:style {:color "#fba000"}} (get-in payments ["Внебюджет" :total] 0)]]]]]]])]
+              [:td {:style {:color "#fba000"}} (get-in f-payments ["Внебюджет" :total] 0)]]]]]]])]
      [:div.container-fluid
       [:div.row.align-items-center.py-4
        [:div.col-lg-6.col-7
@@ -216,16 +219,28 @@
        [:h3.mb-0 "Результаты"]
        [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/create")} "Добавить результат"]]
       [:div.list-group.list-group-flush.mb-5
+       (style/styles
+        [:.name
+         [:&:hover {:text-decoration "underline"}]])
        (map-indexed
-        (fn [idx item] ^{:key idx}
-          [:div.list-group-item.list-group-item-action.pointer
-           {:style    {:width "100%" :display :flex :justify-content :space-between}
-            :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" (:id item))}])}
-           [:div
-            [:small.text-muted.font-weight-bold (get-in item [:period :end])]
-            [:h5.mb-0 (:name item)]]
-           [:div
-            [:span.font-weight-bold (get-in item [:task :target]) " " (get-in item [:task :unit])]
-            [:br]
-            [:span.text-muted.font-weight-bold (get-in item [:task :complete]) " " (get-in item [:task :unit])]]])
+        (fn [idx item]
+          (let [percent (.toFixed (* (/ (h/parse-int (get-in item [:task :complete]))
+                                        (h/parse-int (get-in item [:task :target]))) 100) 1)]
+            [:div.list-group-item.list-group-item-action.pointer.name
+             {:key idx
+              :style    {:width "100%" :display :flex :justify-content :space-between
+                         :background (str "linear-gradient(to right, "
+                                          (cond
+                                            (< percent 30) "#ff6c6cb3"
+                                            (< percent 50) "#ffdb6c"
+                                            (< percent 100) "rgb(221, 255, 115)"
+                                            :else "rgb(0, 255, 48)") " " percent "%, white 0%)")}
+              :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" (:id item))}])}
+             [:div
+              [:small.text-muted.font-weight-bold (get-in item [:period :end])]
+              [:h5.mb-0 (:name item)]]
+             [:div
+              [:span.font-weight-bold (get-in item [:task :target]) " " (get-in item [:task :unit])]
+              [:br]
+              [:span.text-muted.font-weight-bold (get-in item [:task :complete]) " " (get-in item [:task :unit])]]]))
         events)]]]]))

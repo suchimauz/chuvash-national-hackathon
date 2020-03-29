@@ -49,24 +49,23 @@
                [:span.mega-octicon.octicon-plus
                 {:on-click #(rf/dispatch [:zf/add-collection-item form/path [:indicators]])}]]]]]]]]]])))
 
-(defn buttons [{:keys [id reg-id] :as params}]
-  [:div.card-body.container
-   [:button.btn.btn-primary.btn-lg {:on-click #(rf/dispatch [::model/create-resource])} "Сохранить"]
-   [:a.btn.btn-secondary.btn-lg {:href (helpers/href "project" id "regional" reg-id)}  "Отменить"]
-   [:button.btn.text-danger {:on-click #(rf/dispatch [::model/delete params])} "Удалить"]])
-
 (pages/reg-subs-page
  model/create-page
- (fn [page params]
+ (fn [page {:keys [id reg-id] :as params}]
    [:<>
     [header page]
     [form]
-    [buttons params]]))
+    [:div.card-body.container
+     [:button.btn.btn-primary.btn-lg {:on-click #(rf/dispatch [::model/create-resource])} "Сохранить"]
+     [:a.btn.btn-secondary.btn-lg {:href (helpers/href "project" id "regional" reg-id)}  "Отменить"]]]))
 
 (pages/reg-subs-page
  model/edit-page
- (fn [page param]
+ (fn [page {:keys [id reg-id] :as params}]
    [:<>
     [header page]
     [form]
-    [buttons param]]))
+    [:div.card-body.container
+     [:button.btn.btn-primary.btn-lg {:on-click #(rf/dispatch [::model/edit-resource])} "Сохранить"]
+     [:a.btn.btn-secondary.btn-lg {:href (helpers/href "project" id "regional" reg-id)}  "Отменить"]
+     [:button.btn.text-danger {:on-click #(rf/dispatch [::model/delete params])} "Удалить"]]]))

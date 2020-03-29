@@ -101,17 +101,21 @@
              [:label.form-control-label
               "Описание"]
              [inputs/textarea form/path [:description] {:placeholder "Введите описание проекта"}]]
-            [:div.row
-             [:div.col
-              [:div.custom-file
-               [:input#customFileLang.custom-file-input
-                {:lang "en", :type "file"
-                 :on-change #(rf/dispatch [::file/upload (-> % .-target .-files array-seq first)
-                                           {:success ::form/set-img}])}]
-               [:input.form-control.custom-file-label
-                {:placeholder (or (last (str/split @img #"/")) "Укажите фон")}]]]
-             [:div.col-auto
-              [:img.avatar {:src (str "http://localhost:8990" @img)}]]]]]]]]])))
+            (when-not (#{"regional"} @category)
+              [:div.form-group
+               [:label.form-control-label
+                "Изображение"]
+               [:div.row
+                [:div.col
+                 [:div.custom-file
+                  [:input#customFileLang.custom-file-input
+                   {:lang "en", :type "file"
+                    :on-change #(rf/dispatch [::file/upload (-> % .-target .-files array-seq first)
+                                              {:success ::form/set-img}])}]
+                  [:input.form-control.custom-file-label
+                   {:placeholder (or (last (str/split @img #"/")) "Укажите фон")}]]]
+                [:div.col-auto
+                 [:img.avatar {:src (str "http://localhost:8990" @img)}]]]])]]]]]])))
 
 (defn header [{:keys [header]}]
   [:div.header.bg-gradient-primary.py-8.py-lg-8.pt-lg-9

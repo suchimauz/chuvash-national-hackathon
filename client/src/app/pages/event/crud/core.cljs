@@ -129,7 +129,7 @@
     [form]
     [:div.container.card-body
      [:span.pointer.btn.btn-primary.btn-lg
-      {:on-click #(rf/dispatch [::model/create-request])}
+      {:on-click #(rf/dispatch [::model/edit-request])}
       "Сохранить"]
      [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}

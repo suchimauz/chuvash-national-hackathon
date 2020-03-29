@@ -7,6 +7,7 @@
 (def schema
   {:type   :form
    :fields {:name       {:type :string}
+            :id         {:type :string}
             :indicators {:type :collection
                          :item {:type   :form
                                 :fields {:year     {:type :string}
