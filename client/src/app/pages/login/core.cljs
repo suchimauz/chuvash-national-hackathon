@@ -4,9 +4,6 @@
             [app.pages.login.model :as model]
             [re-frame.core :as rf]))
 
-(defn page [form]
-  )
-
 (page/reg-page
  model/index-page
  (fn [page]
@@ -17,15 +14,10 @@
        [:polygon.fill-white {:points "2560 0 2560 100 0 100"}]]]]
     [:div.container.mt--8.pb-5
      [:div.row.justify-content-center
-      
       [:div.col-lg-5.col-md-7.mt-8
-
        [:div.card.bg-ligth.border-0.mb-0
-        
         [:div.card-header.bg-transparent.text-center
-
-         [:h1 "Авторизация"]
-         ]
+         [:h1 "Авторизация"]]
         [:div.separator.separator-bottom.separator-skew.zindex-100
          [:svg {:viewBox "0 0 10 100" :y "0" :x "0"}
           [:polygon.fill-white {:points "2560 0 2560 100 0 100"}]]]
