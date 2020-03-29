@@ -108,7 +108,7 @@
                                    (fn [path] (get-in value path))
                                    display-paths))])]]
          (when dropdown
-           [:div.position-absolute.w-100 {:style {:z-index "100"}}
+           [:div.position-absolute.w-100 {:style {:z-index "900"}}
             [:input.form-control.rounded-0 {:placeholder "Поиск..."
                                             :ref         #(when (and % dropdown) (.focus %))
                                             :on-change   #(on-change (.. % -target -value))}]

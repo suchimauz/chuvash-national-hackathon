@@ -38,7 +38,8 @@
                             :on-change #(rf/dispatch [::file/upload (-> % .-target .-files array-seq first)
                                                       {:success ::form/set-a-img}])}]
                           [:input.form-control.custom-file-label
-                           {:placeholder (or (last (str/split @img #"/")) "Укажите фон")}]]]
+                           (let [name (last (str/split @img #"/"))]
+                             {:placeholder (if (str/blank? name)  "Укажите фон" (str/split @img #"/"))})]]]
                         [:div.col-auto
                          [:img.avatar {:src (str "http://localhost:8990" @img)}]]]]]))
            :title "Создание автора"

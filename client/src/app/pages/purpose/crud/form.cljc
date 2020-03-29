@@ -1,16 +1,26 @@
 (ns app.pages.purpose.crud.form
   (:require [re-frame.core :as rf]
             [app.helpers :as h]
+            [zenform.validators        :as validators]
             [zenform.model :as zf]))
+
+(defmethod validators/validate
+  ::float
+  [{msg :message} v]
+  (when (and v (not (re-matches #"^\d{4}$" (str v))))
+    msg))
 
 (def path [:form ::form])
 (def schema
   {:type   :form
-   :fields {:name       {:type :string}
+   :fields {:name       {:type :string
+                         :validators {:required {:message "Укажите название"}}}
             :id         {:type :string}
             :indicators {:type :collection
                          :item {:type   :form
-                                :fields {:year     {:type :string}
+                                :fields {:year     {:type :string
+                                                    :validators {:required {:message "Укажите год"}
+                                                                 ::float {:message "Неправильный формат"}}}
                                          :current  {:type :string}
                                          :planning {:type :string}}}}
             :project    {:type :object}}})

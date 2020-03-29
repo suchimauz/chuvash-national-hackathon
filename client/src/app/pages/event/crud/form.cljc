@@ -2,24 +2,49 @@
   (:require [re-frame.core :as rf]
             [zenform.model :as zf]
             [app.form.events :as ze]
+            [zenform.validators        :as validators]
             [app.helpers :as h]))
+
+(defmethod validators/validate
+  ::float
+  [{msg :message} v]
+  (when (and v (not (re-matches #"^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$" (str v))))
+    msg))
+
+(defmethod validators/validate
+  ::integer
+  [{msg :message} v]
+  (when (and v (not (re-matches #"^\d+$" (str v))))
+    msg))
 
 (def path [:form ::form])
 (def schema
   {:type   :form
-   :fields {:name        {:type :string}
+   :fields {:name        {:type :string
+                          :validators {:required {:message "Укажите название"}}}
             :id          {:type :string}
             :project     {:type :object}
             :description {:type :string}
             :payment     {:type   :form
-                          :fields {:regional  {:type :string}
-                                   :municipal {:type :string}
-                                   :federal   {:type :string}
-                                   :other     {:type :string}}}
+                          :fields {:regional  {:type :string
+                                               :validators {::float {:message "Неправильный формат"}}
+                                               }
+                                   :municipal {:type :string
+                                               :validators {::float {:message "Неправильный формат"}}
+                                               }
+                                   :federal   {:type :string
+                                               :validators {::float {:message "Неправильный формат"}}
+                                               }
+                                   :other     {:type :string
+                                               :validators {::float {:message "Неправильный формат"}}
+                                               }}}
             :task        {:type :form
                           :fields {:unit {:type :string}
-                                   :target {:type :string}
-                                   :complete {:type :string}}}
+                                   :target {:type :string
+                                            :validators {::integer {:message "Неправильный формат"}}
+                                            }
+                                   :complete {:type :string
+                                              :validators {::integer {:message "Неправильный формат"}}}}}
             :period      {:type   :form
                           :fields {:start {:type :string}
                                    :end   {:type :string}}}}})

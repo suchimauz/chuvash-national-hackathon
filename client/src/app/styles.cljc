@@ -8,9 +8,10 @@
   (styles
    [:body {:color "#333" :font-size "15px" :font-family "GothamPro" :height "100%"}
     [:.app
-     [:.avatar {:height "74px" :width "74px"}]
+     [:.avatar
+      [:img {:height "74px !important" :width "74px !important"}]]
      [:.form-control {:color "#333"
-                      :background-color "#dfe2e25e"}]
+                      :background-color "#f8f8f8"}]
      [:.flashes {:position "fixed" :bottom "20px" :right "20px" :max-width "800px" :z-index 200}
       [:alert-notify {:max-width "800px"}]
       [:ul {:padding-left "20px"}]]
