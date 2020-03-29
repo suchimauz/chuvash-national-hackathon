@@ -9,7 +9,6 @@
 (page/reg-subs-page
  model/show-page
  (fn [{:keys [header items project] {:keys [name]} :event} {:keys [id reg-id event-id]} {:keys [auth?]}]
-   (prn items)
    [:<>
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
      {:style {:background-image (str "url(http://localhost:8990" (:img project) ")")}}
