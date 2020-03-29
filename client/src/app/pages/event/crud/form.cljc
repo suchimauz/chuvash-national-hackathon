@@ -21,7 +21,8 @@
 (def schema
   {:type   :form
    :fields {:name        {:type :string
-                          :validators {:required {:message "Укажите название"}}}
+                          :validators {:required {:message "Укажите название"}}
+                          }
             :id          {:type :string}
             :project     {:type :object}
             :description {:type :string}
@@ -52,7 +53,8 @@
 (def object-path [:form ::object])
 (def object
   {:type   :form
-   :fields {:name    {:type :string}
+   :fields {:name    {:type :string
+                      :validators {:required {:message "Укажите название"}}}
             :address {:type   :form
                       :fields {:district   {:type :string
                                             :items h/districts}

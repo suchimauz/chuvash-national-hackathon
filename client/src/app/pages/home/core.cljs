@@ -12,11 +12,12 @@
     [:div.header.bg-gradient-primary.py-8.py-lg-8.pt-lg-9
      [:div.container.d-flex.align-items-center
       [:div.row
-       [:div.col-lg-7.col-md-10
-        [:h1.display-2.text-white "Hello Jesse"]
+       [:div.col-lg-8.col-md-10
+        [:h1.display-2.text-white "Портал о нацпроектах в Чувашии"]
         [:p.text-white.mt-0.mb-5
-         "This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks"]
-        [:a.btn.btn-neutral {:href "#!"} "Edit profile"]]]]
+         "Проекты федерального масштаба, принятые в России в 2018 году в соответствии с Указом Президента Российской Федерации от 07.05.2018 № 204
+«О национальных целях и стратегических задачах развития Российской Федерации на период до 2024 года» по 13 направлениям"]
+        ]]]
      [:div.separator.separator-bottom.separator-skew.zindex-100
       [:svg {:viewBox "0 0 10 100" :y "0" :x "0"}
        [:polygon.fill-white {:points "2560 0 2560 100 0 100"}]]]]
