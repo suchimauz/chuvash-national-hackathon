@@ -18,7 +18,7 @@
     [:div.container.mt--8.pb-5
      [:div.row.justify-content-center
       
-      [:div.col-lg-5.col-md-7
+      [:div.col-lg-5.col-md-7.mt-8
 
        [:div.card.bg-ligth.border-0.mb-0
         

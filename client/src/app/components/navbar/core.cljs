@@ -12,14 +12,13 @@
           [:a.navbar-brand
            {:href "#/home"}
            [:img {:src "img/logo.png" :style {:height "60px" :weight "100px"}}]]
-          [:button.navbar-toggler
-           {:aria-label "Toggle navigation",
-            :aria-expanded "false",
-            :aria-controls "navbar-collapse",
-            :data-target "#navbar-collapse",
-            :data-toggle "collapse",
-            :type "button"}
-           [:span.navbar-toggler-icon]]
+          [:a.navbar-toggler {:href "#/login"}
+           (if @auth?
+             [:span.btn-danger.btn {:on-click #(rf/dispatch [:zframes.auth/logout])}
+              [:span.nav-link-inner--text "Выход"]]
+             [:a.btn.btn-neutral.btn-icon.pointer {:href "#/login"}
+              [:a.nav-link-inner--text "Авторизация"]])
+           #_[:span.navbar-toggler-icon]]
           [:div#navbar-collapse.navbar-collapse.navbar-custom-collapse.collapse
            [:div.navbar-collapse-header
             [:div.row
