@@ -15,66 +15,68 @@
     [:div.header.pt-8.pt-lg-8.pt-lg-9.rounded-bottom
      {:style {:background-image (str "url(http://localhost:8990" img ")")}}
      [:span.mask.bg-gradient-default.opacity-8]
-     [:div.container-fluid.d-flex.align-items-center
-      [:div.col-lg-7.col-md-9
+     [:div.container-fluid.d-flex.align-items-center.row
+      [:div.col-lg-6
        [:h1.display-4.text-white "Национальный проект"]
        [:h1.display-2.text-white name]]
       (when (seq payments)
-        [:div.row
-         {:key (str (hash payments) (hash f-payments))}
-         [:div.card-body.px-lg-7
-          {:style {:z-index "100"
-                   :position "relative"}}
-          [:div {:style {:position "absolute"
-                         :color "#fff"
-                         :margin "auto"
-                         :height "45%"
-                         :width "30%"
-                         :font-size "35px"
-                         :font-weight "bold"
-                         :text-align "center"
-                         :line-height "15px"
-                         :top "0" :left "0"
-                         :bottom "0" :right "0"}}
-           [:span (.toFixed (reduce + (map :total (vals payments))) 1) [:br]
-            [:span
-             {:style {:font-size "15px"}}
-             "млн. руб."]]]
-          [doughnut/component {:key     "123"
-                               :type    "doughnut"
-                               :_style  {:width  "220px"
-                                         :height "220px"}
-                               :stacked true
-                               :options {:legend {:display false}}
-                               :data    {:labels   (keys payments)
-                                         :datasets [{:data (mapv :total (vals payments))
-                                                     :backgroundColor (mapv :color (vals payments))}
-                                                    {:data (mapv :total (vals f-payments))
-                                                     :backgroundColor (mapv :color (vals f-payments))}]}}]
-          [:div.table-responsive.mt-3.card
-           [:table.table.align-items-center.text-white
-            [:thead.thead-light
-             [:tr
-              [:th "Бюджет"]
-              [:th "План"]
-              [:th "Факт"]]]
-            [:tbody
-             [:tr
-              [:th {:style {:color "red"}} "Федеральный"]
-              [:td {:style {:color "red"}} (get-in payments ["Федеральный" :total] 0)]
-              [:td {:style {:color "red"}} (get-in f-payments ["Федеральный" :total] 0)]]
-             [:tr
-              [:th {:style {:color "blue"}} "Региональный"]
-              [:td {:style {:color "blue"}} (get-in payments ["Региональный" :total] 0)]
-              [:td {:style {:color "blue"}} (get-in f-payments ["Региональный" :total] 0)]]
-             [:tr
-              [:th {:style {:color "purple"}} "Муниципальный"]
-              [:td {:style {:color "purple"}} (get-in payments ["Муниципальный" :total] 0)]
-              [:td {:style {:color "purple"}} (get-in f-payments ["Муниципальный" :total] 0)]]
-             [:tr
-              [:th {:style {:color "#fba000"}} "Внебюджет"]
-              [:td {:style {:color "#fba000"}} (get-in payments ["Внебюджет" :total] 0)]
-              [:td {:style {:color "#fba000"}} (get-in f-payments ["Внебюджет" :total] 0)]]]]]]])]
+        [:div.col-lg-6
+         [:div.row {:key (str (hash payments) (hash f-payments))}
+          [:div.card-body
+           [:div.row
+            [:div.table-responsive.card.col-md-6.p-0.d-flex.align-self-center
+             [:table.table.align-items-center.text-white
+              [:thead.thead-light
+               [:tr
+                [:th "Бюджет"]
+                [:th "План"]
+                [:th "Факт"]]]
+              [:tbody
+               [:tr
+                [:th {:style {:color "red"}} "Федеральный"]
+                [:td {:style {:color "red"}} (get-in payments ["Федеральный" :total] 0)]
+                [:td {:style {:color "red"}} (get-in f-payments ["Федеральный" :total] 0)]]
+               [:tr
+                [:th {:style {:color "blue"}} "Региональный"]
+                [:td {:style {:color "blue"}} (get-in payments ["Региональный" :total] 0)]
+                [:td {:style {:color "blue"}} (get-in f-payments ["Региональный" :total] 0)]]
+               [:tr
+                [:th {:style {:color "purple"}} "Муниципальный"]
+                [:td {:style {:color "purple"}} (get-in payments ["Муниципальный" :total] 0)]
+                [:td {:style {:color "purple"}} (get-in f-payments ["Муниципальный" :total] 0)]]
+               [:tr
+                [:th {:style {:color "#fba000"}} "Внебюджет"]
+                [:td {:style {:color "#fba000"}} (get-in payments ["Внебюджет" :total] 0)]
+                [:td {:style {:color "#fba000"}} (get-in f-payments ["Внебюджет" :total] 0)]]]]]
+            [:div.col-md-6
+             [:div.position-relative
+              [:div.position-absolute.d-flex.justify-content-center.align-items-center {:style {:position "absolute"
+                                                                                                :color "#fff"
+                                                                                                :margin "auto"
+                                                                                                :height "45%"
+                                                                                                :width "30%"
+                                                                                                :font-size "35px"
+                                                                                                :font-weight "bold"
+                                                                                                :text-align "center"
+                                                                                                :line-height "15px"
+                                                                                                :top "0" :left "0"
+                                                                                                :bottom "0" :right "0"}}
+               [:span (.toFixed (reduce + (map :total (vals payments))) 1) [:br]
+                [:span
+                 {:style {:font-size "15px"}}
+                 "млн. руб."]]]
+              [doughnut/component {:key     "123"
+                                   :type    "doughnut"
+                                   :_style  {:width  "200px"
+                                             :height "220px"}
+                                   :stacked true
+                                   :options {:legend {:display false}}
+                                   :data    {:labels   (keys payments)
+                                             :datasets [{:data (mapv :total (vals payments))
+                                                         :backgroundColor (mapv :color (vals payments))}
+                                                        {:data (mapv :total (vals f-payments))
+                                                         :backgroundColor (mapv :color (vals f-payments))}]}}]]
+             ]]]]])]
      [:div.container-fluid
       [:div.row.align-items-center.py-4
        [:div.col-lg-6.col-7
@@ -92,7 +94,7 @@
         [:a.btn.btn.btn-neutral {:href (str "#/project/" id "/regional/create")} "Создать региональный проект"])]
      (map-indexed
       (fn [idx {:keys [period payment] :as item}] ^{:key idx}
-        [:a.card {:href (str "#/project/" id "/regional/" (:id item))}
+        [:a.card.border {:href (str "#/project/" id "/regional/" (:id item))}
 
          [:div.card-header
           {:style {:justify-content :space-between
@@ -109,7 +111,7 @@
            [:div.d-flex.justify-content-between
             [:div.row.align-items-center
              [:div.col-auto
-              [:span.avatar.avatar-xl.rounded-circle
+              [:span.avatar.avatar-xl
                [:img
                 {:src (str "http://localhost:8990" (-> item :author :resource :photo))
                  :alt (-> item :author :display)}]]]
