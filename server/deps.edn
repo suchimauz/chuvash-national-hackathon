@@ -15,4 +15,16 @@
  {:nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "RELEASE"}}
           :main-opts  ["-m" "nrepl.cmdline"
                        "--middleware" "[cider.nrepl/cider-middleware]"
-                       "--port"       "5555"]}}}
+                       "--port"       "5555"]}
+  :build 
+  {:extra-deps {cambada {:git/url "https://github.com/HealthSamurai/cambada"
+                         :sha     "e44a0bebd039285f3e10f15f5703d6eaf92672c7"}}
+   :main-opts  ["-m" "cambada.uberjar"
+                "-p" "resources"
+                "-a" "all"
+                "--app-group-id" "alkona"
+                "--app-artifact-id" "app"
+                "--no-copy-source"]
+   :jvm-opts   ^:replace ["-XX:-OmitStackTraceInFastThrow"]}
+
+  }}

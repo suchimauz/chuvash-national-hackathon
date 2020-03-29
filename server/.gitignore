@@ -1,2 +1,5 @@
 .cpcache/
 .nrepl-port
+app.jar
+pom.xml
+target/
