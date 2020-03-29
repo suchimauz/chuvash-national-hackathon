@@ -21,6 +21,7 @@
        [:h1.display-2.text-white name]]
       (when (seq payments)
         [:div.row
+         {:key (str (hash payments) (hash f-payments))}
          [:div.card-body.px-lg-7
           {:style {:z-index "100"
                    :position "relative"}}
