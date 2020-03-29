@@ -176,7 +176,8 @@
       [:div.card-header.bg-transparent.row.align-items-center
        {:style {:justify-content :space-between}}
        [:h3.mb-0 "Показатели"]
-       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/purpose/create")} "Добавить показатель"]]
+       (when auth?
+         [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/purpose/create")} "Добавить показатель"])]
       [:div.card-body
 
        [:div.timeline.timeline-one-side
@@ -208,16 +209,17 @@
                               :height "100%"}}
                      [:h4.m-0.pr-3 {:style {:z-index "20"}} plan]]]]))
               (:indicators item))]
-            [:div.d-flex.justify-content-end
-             [:a.font-weight-bold.p-0.text-muted
-              {:href (h/href "project" id "regional" reg-id "purpose" (:id item) "edit")} "Редактировать"]]])
-         purposes)]
-       ]]
+            (when auth?
+              [:div.d-flex.justify-content-end
+               [:a.font-weight-bold.p-0.text-muted
+                {:href (h/href "project" id "regional" reg-id "purpose" (:id item) "edit")} "Редактировать"]])])
+         purposes)]]]
      [:div
       [:div.card-header.bg-transparent.row.align-items-center
        {:style {:justify-content :space-between}}
        [:h3.mb-0 "Результаты"]
-       [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/create")} "Добавить результат"]]
+       (when auth?
+         [:a.btn {:href (str "#/project/" id "/regional/" reg-id "/event/create")} "Добавить результат"])]
       [:div.list-group.list-group-flush.mb-5
        (style/styles
         [:.name
