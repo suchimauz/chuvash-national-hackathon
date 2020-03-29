@@ -27,7 +27,7 @@
  object-edit-page
  (fn [{{:keys [event-id reg-id id obj-id]} :fragment-params} _]
    {:header "Редактирование объекта"
-    :cancel-uri (str "/project/" id "/regional/" reg-id "/event/" event-id "/object/" obj-id)}))
+    :cancel-uri (str "/project/" id "/regional/" reg-id "/event/" event-id)}))
 
 (rf/reg-event-fx
  object-create-page
@@ -156,6 +156,19 @@
    {:xhr/fetch {:uri (str "/Event/" id)
                 :method :DELETE
                 :success {:event ::delete-success :params (str "/project/" id "/regional/" reg-id)}}}))
+
+(rf/reg-event-fx
+ ::delete-object
+ (fn [{{{:keys [event-id reg-id id obj-id]} :fragment-params :as db} :db} [_ id]]
+   {:xhr/fetch {:uri (str "/Object/" id)
+                :method :DELETE
+                :success {:event ::delete-object-success :params (str "#/project/" id "/regional/" reg-id "/event/" event-id)}}}))
+
+(rf/reg-event-fx
+ ::delete-object-success
+ (fn [_ [_ _ uri]]
+   {:zframes.redirect/redirect uri
+    :flash/flash [:success {:msg "Мероприятие успешно удалено" :title "Успешно!"}]}))
 
 (rf/reg-event-fx
  ::create-success

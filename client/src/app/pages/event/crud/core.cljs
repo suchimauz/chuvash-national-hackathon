@@ -163,4 +163,6 @@
      [:span.pointer.btn.btn-secondary.btn-lg
       {:on-click #(rf/dispatch [:zframes.redirect/redirect {:uri cancel-uri}])}
       "Отменить"]
-     [:a.ml-2.text-danger.pointer "Удалить"]]]))
+     [:a.ml-2.text-danger.pointer
+      {:on-click #(rf/dispatch [::model/delete-object obj-id])}
+      "Удалить"]]]))

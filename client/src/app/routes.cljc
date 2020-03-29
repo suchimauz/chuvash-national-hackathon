@@ -20,7 +20,7 @@
                                                                   [:event-id] {:.       :app.pages.event.model/show
                                                                                "edit"   {:. :app.pages.event.crud.model/edit}
                                                                                "object" {"create"  {:. :app.pages.event.crud.model/object-create}
-                                                                                         [:obj-id] {:.     :app.pages.event.crud.model/object-show
+                                                                                         [:obj-id] {:.     :app.pages.event.crud.model/object-edit
                                                                                                     "edit" {:. :app.pages.event.crud.model/object-edit}}}}}
                                                      "purpose"   {:.       :app.pages.purpose.model/index
                                                                   "create" {:. :app.pages.purpose.crud.model/create}

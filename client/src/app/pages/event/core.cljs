@@ -41,9 +41,11 @@
       [:div.list-group.list-group-flush.mb-5
        (map-indexed
         (fn [idx item] ^{:key idx}
-          [:div.list-group-item.list-group-item-action.pointer
-           {:style {:width "100%"}
-            :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" event-id "/object/" (:id item) "/edit")}])}
-           [:small.text-muted.font-weight-bold (:name item)]
-           [:h5.mt-3.mb-0 (-> item :address :city)]])
+          (let [address (:address item)]
+            [:div.list-group-item.list-group-item-action.pointer
+             {:style {:width "100%"}
+              :on-click #(rf/dispatch [:zframes.redirect/redirect {:uri (str "#/project/" id "/regional/" reg-id "/event/" event-id "/object/" (:id item) "/edit")}])}
+             [:small.font-weight-bold (str (or (:district address) (:city address)) ", " (:street address) ", " (:appartment address))]
+             [:p
+              [:small.text-muted.font-weight-bold (:name item)]]]))
         items)]]]]))
